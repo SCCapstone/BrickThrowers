@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     private Vector2 movement;
 
     // Inventory
-    private int inventorySize = 3;
-    private List<Item> inventory = new List<Item>();
+    private int inventorySize = 4;
+    //private List<Item> inventory = new List<Item>();
     private int inventoryIndex = 0;
 }

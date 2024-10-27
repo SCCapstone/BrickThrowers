@@ -19,7 +19,7 @@ Use the build settings to select the platform you want to build for, and then cl
 
 # Deployment
 
-Publishing is the typical method of "deploying" a Unity game. If using the Windows platform, you can publish the game as an executable, which can be run on any Windows computer. You can then publish the gmae on a platform such as Steam, or itch.io.
+Publishing is the typical method of "deploying" a Unity game. If using the Windows platform, you can publish the game as an executable, which can be run on any Windows computer. You can then publish the game on a platform such as Steam, or itch.io.
 
 WebGL builds can be published on a website, on Unity Play, or on a platform such as itch.io.
 

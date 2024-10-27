@@ -23,6 +23,10 @@ Publishing is the typical method of "deploying" a Unity game. If using the Windo
 
 WebGL builds can be published on a website, on Unity Play, or on a platform such as itch.io.
 
+# Style Guide
+
+We are to use Google's C# style guide for this project. The style guide can be found [here](https://google.github.io/styleguide/csharp-style.html).
+
 # Testing
 
 In 492 you will write automated tests. When you do you will need to add a

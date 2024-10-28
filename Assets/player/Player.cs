@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
      * This game is also in a 2D environment, so movement should be restricted to the x and y axis.
      * Additionally, players should have inventory, and interaction with inventory items and other objects in the game.
      * Actual in-game player classes should inherit from this class and implement their own unique properties and methods.
-     * Players all emit some form of light, so they should have a light source attached to thoooom.
+     * Players all emit some form of light, so they should have a light source attached to them.
      */
     
     [SerializeField]

@@ -47,4 +47,5 @@ Explain how to run the automated tests.
 # Authors
 
 Reshlynt (Scott Do) - dobao98123@gmail.com
+
 tylerstargel (Tyler Stargel) - thetylerstargel@gmail.com

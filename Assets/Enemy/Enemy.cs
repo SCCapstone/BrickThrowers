@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     // How much damage for player
    private int damage = 4;
     // health for enemies
-   private int health = 5;
+   private int health = 6;
 
    // Method to reduce health when the enemy takes damage
    public void TakeDamage(int damageAmount)

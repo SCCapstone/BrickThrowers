@@ -49,3 +49,5 @@ Explain how to run the automated tests.
 Reshlynt (Scott Do) - dobao98123@gmail.com
 
 tylerstargel (Tyler Stargel) - thetylerstargel@gmail.com
+
+Crunko (Joshua Kolbusz) - joshuakolbusz@gmail.com

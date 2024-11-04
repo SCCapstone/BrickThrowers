@@ -19,7 +19,8 @@ public class Anglerfish : Enemy
 
     void Update()
     {
-        Move();
+        //Commented out so that the game can compile
+        //Move();
         Flicker();
         
     }

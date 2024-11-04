@@ -56,5 +56,7 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "BrickThrowers.sln"
+    "dotnet.defaultSolution": "BrickThrowers.sln",
+    "dotnet.preferCSharpExtension": true,
+    "dotnet.codeLens.enableReferencesCodeLens": false
 }

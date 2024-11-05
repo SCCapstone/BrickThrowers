@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
         of the enemies on the XY plain and make them focus on the player
         * Enemies should have health, speed, and attack as the basics
         for all of them
+        * New Feature: Added a method to reduce enemy health when attacked.
    */
 
    private float speed = 6f;
@@ -24,5 +25,13 @@ public class Enemy : MonoBehaviour
     // health for enemies
    private int health = 5;
 
-
+   // Method to reduce health when the enemy takes damage
+   public void TakeDamage(int damageAmount)
+   {
+       health -= damageAmount;
+       if (health <= 0)
+       {
+           Destroy(gameObject);
+       }
+   }
 }

@@ -16,13 +16,35 @@ public class Player : MonoBehaviour
      */
     
     [SerializeField]
-    private float speed = 5f;
+    public float speed = 40f;
+    public float verticalSpeed = 40f;
 
-    private Rigidbody2D rb;
+    public float waterDrag = 3f;
+    public float waterGravityScale = 50f;
+
+
+    public Rigidbody2D rb;
     private Vector2 movement;
 
     // Inventory
     private int inventorySize = 4;
     //private List<Item> inventory = new List<Item>();
     private int inventoryIndex = 0;
+
+    void Start() {
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = waterGravityScale;
+        rb.drag = waterDrag;
+    }
+
+    void Update() {
+        Movement();
+    }
+
+    public void Movement() {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        rb.velocity = new Vector2(horizontalInput * speed, verticalInput * verticalSpeed);
+    }
 }

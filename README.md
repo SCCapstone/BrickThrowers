@@ -51,3 +51,5 @@ Reshlynt (Scott Do) - dobao98123@gmail.com
 tylerstargel (Tyler Stargel) - thetylerstargel@gmail.com
 
 Crunko (Joshua Kolbusz) - joshuakolbusz@gmail.com
+
+kjthaoo (Kelly Thao) - kjthao@email.sc.edu

@@ -52,4 +52,4 @@ tylerstargel (Tyler Stargel) - thetylerstargel@gmail.com
 
 Crunko (Joshua Kolbusz) - joshuakolbusz@gmail.com
 
-kjthaoo (Kelly Thao) - kjthao@email.sc.edu
+kjthaoo (Kelly Thao) - kthao43726@gmail.com

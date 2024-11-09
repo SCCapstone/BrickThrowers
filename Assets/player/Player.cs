@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Defines what a player should do.
+/// </summary>
 public class Player : MonoBehaviour
 {
     /*
@@ -14,8 +17,10 @@ public class Player : MonoBehaviour
      * Actual in-game player classes should inherit from this class and implement their own unique properties and methods.
      * Players all emit some form of light, so they should have a light source attached to them.
      */
-    
-    [SerializeField]
+
+    // This class should never be used for player classes, but is the framework of classes.
+
+    // Variables to allow water-like movement
     public float speed = 40f;
     public float verticalSpeed = 40f;
 
@@ -31,20 +36,47 @@ public class Player : MonoBehaviour
     //private List<Item> inventory = new List<Item>();
     private int inventoryIndex = 0;
 
-    void Start() {
-        rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = waterGravityScale;
-        rb.drag = waterDrag;
-    }
+    // Items in Range
+    private List<GameObject> itemsInRange = new List<GameObject>();
 
-    void Update() {
-        Movement();
-    }
-
-    public void Movement() {
+    /// <summary>
+    /// Moves players according to particular player class parameters.
+    /// Some classes move faster than others.
+    /// </summary>
+    public virtual void Movement()
+    {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         rb.velocity = new Vector2(horizontalInput * speed, verticalInput * verticalSpeed);
     }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Item":
+                ItemInteract();
+                break;
+            case "Enemy":
+                HealthDeplete();
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Health Deplete
+    public void HealthDeplete()
+    {
+        Debug.Log("Health Depleted");
+    }
+
+    // Item Interact
+    public void ItemInteract()
+    {
+        Debug.Log("Item Interacted");
+    }
+
+
 }

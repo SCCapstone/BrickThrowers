@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Defines what a player should do.
+/// </summary>
 public class Player : MonoBehaviour
 {
     /*
@@ -14,14 +15,14 @@ public class Player : MonoBehaviour
      * Actual in-game player classes should inherit from this class and implement their own unique properties and methods.
      * Players all emit some form of light, so they should have a light source attached to them.
      */
-    
+
     [SerializeField]
     // Movement
     public float speed = 40f;
     public float verticalSpeed = 40f;
     public float fastSpeedMultiplier = 1.5f;
     private bool isSwimmingFast = false;
-    
+
     // Water Physics
     public float waterDrag = 3f;
     public float waterGravityScale = 50f;
@@ -47,7 +48,8 @@ public class Player : MonoBehaviour
     //private List<Item> inventory = new List<Item>();
     //private int inventoryIndex = 0;
 
-    void Start() {
+    void Start()
+    {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = waterGravityScale;
         rb.drag = waterDrag;
@@ -55,43 +57,77 @@ public class Player : MonoBehaviour
         currentStamina = maxStamina;
     }
 
-    void Update() {
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Item":
+                ItemInteract();
+                break;
+            case "Enemy":
+                HealthDeplete();
+                break;
+            default:
+                break;
+        }
+    }
+    void Update()
+    {
         Movement();
         OxygenAndStamina();
     }
 
-    private void Movement() {
+    private void Movement()
+    {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         float x = horizontalInput * speed;
         float y = verticalInput * verticalSpeed;
-
-        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0) {
+        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
+        {
             isSwimmingFast = true;
             x *= fastSpeedMultiplier;
-        } else {
+        }
+        else
+        {
             isSwimmingFast = false;
         }
-        rb.velocity = new Vector2(x,y);
+        rb.velocity = new Vector2(x, y);
+    }
+    // Health Deplete
+    public void HealthDeplete()
+    {
+        Debug.Log("Health Depleted");
     }
 
-    private void OxygenAndStamina() {
+    private void OxygenAndStamina()
+    {
         float oxygenDepletion = oxygenDepletionRate * Time.deltaTime;
 
-        if (currentStamina <= lowStaminaThreshold) {
+        if (currentStamina <= lowStaminaThreshold)
+        {
             oxygenDepletion *= lowStaminaMultiplier;
         }
 
         currentOxygen -= oxygenDepletion;
-        currentOxygen = Mathf.Clamp(currentOxygen,0,maxOxygen);
+        currentOxygen = Mathf.Clamp(currentOxygen, 0, maxOxygen);
 
-        if (isSwimmingFast) {
+        if (isSwimmingFast)
+        {
             currentStamina -= staminaDepletionRate * Time.deltaTime;
-        } else {
+        }
+        else
+        {
             currentStamina += staminaRecoveryRate * Time.deltaTime;
         }
 
-        currentStamina = Mathf.Clamp(currentStamina,0,maxStamina);
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        // Item Interact
+
+    }
+    public void ItemInteract()
+    {
+        Debug.Log("Item Interacted");
     }
 
     public float GetOxygenLevel() => currentOxygen;

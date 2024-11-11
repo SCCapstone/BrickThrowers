@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86561474acaab754c86219a4b999858a, type: 3}
-  m_Name: Flashlight
+  m_Script: {fileID: 11500000, guid: acf3bdf33c813004aa5acaafad12cce5, type: 3}
+  m_Name: New Artifact Object
   m_EditorClassIdentifier: 
-  id: 
-  displayName: 
-  icon: {fileID: 0}
   prefab: {fileID: 0}
+  type: 1
+  itemName: 
+  description: 
+  value: 0

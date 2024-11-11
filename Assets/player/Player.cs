@@ -31,13 +31,8 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     private Vector2 movement;
 
-    // Inventory
-    private int inventorySize = 4;
-    //private List<Item> inventory = new List<Item>();
-    private int inventoryIndex = 0;
-
-    // Items in Range
-    private List<GameObject> itemsInRange = new List<GameObject>();
+    // Health
+    public int health = 100;
 
     /// <summary>
     /// Moves players according to particular player class parameters.
@@ -51,31 +46,26 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector2(horizontalInput * speed, verticalInput * verticalSpeed);
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionStay2D(Collision2D collision)
     {
-        switch (collision.gameObject.tag)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            case "Item":
-                ItemInteract();
-                break;
-            case "Enemy":
-                HealthDeplete();
-                break;
-            default:
-                break;
+            HealthDeplete();
         }
     }
 
-    // Health Deplete
-    public void HealthDeplete()
-    {
-        Debug.Log("Health Depleted");
-    }
 
-    // Item Interact
-    public void ItemInteract()
+    // Health Deplete
+    public virtual void HealthDeplete()
     {
-        Debug.Log("Item Interacted");
+        // Deplete health so long as player is collion with an enemy
+        // On 0 health, player dies, the player GameObject destroys itself
+        health -= 25;
+        if (health <= 0)
+        {
+            Debug.Log("health = " + health);
+            Destroy(gameObject);
+        }
     }
 
 

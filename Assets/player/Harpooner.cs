@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Harpooner : MonoBehaviour
+public class Harpooner : Player
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = waterGravityScale;
+        rb.drag = waterDrag;
+        // Harpooner does not have less health.
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        Movement();
     }
 }

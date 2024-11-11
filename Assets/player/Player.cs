@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
 
     public Rigidbody2D rb;
     private Vector2 movement;
+    public int health;
 
     // Inventory
     //private int inventorySize = 4;
@@ -65,7 +66,7 @@ public class Player : MonoBehaviour
                 ItemInteract();
                 break;
             case "Enemy":
-                HealthDeplete();
+            HealthDeplete();
                 break;
             default:
                 break;
@@ -94,10 +95,18 @@ public class Player : MonoBehaviour
         }
         rb.velocity = new Vector2(x, y);
     }
+
     // Health Deplete
-    public void HealthDeplete()
+    public virtual void HealthDeplete()
     {
-        Debug.Log("Health Depleted");
+        // Deplete health so long as player is collion with an enemy
+        // On 0 health, player dies, the player GameObject destroys itself
+        health -= 25;
+        if (health <= 0)
+        {
+            Debug.Log("health = " + health);
+            Destroy(gameObject);
+        }
     }
 
     private void OxygenAndStamina()

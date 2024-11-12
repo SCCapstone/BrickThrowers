@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 528d063d21cb5ee4fbfba82079909425, type: 3}
-  m_Name: Flashlight
+  m_Script: {fileID: 11500000, guid: 1fc53df848ac5cb4ca8a307fc25c539e, type: 3}
+  m_Name: Player Inventory
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6803123034363564257, guid: 95c2b371a1062e440abacebc8e638090, type: 3}
-  type: 0
-  itemName: Flashlight
-  description: Lights a direction.
+  Container: []

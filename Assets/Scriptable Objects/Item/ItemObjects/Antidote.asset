@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a30e7b6819c76e4797c3b25ac383292, type: 3}
+  m_Script: {fileID: 11500000, guid: 528d063d21cb5ee4fbfba82079909425, type: 3}
   m_Name: Antidote
   m_EditorClassIdentifier: 
   prefab: {fileID: 2698940778127083323, guid: fd101e9fa75743147bbc1961f62c3811, type: 3}
   type: 0
   itemName: Antidote
-  description: Aleviates the effects of poision.
+  description: posion poison go away

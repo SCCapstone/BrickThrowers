@@ -7,6 +7,8 @@ public class InventoryObject : ScriptableObject
 {
     public List<InventorySlot> Container = new List<InventorySlot>();
     // Add item to inventory
+    // Remember that it currently is able to stack
+    // Will have to remove later
     public void AddItem(ItemData _item, int _amount)
     {
         bool hasItem = false;

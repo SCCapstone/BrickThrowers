@@ -57,6 +57,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            Item item = collision.gameObject.GetComponent<Item>();
+            inventory.AddItem(item.item, 1);
+            Destroy(collision.gameObject);
+        }
+    }
 
     // Health Deplete
     public virtual void HealthDeplete()
@@ -71,5 +80,9 @@ public class Player : MonoBehaviour
         }
     }
 
-
+    // Activities when you quit application
+    private void OnApplicationQuit()
+    {
+        inventory.Container.Clear();
+    }
 }

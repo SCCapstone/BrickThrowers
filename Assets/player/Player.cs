@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
     // Health
     public int health = 100;
 
+    // Inventory
+    public InventoryObject inventory;
+
     /// <summary>
     /// Moves players according to particular player class parameters.
     /// Some classes move faster than others.

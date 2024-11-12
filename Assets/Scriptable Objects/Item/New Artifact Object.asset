@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
   type: 1
-  itemName: 
-  description: 
-  value: 0
+  itemName: Chalice
+  description: A nice looking cup.
+  value: 25

@@ -84,7 +84,10 @@ public class Jellyfish : MonoBehaviour
 }
 
 // Diver.cs (Updated to handle stun)
+
+/* commenting this out due to error: Need fixing
 using UnityEngine;
+*/
 
 public class Diver : MonoBehaviour
 {

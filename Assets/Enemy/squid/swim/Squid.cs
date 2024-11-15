@@ -1,4 +1,5 @@
 // Squid.cs
+/*
 using UnityEngine;
 
 public class Squid : MonoBehaviour
@@ -132,3 +133,4 @@ public class Diver : MonoBehaviour
         }
     }
 }
+*/

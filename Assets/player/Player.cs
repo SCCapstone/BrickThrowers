@@ -44,6 +44,9 @@ public class Player : MonoBehaviour
     private Vector2 movement;
     public int health;
 
+    // Health
+    public int health = 100;
+
     // Inventory
     //private int inventorySize = 4;
     //private List<Item> inventory = new List<Item>();

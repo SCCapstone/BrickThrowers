@@ -1,29 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO.Enumeration;
+using System.IO;
+/// <summary>
+/// Stores the list of items in the inventory, and manages inventory slots.
+/// </summary>
 [CreateAssetMenu(fileName = "New Inventory Object", menuName = "Inventory System/Inventory")]
-public class InventoryObject : ScriptableObject
+public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
 {
+    public ItemDatabaseObject database;
     public List<InventorySlot> Container = new List<InventorySlot>();
+    public string savePath;
+
+
     // Add item to inventory
     // Remember that it currently is able to stack
     // Will have to remove later
-    public void AddItem(ItemData _item, int _amount)
+    public void AddItem(ItemObject _item, int _amount)
     {
-        bool hasItem = false;
         for (int i = 0; i < Container.Count; i++)
         {
             if (Container[i].item == _item)
             {
                 Container[i].AddAmount(_amount);
-                hasItem = true;
-                break;
+                return;
             }
         }
-        if (!hasItem)
+        Container.Add(new InventorySlot(database.GetID[_item], _item, _amount));
+    }
+    /// <summary>
+    /// Soon as anything need deserialize, this will be called to repopulate
+    /// </summary>
+    public void OnAfterDeserialize()
+    {
+        for (int i = 0; i < Container.Count; i++)
         {
-            Container.Add(new InventorySlot(_item, _amount));
+            Container[i].item = database.GetItem[Container[i].ID];
+        }
+    }
+
+    public void OnBeforeSerialize()
+    {
+    }
+    /// <summary>
+    /// Save the inventory to a file
+    /// </summary>
+    public void Save()
+    {
+        string saveData = JsonUtility.ToJson(this, true);
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
+        bf.Serialize(file, saveData);
+        file.Close();
+    }
+    /// <summary>
+    /// Load the inventory from a file
+    /// </summary>
+    public void Load()
+    {
+        if(File.Exists(string.Concat(Application.persistentDataPath, savePath)))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
+            JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
+            file.Close();
         }
     }
 }
@@ -34,10 +76,12 @@ public class InventoryObject : ScriptableObject
 [System.Serializable]
 public class InventorySlot
 {
-    public ItemData item;
+    public int ID;
+    public ItemObject item;
     public int amount;
-    public InventorySlot(ItemData _item, int _amount)
+    public InventorySlot(int _id, ItemObject _item, int _amount)
     {
+        ID = _id;
         item = _item;
         amount = _amount;
     }

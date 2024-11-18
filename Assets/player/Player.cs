@@ -117,6 +117,20 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    /// <summary>
+    /// Test code
+    /// </summary>
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            inventory.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            inventory.Load();
+        }
+    }
 
     private void OxygenAndStamina()
     {

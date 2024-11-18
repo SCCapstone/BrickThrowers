@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1327467577902463647}
   - component: {fileID: 1607431156268769011}
   - component: {fileID: 5152994825773267820}
+  - component: {fileID: 3368198803329025252}
   m_Layer: 0
   m_Name: antidote
   m_TagString: Untagged
@@ -130,3 +131,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.25, y: 1.25}
   m_EdgeRadius: 0
+--- !u!114 &3368198803329025252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2698940778127083323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b82f060f7dd17438042bb82eb79743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 1b2414e2ee7cf894b9fea88937e4e3fe, type: 2}

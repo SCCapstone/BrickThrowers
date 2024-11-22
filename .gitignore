@@ -72,3 +72,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 *.vsconfig
 /UserSettings/Layouts/default-2022.dwlt
+/UserSettings/Layouts/default-2022.dwlt
+/UserSettings/EditorUserSettings.asset
+*.meta

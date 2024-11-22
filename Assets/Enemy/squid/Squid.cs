@@ -88,48 +88,45 @@ public class Squid : MonoBehaviour
     }
 }
 
-// Diver.cs (Updated to handle blinding effect)
-using UnityEngine;
+//public class Diver : MonoBehaviour
+//{
+//    public int oxygenLevel = 100;
+//    private bool isBlinded = false;             // Whether the diver is currently blinded
+//    private float blindTimer = 0f;
 
-public class Diver : MonoBehaviour
-{
-    public int oxygenLevel = 100;
-    private bool isBlinded = false;             // Whether the diver is currently blinded
-    private float blindTimer = 0f;
+//    void Update()
+//    {
+//        if (isBlinded)
+//        {
+//            blindTimer -= Time.deltaTime;
+//            if (blindTimer <= 0f)
+//            {
+//                isBlinded = false;
+//                Debug.Log("Diver's vision restored.");
+//                // Restore diver's vision effect here
+//            }
+//        }
+//    }
 
-    void Update()
-    {
-        if (isBlinded)
-        {
-            blindTimer -= Time.deltaTime;
-            if (blindTimer <= 0f)
-            {
-                isBlinded = false;
-                Debug.Log("Diver's vision restored.");
-                // Restore diver's vision effect here
-            }
-        }
-    }
+//    public void Blind(float duration)
+//    {
+//        isBlinded = true;
+//        blindTimer = duration;
+//        Debug.Log("Diver is blinded by squid ink!");
+//        // Trigger vision-obscuring effect here, like fading screen or overlaying dark filter
+//    }
 
-    public void Blind(float duration)
-    {
-        isBlinded = true;
-        blindTimer = duration;
-        Debug.Log("Diver is blinded by squid ink!");
-        // Trigger vision-obscuring effect here, like fading screen or overlaying dark filter
-    }
+//    public void TakeOxygenDamage(int damage)
+//    {
+//        if (isBlinded) return;  // Optional: Divers could take reduced or no actions when blinded
 
-    public void TakeOxygenDamage(int damage)
-    {
-        if (isBlinded) return;  // Optional: Divers could take reduced or no actions when blinded
+//        oxygenLevel -= damage;
+//        Debug.Log("Diver's oxygen level: " + oxygenLevel);
 
-        oxygenLevel -= damage;
-        Debug.Log("Diver's oxygen level: " + oxygenLevel);
-
-        if (oxygenLevel <= 0)
-        {
-            Debug.Log("Diver has run out of oxygen!");
-            // Handle game over or level restart
-        }
-    }
-}
+//        if (oxygenLevel <= 0)
+//        {
+//            Debug.Log("Diver has run out of oxygen!");
+//            // Handle game over or level restart
+//        }
+//    }
+//}

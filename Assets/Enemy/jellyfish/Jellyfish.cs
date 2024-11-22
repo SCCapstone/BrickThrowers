@@ -83,46 +83,45 @@ public class Jellyfish : MonoBehaviour
     }
 }
 
-// Diver.cs (Updated to handle stun)
-using UnityEngine;
 
-public class Diver : MonoBehaviour
-{
-    public int oxygenLevel = 100;
-    private bool isStunned = false;             // Whether the diver is currently stunned
-    private float stunTimer = 0f;
 
-    void Update()
-    {
-        if (isStunned)
-        {
-            stunTimer -= Time.deltaTime;
-            if (stunTimer <= 0f)
-            {
-                isStunned = false;
-                Debug.Log("Diver is no longer stunned.");
-            }
-        }
-    }
+//public class Diver : MonoBehaviour
+//{
+//    public int oxygenLevel = 100;
+//    private bool isStunned = false;             // Whether the diver is currently stunned
+//    private float stunTimer = 0f;
 
-    public void Stun(float duration)
-    {
-        isStunned = true;
-        stunTimer = duration;
-        Debug.Log("Diver is stunned!");
-    }
+//    void Update()
+//    {
+//        if (isStunned)
+//        {
+//            stunTimer -= Time.deltaTime;
+//            if (stunTimer <= 0f)
+//            {
+//                isStunned = false;
+//                Debug.Log("Diver is no longer stunned.");
+//            }
+//        }
+//    }
 
-    public void TakeOxygenDamage(int damage)
-    {
-        if (isStunned) return;  // Diver takes no action while stunned
+//    public void Stun(float duration)
+//    {
+//        isStunned = true;
+//        stunTimer = duration;
+//        Debug.Log("Diver is stunned!");
+//    }
 
-        oxygenLevel -= damage;
-        Debug.Log("Diver's oxygen level: " + oxygenLevel);
+//    public void TakeOxygenDamage(int damage)
+//    {
+//        if (isStunned) return;  // Diver takes no action while stunned
 
-        if (oxygenLevel <= 0)
-        {
-            Debug.Log("Diver has run out of oxygen!");
-            // Handle game over or level restart
-        }
-    }
-}
+//        oxygenLevel -= damage;
+//        Debug.Log("Diver's oxygen level: " + oxygenLevel);
+
+//        if (oxygenLevel <= 0)
+//        {
+//            Debug.Log("Diver has run out of oxygen!");
+//            // Handle game over or level restart
+//        }
+//    }
+//}

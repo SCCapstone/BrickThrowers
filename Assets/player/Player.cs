@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Defines what a player should do.
 /// </summary>
-public class Player : MonoBehaviour
+public class Player : Diver
 {
     /*
      * A player class should be a parent class where all the player related classes should inherit from.
@@ -42,15 +43,12 @@ public class Player : MonoBehaviour
 
     public Rigidbody2D rb;
     private Vector2 movement;
-    public int health;
 
     // Health
     public int health = 100;
 
     // Inventory
-    //private int inventorySize = 4;
-    //private List<Item> inventory = new List<Item>();
-    //private int inventoryIndex = 0;
+    public InventoryObject inventory;
 
     void Start()
     {
@@ -77,11 +75,12 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        base.Update();
         Movement();
         OxygenAndStamina();
     }
 
-    private void Movement()
+    public void Movement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -120,20 +119,7 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    /// <summary>
-    /// Test code
-    /// </summary>
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            inventory.Save();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            inventory.Load();
-        }
-    }
+
 
     private void OxygenAndStamina()
     {

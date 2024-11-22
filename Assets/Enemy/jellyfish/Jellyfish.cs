@@ -1,5 +1,5 @@
 // Jellyfish.cs
-using UnityEngine;
+/*using UnityEngine;
 
 public class Jellyfish : MonoBehaviour
 {
@@ -126,3 +126,4 @@ public class Diver : MonoBehaviour
         }
     }
 }
+*/

@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 238813259}
   - component: {fileID: 238813261}
   - component: {fileID: 238813260}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 253129981}
   - component: {fileID: 253129982}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Oxygen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.694046, y: -1.9057007}
+  m_AnchoredPosition: {x: -0.4, y: -1.9057007}
   m_SizeDelta: {x: 149.3163, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &253129982
@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 337548783}
   - component: {fileID: 337548784}
   - component: {fileID: 337548785}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 391881115}
   - component: {fileID: 391881117}
   - component: {fileID: 391881116}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 394390176}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -701,7 +701,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 672376197}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,8 +754,8 @@ Transform:
   m_GameObject: {fileID: 775489800}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -124.366684, y: 106.33333, z: 0}
-  m_LocalScale: {x: 3.9687433, y: 4.79263, z: 3.9227905}
+  m_LocalPosition: {x: -301, y: 161, z: 0}
+  m_LocalScale: {x: 4.93199, y: 5.9558415, z: 4.874884}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 253129981}
@@ -825,7 +825,7 @@ GameObject:
   - component: {fileID: 908394101}
   - component: {fileID: 908394103}
   - component: {fileID: 908394102}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -966,7 +966,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1168589156}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1179,7 +1179,7 @@ GameObject:
   - component: {fileID: 1367863563}
   - component: {fileID: 1367863562}
   - component: {fileID: 1367863561}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1215,7 +1215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1235,8 +1235,8 @@ Canvas:
   m_GameObject: {fileID: 1367863560}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1281,7 +1281,7 @@ GameObject:
   - component: {fileID: 1552080691}
   - component: {fileID: 1552080693}
   - component: {fileID: 1552080692}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1406,7 +1406,7 @@ GameObject:
   - component: {fileID: 1645125423}
   - component: {fileID: 1645125425}
   - component: {fileID: 1645125424}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1481,7 +1481,7 @@ GameObject:
   - component: {fileID: 1800233560}
   - component: {fileID: 1800233562}
   - component: {fileID: 1800233561}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1554,7 +1554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2039201970}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1591,7 +1591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2100062209}
   - component: {fileID: 2100062208}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Stamina
   m_TagString: Untagged
   m_Icon: {fileID: 0}

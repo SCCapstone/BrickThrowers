@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,14 +11,14 @@ public class Anglerfish : Enemy
 
     void Start()
     {
-        /*
+        
         if (anglerLight != null)
         {
             anglerLight.intensity = lightIntensity; // set as the 3f intensity.
         }
-        */
+        
     }
-/*
+
     void Update()
     {
         //Commented out so that the game can compile
@@ -33,6 +34,7 @@ public class Anglerfish : Enemy
             anglerLight.intensity = Random.Range(0.5f, lightIntensity); // changes the intensity to .5, giving a flicker effect
         }
     }
-*/
+
     // add attack method and other behaviors here!
 }
+*/

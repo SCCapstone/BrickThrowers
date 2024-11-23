@@ -1,4 +1,6 @@
 // Shark.cs
+
+/*
 using UnityEngine;
 
 public class Shark : MonoBehaviour
@@ -78,3 +80,4 @@ public class Shark : MonoBehaviour
         cooldownTimer = chargeCooldown;
     }
 }
+*/

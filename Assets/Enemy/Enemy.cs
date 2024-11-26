@@ -4,34 +4,72 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-   /*
-        * A Enemy Class is a parent class of all enemies in the game
-        * As the parent class it will be the have the main basic
-        components that each enemy must have when they are in the game
-        * Due to this game being 2D I will also have to adapt the movement
-        of the enemies on the XY plain and make them focus on the player
-        * Enemies should have health, speed, and attack as the basics
-        for all of them
-        * New Feature: Added a method to reduce enemy health when attacked.
-   */
+    /*
+        * The Enemy Class is a parent class for all enemies in the game.
+        * This class provides the basic components and functionality
+        * common to all enemies, including movement, health, speed, and attack.
+        * Enemies operate on the 2D XY plane and can focus on the player.
+        * Feature: Added health reduction and death mechanics.
+    */
 
-   private float speed = 6f;
+    [Header("Enemy Attributes")]
+    [SerializeField] private float speed = 6f; // Speed of enemy movement
+    [SerializeField] private int damage = 4; // Damage dealt to the player
+    [SerializeField] private int maxHealth = 6; // Max health of the enemy
 
-   private Rigidbody2D rigidbody;
-   private Vector2 movement;
+    private int currentHealth; // Current health of the enemy
+    private Rigidbody2D rigidbody2D; // Rigidbody for movement
+    private Vector2 movement; // Movement direction
 
-    // How much damage for player
-   private int damage = 4;
-    // health for enemies
-   private int health = 6;
+    void Awake()
+    {
+        // Initialize health and cache Rigidbody2D
+        currentHealth = maxHealth;
+        rigidbody2D = GetComponent<Rigidbody2D>();
+    }
 
-   // Method to reduce health when the enemy takes damage
-   public void TakeDamage(int damageAmount)
-   {
-       health -= damageAmount;
-       if (health <= 0)
-       {
-           Destroy(gameObject);
-       }
-   }
+    // Move towards a target (e.g., player)
+    public virtual void Move(Vector2 targetPosition)
+    {
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        movement = direction * speed;
+
+        // Apply movement to the Rigidbody
+        if (rigidbody2D != null)
+        {
+            rigidbody2D.velocity = movement;
+        }
+    }
+
+    // Reduce health when taking damage
+    public void TakeDamage(int damageAmount)
+    {
+        currentHealth -= damageAmount;
+
+        // Check for death
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    // Handle enemy death
+    protected virtual void Die()
+    {
+        // Destroy the enemy GameObject
+        Destroy(gameObject);
+    }
+
+    // Getter for damage value (to deal damage to the player)
+    public int GetDamage()
+    {
+        return damage;
+    }
+
+    // Debug to test health system
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
+    }
 }

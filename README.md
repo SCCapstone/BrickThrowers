@@ -47,3 +47,9 @@ Explain how to run the automated tests.
 # Authors
 
 Reshlynt (Scott Do) - dobao98123@gmail.com
+
+tylerstargel (Tyler Stargel) - thetylerstargel@gmail.com
+
+Crunko (Joshua Kolbusz) - joshuakolbusz@gmail.com
+
+kjthaoo (Kelly Thao) - kthao43726@gmail.com

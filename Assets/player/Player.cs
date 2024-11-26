@@ -16,13 +16,84 @@ public class Player : MonoBehaviour
      */
     
     [SerializeField]
-    private float speed = 5f;
+    // Movement
+    public float speed = 40f;
+    public float verticalSpeed = 40f;
+    public float fastSpeedMultiplier = 1.5f;
+    private bool isSwimmingFast = false;
+    
+    // Water Physics
+    public float waterDrag = 3f;
+    public float waterGravityScale = 50f;
 
-    private Rigidbody2D rb;
+    // Oxygen and Stamina
+    public float maxOxygen = 100f;
+    public float oxygenDepletionRate = 1f;
+    public float lowStaminaMultiplier = 5f;
+
+    public float maxStamina = 20f;
+    public float staminaDepletionRate = 2f;
+    public float staminaRecoveryRate = 1f;
+    public float lowStaminaThreshold = 5f;
+
+    private float currentOxygen;
+    private float currentStamina;
+
+    public Rigidbody2D rb;
     private Vector2 movement;
 
     // Inventory
-    private int inventorySize = 4;
+    //private int inventorySize = 4;
     //private List<Item> inventory = new List<Item>();
-    private int inventoryIndex = 0;
+    //private int inventoryIndex = 0;
+
+    void Start() {
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = waterGravityScale;
+        rb.drag = waterDrag;
+        currentOxygen = maxOxygen;
+        currentStamina = maxStamina;
+    }
+
+    void Update() {
+        Movement();
+        OxygenAndStamina();
+    }
+
+    private void Movement() {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        float x = horizontalInput * speed;
+        float y = verticalInput * verticalSpeed;
+
+        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0) {
+            isSwimmingFast = true;
+            x *= fastSpeedMultiplier;
+        } else {
+            isSwimmingFast = false;
+        }
+        rb.velocity = new Vector2(x,y);
+    }
+
+    private void OxygenAndStamina() {
+        float oxygenDepletion = oxygenDepletionRate * Time.deltaTime;
+
+        if (currentStamina <= lowStaminaThreshold) {
+            oxygenDepletion *= lowStaminaMultiplier;
+        }
+
+        currentOxygen -= oxygenDepletion;
+        currentOxygen = Mathf.Clamp(currentOxygen,0,maxOxygen);
+
+        if (isSwimmingFast) {
+            currentStamina -= staminaDepletionRate * Time.deltaTime;
+        } else {
+            currentStamina += staminaRecoveryRate * Time.deltaTime;
+        }
+
+        currentStamina = Mathf.Clamp(currentStamina,0,maxStamina);
+    }
+
+    public float GetOxygenLevel() => currentOxygen;
+    public float GetStaminaLevel() => currentStamina;
 }

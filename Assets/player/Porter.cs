@@ -14,6 +14,6 @@ public class Porter : Player
 
     void Update()
     {
-        Movement();
+        base.Update();
     }
 }

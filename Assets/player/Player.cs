@@ -73,11 +73,12 @@ public class Player : Diver
                 break;
         }
     }
-    void Update()
+    public void Update()
     {
         base.Update();
         Movement();
         OxygenAndStamina();
+        SaveAndLoadTest();
     }
 
     public void Movement()
@@ -101,8 +102,8 @@ public class Player : Diver
     {
         if (collision.gameObject.CompareTag("Item"))
         {
-            Item item = collision.gameObject.GetComponent<Item>();
-            inventory.AddItem(item.item, 1);
+            GroundItem item = collision.gameObject.GetComponent<GroundItem>();
+            inventory.AddItem(new Item(item.item), 1);
             Destroy(collision.gameObject);
         }
     }
@@ -153,9 +154,23 @@ public class Player : Diver
 
     public float GetOxygenLevel() => currentOxygen;
     public float GetStaminaLevel() => currentStamina;
+    // Test save and load items
+    public void SaveAndLoadTest()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("I entered the save place");
+             inventory.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log("I entered the load place");
+            inventory.Load();
+        }
+    }
     // Activities when you quit application
     private void OnApplicationQuit()
     {
-        inventory.Container.Clear();
+        inventory.Container.Items.Clear();
     }
 }

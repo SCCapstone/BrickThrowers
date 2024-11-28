@@ -217,11 +217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1327467577902463647, guid: fd101e9fa75743147bbc1961f62c3811, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: 7.06
       objectReference: {fileID: 0}
     - target: {fileID: 1327467577902463647, guid: fd101e9fa75743147bbc1961f62c3811, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.0000002
+      value: -6.52
       objectReference: {fileID: 0}
     - target: {fileID: 1327467577902463647, guid: fd101e9fa75743147bbc1961f62c3811, type: 3}
       propertyPath: m_LocalPosition.z
@@ -509,11 +509,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1327467577902463647, guid: fd101e9fa75743147bbc1961f62c3811, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.357258
+      value: -0.43
       objectReference: {fileID: 0}
     - target: {fileID: 1327467577902463647, guid: fd101e9fa75743147bbc1961f62c3811, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.06276575
+      value: 3.92
       objectReference: {fileID: 0}
     - target: {fileID: 1327467577902463647, guid: fd101e9fa75743147bbc1961f62c3811, type: 3}
       propertyPath: m_LocalPosition.z
@@ -622,7 +622,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.411054
+  orthographic size: 9.818373
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -749,8 +749,8 @@ MonoBehaviour:
   speed: 40
   verticalSpeed: 40
   fastSpeedMultiplier: 1.5
-  waterDrag: 3
-  waterGravityScale: 50
+  waterDrag: 1
+  waterGravityScale: 30
   maxOxygen: 100
   oxygenDepletionRate: 1
   lowStaminaMultiplier: 5

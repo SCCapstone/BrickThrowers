@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Defines what a player should do.
 /// </summary>
-public class Player : Diver
+public abstract class Player : Diver
 {
     /*
      * A player class should be a parent class where all the player related classes should inherit from.
@@ -78,7 +78,6 @@ public class Player : Diver
         base.Update();
         Movement();
         OxygenAndStamina();
-        SaveAndLoadTest();
     }
 
     public void Movement()
@@ -98,13 +97,14 @@ public class Player : Diver
         }
         rb.velocity = new Vector2(x, y);
     }
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Item"))
         {
             GroundItem item = collision.gameObject.GetComponent<GroundItem>();
-            inventory.AddItem(new Item(item.item), 1);
-            Destroy(collision.gameObject);
+            bool add_good = inventory.AddItem(new Item(item.item), 1);
+            if (add_good)
+                Destroy(collision.gameObject);
         }
     }
 
@@ -154,23 +154,25 @@ public class Player : Diver
 
     public float GetOxygenLevel() => currentOxygen;
     public float GetStaminaLevel() => currentStamina;
-    // Test save and load items
-    public void SaveAndLoadTest()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("I entered the save place");
-             inventory.Save();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Debug.Log("I entered the load place");
-            inventory.Load();
-        }
-    }
+
     // Activities when you quit application
     private void OnApplicationQuit()
     {
         inventory.Container.Items.Clear();
     }
 }
+
+// Test save and load items
+//public void SaveAndLoadTest()
+//{
+//    if (Input.GetKeyDown(KeyCode.Space))
+//    {
+//        Debug.Log("I entered the save place");
+//        inventory.Save();
+//    }
+//    if (Input.GetKeyDown(KeyCode.L))
+//    {
+//        Debug.Log("I entered the load place");
+//        inventory.Load();
+//    }
+//}

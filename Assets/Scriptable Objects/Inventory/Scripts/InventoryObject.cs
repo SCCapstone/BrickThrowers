@@ -13,21 +13,28 @@ public class InventoryObject : ScriptableObject
     public ItemDatabaseObject database;
     public string savePath;
     public Inventory Container;
+    public const int LIMIT = 3;
 
     // Add item to inventory
     // Remember that it currently is able to stack
     // Will have to remove later
-    public void AddItem(Item _item, int _amount)
+    public bool AddItem(Item _item, int _amount)
     {
-        for (int i = 0; i < Container.Items.Count; i++)
+        //for (int i = 0; i < Container.Items.Count; i++)
+        //{
+        //    if (Container.Items[i].item.Id == _item.Id)
+        //    {
+        //        Container.Items[i].AddAmount(_amount);
+        //        return;
+        //    }
+        //}
+        if(Container.Items.Count >= LIMIT)
         {
-            if (Container.Items[i].item.Id == _item.Id)
-            {
-                Container.Items[i].AddAmount(_amount);
-                return;
-            }
+            Debug.Log("Inventory is full");
+            return false;
         }
         Container.Items.Add(new InventorySlot(_item.Id, _item, _amount));
+        return true;
     }
 
     /// <summary>

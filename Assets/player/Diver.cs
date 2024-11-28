@@ -13,6 +13,8 @@ public class Diver : MonoBehaviour
     private float stunTimer = 0f;
     private float blindTimer = 0f;
 
+
+
     public void Update()
     {
         if (isStunned)

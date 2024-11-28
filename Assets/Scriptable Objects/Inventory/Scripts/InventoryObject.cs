@@ -36,6 +36,24 @@ public class InventoryObject : ScriptableObject
         Container.Items.Add(new InventorySlot(_item.Id, _item, _amount));
         return true;
     }
+    // For now it will have to remove the first item on the list.
+    public Item RemoveItem()
+    {
+        // Check if the inventory is empty
+        // If true, return since there is nothing to do
+        if (Container.Items.Count == 0)
+        {
+            return null;
+        }
+        // Take the first item on the list
+        // Remove the first item on the list
+        Item item = Container.Items[0].item;
+        Container.Items.RemoveAt(0);
+        Container.Items.TrimExcess();
+
+        return item;
+
+    }
 
     /// <summary>
     /// Save the inventory to a file

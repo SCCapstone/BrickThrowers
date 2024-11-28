@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,6 +51,7 @@ public abstract class Player : Diver
     // Inventory
     public InventoryObject inventory;
 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -59,25 +61,13 @@ public abstract class Player : Diver
         currentStamina = maxStamina;
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        switch (collision.gameObject.tag)
-        {
-            case "Item":
-                ItemInteract();
-                break;
-            case "Enemy":
-            HealthDeplete();
-                break;
-            default:
-                break;
-        }
-    }
     public void Update()
     {
         base.Update();
         Movement();
         OxygenAndStamina();
+        // Action to collect item
+
     }
 
     public void Movement()
@@ -97,6 +87,11 @@ public abstract class Player : Diver
         }
         rb.velocity = new Vector2(x, y);
     }
+
+    /// <summary>
+    /// Actions when colliders stay within each other.
+    /// </summary>
+    /// <param name="collision"></param>
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Item"))
@@ -105,6 +100,7 @@ public abstract class Player : Diver
             bool add_good = inventory.AddItem(new Item(item.item), 1);
             if (add_good)
                 Destroy(collision.gameObject);
+
         }
     }
 
@@ -121,7 +117,9 @@ public abstract class Player : Diver
         }
     }
 
-
+    /// <summary>
+    /// Manages oxygen and stamina
+    /// </summary>
     private void OxygenAndStamina()
     {
         float oxygenDepletion = oxygenDepletionRate * Time.deltaTime;
@@ -147,10 +145,6 @@ public abstract class Player : Diver
         // Item Interact
 
     }
-    public void ItemInteract()
-    {
-        Debug.Log("Item Interacted");
-    }
 
     public float GetOxygenLevel() => currentOxygen;
     public float GetStaminaLevel() => currentStamina;
@@ -159,6 +153,23 @@ public abstract class Player : Diver
     private void OnApplicationQuit()
     {
         inventory.Container.Items.Clear();
+    }
+
+    public void DropItem()
+    {
+        // Remove an item to return it to this function, then drop the item in the scene world.
+        //Randomize the location of the item in the scene world where dropped relative to the player.
+        // It should be in the same radius of the player's item trigger child GameObject collision box.
+        // The item is not a child of the player GameObject. It is a separate GameObject in the scene world.
+
+        Item item = inventory.RemoveItem();
+        if (item == null) {
+            return;
+        }
+        Vector3 playerPosition = transform.position;
+        Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), 0);
+        randomPosition.Normalize();
+
     }
 }
 
@@ -174,5 +185,20 @@ public abstract class Player : Diver
 //    {
 //        Debug.Log("I entered the load place");
 //        inventory.Load();
+//    }
+//}
+
+//public void OnCollisionEnter2D(Collision2D collision)
+//{
+//    switch (collision.gameObject.tag)
+//    {
+//        case "Item":
+//            ItemInteract();
+//            break;
+//        case "Enemy":
+//            HealthDeplete();
+//            break;
+//        default:
+//            break;
 //    }
 //}

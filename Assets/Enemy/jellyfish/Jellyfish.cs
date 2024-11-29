@@ -4,7 +4,7 @@ public class Jellyfish : MonoBehaviour
 {
     public float floatSpeed = 1.5f;               // Speed of jellyfish floating
     public float directionChangeInterval = 2f;   // Interval for changing direction
-    public float stunDuration = 2f;              // Duration of diver's stun upon contact
+    public float stunDuration = 2f;              // Duration of player's stun upon contact
 
     private Rigidbody2D rb;
     private Vector2 moveDirection;
@@ -48,13 +48,17 @@ public class Jellyfish : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Diver"))
+        if (collision.CompareTag("Player"))
         {
-            Diver diver = collision.GetComponent<Diver>();
-            if (diver != null)
+            Player player = collision.GetComponent<Player>();
+            if (player != null)
             {
-                diver.Stun(stunDuration);
-                Debug.Log("Diver stunned by Jellyfish!");
+                player.Stun(stunDuration);
+                Debug.Log("Player stunned by Jellyfish!");
+            }
+            else
+            {
+                Debug.LogError("The collided object tagged 'Player' does not have a Player component!");
             }
         }
     }

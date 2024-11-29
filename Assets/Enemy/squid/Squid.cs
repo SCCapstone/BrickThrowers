@@ -1,16 +1,14 @@
-// Squid.cs
-/*
 using UnityEngine;
 
 public class Squid : MonoBehaviour
 {
-    public float ambushSpeed = 7f;              // Speed of squid during ambush
-    public float retreatSpeed = 10f;            // Speed of squid when retreating
-    public float ambushRange = 8f;              // Range at which squid detects diver and begins ambush
-    public float inkBlindDuration = 3f;         // Duration for which the diver is blinded
-    public float retreatDuration = 1.5f;        // Duration of squid's retreat after ambush
+    public float ambushSpeed = 7f;              // Speed during ambush
+    public float retreatSpeed = 10f;           // Speed during retreat
+    public float ambushRange = 8f;             // Detection range for ambush
+    public float inkBlindDuration = 3f;        // Duration of blindness effect
+    public float retreatDuration = 1.5f;       // Duration of retreat after ambush
 
-    private Transform diver;
+    private Transform targetPlayer;            // Targeted player
     private Vector2 retreatDirection;
     private bool isAmbushing = false;
     private bool isRetreating = false;
@@ -20,15 +18,30 @@ public class Squid : MonoBehaviour
 
     void Start()
     {
-        diver = GameObject.FindGameObjectWithTag("Diver").transform;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            targetPlayer = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogError("No GameObject with tag 'Player' found in the scene.");
+        }
+
         rb = GetComponent<Rigidbody2D>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D is missing on the Squid GameObject.");
+        }
     }
 
     void Update()
     {
+        if (targetPlayer == null || rb == null) return;
+
         if (isAmbushing)
         {
-            AmbushDiver();
+            AmbushPlayer();
         }
         else if (isRetreating)
         {
@@ -41,38 +54,38 @@ public class Squid : MonoBehaviour
         }
         else
         {
-            DetectDiverAndAmbush();
+            DetectPlayerAndAmbush();
         }
     }
 
-    void DetectDiverAndAmbush()
+    void DetectPlayerAndAmbush()
     {
-        // Start ambush if diver is within ambush range
-        if (Vector2.Distance(transform.position, diver.position) <= ambushRange)
+        // Start ambush if the player is within ambush range
+        if (Vector2.Distance(transform.position, targetPlayer.position) <= ambushRange)
         {
             isAmbushing = true;
         }
     }
 
-    void AmbushDiver()
+    void AmbushPlayer()
     {
-        // Move towards the diver quickly
-        Vector2 directionToDiver = (diver.position - transform.position).normalized;
-        rb.MovePosition(rb.position + directionToDiver * ambushSpeed * Time.deltaTime);
+        // Move toward the player quickly
+        Vector2 directionToPlayer = (targetPlayer.position - transform.position).normalized;
+        rb.MovePosition(rb.position + directionToPlayer * ambushSpeed * Time.deltaTime);
 
-        // If close enough to diver, release ink and retreat
-        if (Vector2.Distance(transform.position, diver.position) <= 1f)
+        // If close enough to the player, release ink and retreat
+        if (Vector2.Distance(transform.position, targetPlayer.position) <= 1f)
         {
             ReleaseInk();
-            StartRetreat(directionToDiver);
+            StartRetreat(directionToPlayer);
         }
     }
 
-    void StartRetreat(Vector2 directionToDiver)
+    void StartRetreat(Vector2 directionToPlayer)
     {
         isAmbushing = false;
         isRetreating = true;
-        retreatDirection = -directionToDiver; // Retreat in the opposite direction
+        retreatDirection = -directionToPlayer; // Retreat in the opposite direction
         retreatTimer = retreatDuration;
     }
 
@@ -83,54 +96,15 @@ public class Squid : MonoBehaviour
 
     void ReleaseInk()
     {
-        Debug.Log("Squid releases ink, blinding the diver!");
-        diver.GetComponent<Diver>().Blind(inkBlindDuration);
-    }
-}
-
-// Diver.cs (Updated to handle blinding effect)
-using UnityEngine;
-
-public class Diver : MonoBehaviour
-{
-    public int oxygenLevel = 100;
-    private bool isBlinded = false;             // Whether the diver is currently blinded
-    private float blindTimer = 0f;
-
-    void Update()
-    {
-        if (isBlinded)
+        Debug.Log("Squid releases ink, blinding the player!");
+        Player player = targetPlayer.GetComponent<Player>();
+        if (player != null)
         {
-            blindTimer -= Time.deltaTime;
-            if (blindTimer <= 0f)
-            {
-                isBlinded = false;
-                Debug.Log("Diver's vision restored.");
-                // Restore diver's vision effect here
-            }
+            player.Blind(inkBlindDuration);
         }
-    }
-
-    public void Blind(float duration)
-    {
-        isBlinded = true;
-        blindTimer = duration;
-        Debug.Log("Diver is blinded by squid ink!");
-        // Trigger vision-obscuring effect here, like fading screen or overlaying dark filter
-    }
-
-    public void TakeOxygenDamage(int damage)
-    {
-        if (isBlinded) return;  // Optional: Divers could take reduced or no actions when blinded
-
-        oxygenLevel -= damage;
-        Debug.Log("Diver's oxygen level: " + oxygenLevel);
-
-        if (oxygenLevel <= 0)
+        else
         {
-            Debug.Log("Diver has run out of oxygen!");
-            // Handle game over or level restart
+            Debug.LogError("The target does not have a Player component!");
         }
     }
 }
-*/

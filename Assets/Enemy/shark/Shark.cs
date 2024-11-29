@@ -5,11 +5,11 @@ public class Shark : MonoBehaviour
     public float patrolSpeed = 3f;               // Speed of shark patrol
     public float chargeSpeed = 7f;              // Speed of shark when charging
     public float chargeCooldown = 3f;           // Cooldown time between charges
-    public float detectionRange = 10f;          // Detection range for spotting the diver
+    public float detectionRange = 10f;          // Detection range for spotting the player
     public float chargeDuration = 2f;           // Duration of the charge
-    public int oxygenDamage = 20;               // Amount of oxygen damage to the diver
+    public int oxygenDamage = 20;               // Amount of oxygen damage to the player
 
-    private Transform diver;
+    private Transform targetPlayer;
     private Rigidbody2D rb;
     private bool isCharging = false;
     private float chargeTimer = 0f;
@@ -26,10 +26,15 @@ public class Shark : MonoBehaviour
         }
 
         patrolDirection = GetRandomDirection(); // Initialize patrol direction
-        GameObject diverObject = GameObject.FindGameObjectWithTag("Diver");
-        if (diverObject != null)
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
         {
-            diver = diverObject.transform;
+            targetPlayer = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogError("No GameObject with tag 'Player' found in the scene.");
         }
     }
 
@@ -39,7 +44,7 @@ public class Shark : MonoBehaviour
 
         cooldownTimer -= Time.deltaTime;
 
-        if (!isCharging && diver != null && cooldownTimer <= 0f && Vector2.Distance(transform.position, diver.position) <= detectionRange)
+        if (!isCharging && targetPlayer != null && cooldownTimer <= 0f && Vector2.Distance(transform.position, targetPlayer.position) <= detectionRange)
         {
             StartCharging();
         }
@@ -47,7 +52,7 @@ public class Shark : MonoBehaviour
         if (isCharging)
         {
             chargeTimer -= Time.deltaTime;
-            ChargeTowardsDiver();
+            ChargeTowardsPlayer();
 
             if (chargeTimer <= 0f)
             {
@@ -79,10 +84,14 @@ public class Shark : MonoBehaviour
         cooldownTimer = chargeCooldown;
     }
 
-    void ChargeTowardsDiver()
+    void ChargeTowardsPlayer()
     {
-        Vector2 chargeDirection = ((Vector2)diver.position - (Vector2)transform.position).normalized;
+        if (targetPlayer == null) return;
+
+        Vector2 chargeDirection = ((Vector2)targetPlayer.position - (Vector2)transform.position).normalized;
         rb.velocity = chargeDirection * chargeSpeed;
+
+        // Optional: Check for direct collisions during charge using raycast or triggers
     }
 
     void StopCharging()
@@ -95,5 +104,18 @@ public class Shark : MonoBehaviour
     {
         float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
         return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            Player player = collision.collider.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeOxygenDamage(oxygenDamage);
+                Debug.Log("Shark dealt damage to the player!");
+            }
+        }
     }
 }

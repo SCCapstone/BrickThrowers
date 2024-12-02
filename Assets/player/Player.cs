@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -96,4 +97,30 @@ public class Player : MonoBehaviour
 
     public float GetOxygenLevel() => currentOxygen;
     public float GetStaminaLevel() => currentStamina;
+
+    // Added because was in Lionfish.cs, and causing compile errors
+    public void ApplyPoison() {}
+
+    // Added because was in PirateA.cs, and causing compile errors
+    public void TakeDamage(int val) {}
+
+    // Added because was in Shark.cs, and causing compile errors
+    // Also, does this not conflict with TakeDamage?
+    public void TakeOxygenDamage(int val) {}
+
+    // Added because was in PirateB.cs, and causing compile errors
+    public bool HasArtifact() {return true;}
+    public void RemoveArtifact() {}
+
+    // Added becasue was in Squid.cs, and casuing compile errors
+    public void Blind(float duration) {}
+
+    // Added because was in Jellyfish.cs, and causing compile errors
+    public void Stun(float duration) {}
+
+    // Added becasue was in Octopus.cs, and causing compile errors.
+    public void SuppressLight(bool val) {}
+    public void SuppressMovement(bool val) {}
+    public int GetNearbyDivers() {return 0;}
+    
 }

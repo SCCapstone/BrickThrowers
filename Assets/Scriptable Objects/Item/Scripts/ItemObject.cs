@@ -11,6 +11,7 @@ public enum ItemType
     Default
 }
 
+[System.Serializable]
 public class ItemObject : ScriptableObject
 {
     public int Id;

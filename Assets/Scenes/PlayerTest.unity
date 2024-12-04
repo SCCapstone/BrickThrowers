@@ -710,6 +710,10 @@ PrefabInstance:
       value: antidote
       objectReference: {fileID: 0}
     - target: {fileID: 2698940778127083323, guid: fd101e9fa75743147bbc1961f62c3811, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698940778127083323, guid: fd101e9fa75743147bbc1961f62c3811, type: 3}
       propertyPath: m_TagString
       value: Item
       objectReference: {fileID: 0}

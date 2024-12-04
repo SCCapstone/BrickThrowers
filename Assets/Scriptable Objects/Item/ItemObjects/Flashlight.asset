@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528d063d21cb5ee4fbfba82079909425, type: 3}
   m_Name: Flashlight
   m_EditorClassIdentifier: 
-  Id: 0
+  Id: 2
   display: {fileID: 21300000, guid: 88a13f0c183a62e48ad25434108cda3a, type: 3}
   type: 0
   itemName: Flashlight
   description: Lights a direction.
-  prefabModel: {fileID: 6803123034363564257, guid: 95c2b371a1062e440abacebc8e638090, type: 3}

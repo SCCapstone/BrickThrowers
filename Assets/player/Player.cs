@@ -55,6 +55,7 @@ public abstract class Player : Diver
 
     // Actions
     public static event Action<GameObject> onItemPickup;
+    public static event Action onItemDrop;
 
     void Start()
     {
@@ -218,7 +219,7 @@ public abstract class Player : Diver
         item.prefab.SetActive(true);
 
         // Problem: the function above does not operate correctly. The gameObject inventory slot is not removed.
-
+        onItemDrop?.Invoke();
 
     }
 }

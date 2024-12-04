@@ -1,12 +1,9 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-/// <summary>
-/// Defines what a player should do.
-/// </summary>
-public abstract class Player : Diver
+public class Player : MonoBehaviour
 {
     /*
      * A player class should be a parent class where all the player related classes should inherit from.
@@ -47,37 +44,21 @@ public abstract class Player : Diver
     private Vector2 movement;
 
     // Inventory
-    public InventoryObject inventory;
-    private bool nearItem; // If the player is near an item, this is true.
-    public List<GameObject> nearestItems = new List<GameObject>();
+    //private int inventorySize = 4;
+    //private List<Item> inventory = new List<Item>();
+    //private int inventoryIndex = 0;
 
-    // Actions
-    public static event Action<GameObject> onItemPickup;
-    public static event Action onItemDrop;
-
-    void Start()
-    {
+    void Start() {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = waterGravityScale;
         rb.drag = waterDrag;
         currentOxygen = maxOxygen;
         currentStamina = maxStamina;
-        onItemPickup += AddItem;
     }
 
-    public void Update()
-    {
-        base.Update();
+    void Update() {
         Movement();
         OxygenAndStamina();
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            DropItem();
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-           onItemPickup?.Invoke(nearestItems[0]);
-        }
     }
 
     private void Movement() {
@@ -85,86 +66,33 @@ public abstract class Player : Diver
         float verticalInput = Input.GetAxis("Vertical");
         float x = horizontalInput * speed;
         float y = verticalInput * verticalSpeed;
-        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
-        {
+
+        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0) {
             isSwimmingFast = true;
             x *= fastSpeedMultiplier;
-        }
-        else
-        {
+        } else {
             isSwimmingFast = false;
         }
-        rb.velocity = new Vector2(x, y);
+        rb.velocity = new Vector2(x,y);
     }
 
-    public void AddItem(GameObject _gameObj)
-    {
-        GroundItem item = _gameObj.GetComponent<GroundItem>();
-        // Error: When destroying the gameObject, there is nothing to create it again.
-        // So, create a clone of the gameObject, send that into the Item contructor, and
-        // destroy the original.
-        // Clone should not be present in the scene.
-        bool add_good = inventory.AddItem(new Item(item.item, _gameObj), 1);
-        if (add_good)
-            _gameObj.SetActive(false);
-    }
-
-    /// <summary>
-    /// If the player is near an item, switch to true.
-    /// </summary>
-    /// <param name="collision"></param>
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Item"))
-        {
-            Debug.Log("enter item range");
-            nearestItems.Add(collision.gameObject);
-            nearItem = true;
-        }
-    }
-
-    /// <summary>
-    /// If the player has left item vicinity, this is false.
-    /// </summary>
-    /// <param name="collision"></param>
-    public void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Item"))
-        {
-            Debug.Log("exit item range");
-            // find the gameObject within the nearest items list, and then remove it.
-            nearestItems.Remove(collision.gameObject);
-            nearItem = false;
-        }
-    }
-
-    /// <summary>
-    /// Manages oxygen and stamina
-    /// </summary>
-    private void OxygenAndStamina()
-    {
+    private void OxygenAndStamina() {
         float oxygenDepletion = oxygenDepletionRate * Time.deltaTime;
 
-        if (currentStamina <= lowStaminaThreshold)
-        {
+        if (currentStamina <= lowStaminaThreshold) {
             oxygenDepletion *= lowStaminaMultiplier;
         }
 
         currentOxygen -= oxygenDepletion;
-        currentOxygen = Mathf.Clamp(currentOxygen, 0, maxOxygen);
+        currentOxygen = Mathf.Clamp(currentOxygen,0,maxOxygen);
 
-        if (isSwimmingFast)
-        {
+        if (isSwimmingFast) {
             currentStamina -= staminaDepletionRate * Time.deltaTime;
-        }
-        else
-        {
+        } else {
             currentStamina += staminaRecoveryRate * Time.deltaTime;
         }
 
-        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        // Item Interact
-
+        currentStamina = Mathf.Clamp(currentStamina,0,maxStamina);
     }
 
     public float GetOxygenLevel() => currentOxygen;
@@ -194,41 +122,5 @@ public abstract class Player : Diver
     public void SuppressLight(bool val) {}
     public void SuppressMovement(bool val) {}
     public int GetNearbyDivers() {return 0;}
-
-    // Activities when you quit application
-    private void OnApplicationQuit()
-    {
-        onItemPickup -= AddItem;
-        inventory.Container.Items.Clear();
-    }
-    /// <summary>
-    /// Not ideal, but the current implementation is disabling the item when adding it to inventory, and changing position and enable when item is added.
-    /// </summary>
-    public void DropItem()
-    {
-        // Remove an item to return it to this function, then drop the item in the scene world.
-        // The item is not a child of the player GameObject. It is a separate GameObject in the scene world.
-
-        // If the inventory is empty, return.
-        if (inventory.Container.Items.Count <= 0)
-            return;
-        Item item = inventory.RemoveItem();
-        if (item == null)
-        {
-            return;
-        }
-        Vector3 playerPosition = transform.position;
-        Vector3 dropPosition = transform.forward;
-        Vector3 itemPosition = playerPosition + dropPosition;
-
-        // Change the item's position to the item position variable.
-        item.prefab.transform.position = itemPosition;
-
-        // enable the item in the scene world.
-        item.prefab.SetActive(true);
-
-        // Problem: the function above does not operate correctly. The gameObject inventory slot is not removed.
-        onItemDrop?.Invoke();
-
-    }
+    
 }

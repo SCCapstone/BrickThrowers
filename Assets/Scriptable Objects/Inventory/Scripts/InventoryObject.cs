@@ -49,7 +49,9 @@ public class InventoryObject : ScriptableObject
         // Remove the first item on the list
         Item item = Container.Items[0].item;
         Container.Items.RemoveAt(0);
-        Container.Items.TrimExcess();
+
+        // Find that item that appears in the inventory slot list and remove the slot
+        Container.Items.Remove(Container.Items.Find(x => x.item == item));
 
         return item;
 
@@ -124,10 +126,5 @@ public class InventorySlot
         ID = _id;
         item = _item;
         amount = _amount;
-    }
-
-    public void AddAmount(int value)
-    {
-        amount += value;
     }
 }

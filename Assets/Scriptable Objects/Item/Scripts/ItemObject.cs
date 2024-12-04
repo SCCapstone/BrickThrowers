@@ -26,9 +26,11 @@ public class Item
 {
     public string Name;
     public int Id;
-    public Item(ItemObject item)
+    public GameObject prefab;
+    public Item(ItemObject item, GameObject _prefab)
     {
         Name = item.itemName;
         Id = item.Id;
+        prefab = _prefab;
     }
 }

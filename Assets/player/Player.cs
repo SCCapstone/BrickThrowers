@@ -50,7 +50,11 @@ public abstract class Player : Diver
 
     // Inventory
     public InventoryObject inventory;
+    private bool nearItem; // If the player is near an item, this is true.
+    public List<GameObject> nearestItems = new List<GameObject>();
 
+    // Actions
+    public static event Action<GameObject> onItemPickup;
 
     void Start()
     {
@@ -59,6 +63,7 @@ public abstract class Player : Diver
         rb.drag = waterDrag;
         currentOxygen = maxOxygen;
         currentStamina = maxStamina;
+        onItemPickup += AddItem;
     }
 
     public void Update()
@@ -66,8 +71,14 @@ public abstract class Player : Diver
         base.Update();
         Movement();
         OxygenAndStamina();
-        // Action to collect item
-
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            DropItem();
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+           onItemPickup?.Invoke(nearestItems[0]);
+        }
     }
 
     public void Movement()
@@ -88,19 +99,44 @@ public abstract class Player : Diver
         rb.velocity = new Vector2(x, y);
     }
 
+    public void AddItem(GameObject _gameObj)
+    {
+        GroundItem item = _gameObj.GetComponent<GroundItem>();
+        // Error: When destroying the gameObject, there is nothing to create it again.
+        // So, create a clone of the gameObject, send that into the Item contructor, and
+        // destroy the original.
+        // Clone should not be present in the scene.
+        bool add_good = inventory.AddItem(new Item(item.item, _gameObj), 1);
+        if (add_good)
+            _gameObj.SetActive(false);
+    }
+
     /// <summary>
-    /// Actions when colliders stay within each other.
+    /// If the player is near an item, switch to true.
     /// </summary>
     /// <param name="collision"></param>
-    public void OnTriggerStay2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Item"))
         {
-            GroundItem item = collision.gameObject.GetComponent<GroundItem>();
-            bool add_good = inventory.AddItem(new Item(item.item), 1);
-            if (add_good)
-                Destroy(collision.gameObject);
+            Debug.Log("enter item range");
+            nearestItems.Add(collision.gameObject);
+            nearItem = true;
+        }
+    }
 
+    /// <summary>
+    /// If the player has left item vicinity, this is false.
+    /// </summary>
+    /// <param name="collision"></param>
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            Debug.Log("exit item range");
+            // find the gameObject within the nearest items list, and then remove it.
+            nearestItems.Remove(collision.gameObject);
+            nearItem = false;
         }
     }
 
@@ -152,53 +188,37 @@ public abstract class Player : Diver
     // Activities when you quit application
     private void OnApplicationQuit()
     {
+        onItemPickup -= AddItem;
         inventory.Container.Items.Clear();
     }
-
+    /// <summary>
+    /// Not ideal, but the current implementation is disabling the item when adding it to inventory, and changing position and enable when item is added.
+    /// </summary>
     public void DropItem()
     {
         // Remove an item to return it to this function, then drop the item in the scene world.
-        //Randomize the location of the item in the scene world where dropped relative to the player.
-        // It should be in the same radius of the player's item trigger child GameObject collision box.
         // The item is not a child of the player GameObject. It is a separate GameObject in the scene world.
 
+        // If the inventory is empty, return.
+        if (inventory.Container.Items.Count <= 0)
+            return;
         Item item = inventory.RemoveItem();
-        if (item == null) {
+        if (item == null)
+        {
             return;
         }
         Vector3 playerPosition = transform.position;
-        Vector3 randomPosition = new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f), 0);
-        randomPosition.Normalize();
+        Vector3 dropPosition = transform.forward;
+        Vector3 itemPosition = playerPosition + dropPosition;
+
+        // Change the item's position to the item position variable.
+        item.prefab.transform.position = itemPosition;
+
+        // enable the item in the scene world.
+        item.prefab.SetActive(true);
+
+        // Problem: the function above does not operate correctly. The gameObject inventory slot is not removed.
+
 
     }
 }
-
-// Test save and load items
-//public void SaveAndLoadTest()
-//{
-//    if (Input.GetKeyDown(KeyCode.Space))
-//    {
-//        Debug.Log("I entered the save place");
-//        inventory.Save();
-//    }
-//    if (Input.GetKeyDown(KeyCode.L))
-//    {
-//        Debug.Log("I entered the load place");
-//        inventory.Load();
-//    }
-//}
-
-//public void OnCollisionEnter2D(Collision2D collision)
-//{
-//    switch (collision.gameObject.tag)
-//    {
-//        case "Item":
-//            ItemInteract();
-//            break;
-//        case "Enemy":
-//            HealthDeplete();
-//            break;
-//        default:
-//            break;
-//    }
-//}

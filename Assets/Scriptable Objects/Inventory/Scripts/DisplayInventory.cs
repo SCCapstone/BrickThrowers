@@ -9,8 +9,11 @@ public class DisplayInventory : MonoBehaviour
 {
     public GameObject inventoryPrefab;
     public InventoryObject inventory; // Hold inventory object to display
-
     Dictionary<InventorySlot, GameObject> itemDisplayed = new Dictionary<InventorySlot, GameObject>();
+
+    // Action
+    //public static void 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,4 +61,35 @@ public class DisplayInventory : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Finds
+    /// </summary>
+    public void RemoveInventorySlot(Item invSlot)
+    {
+        // Remove the item from the dictionary display.
+        // Find the inventory slot that has this item and remove that slot.
+
+        // Bug: The gameObject is not destroyed, but the item is removed from the dictionary.
+        // Intention: Destroy the related gameObject to the inventory slot. Though the problem is that there is currently no easy identifier to find the gameObject - all save for the sprite.
+        // Could try to find if slot matches the sprite of the gameObject, or rahter the sprite of the child of the gameObject.
+
+        InventorySlot slot = inventory.Container.Items.Find(x => x.item == invSlot);
+
+        // Check if the slot exists and is in the dictionary
+        if (slot != null && itemDisplayed.ContainsKey(slot))
+        {
+            // Destroy the GameObject representation
+            GameObject slotObject = itemDisplayed[slot];
+            Destroy(slotObject);
+
+            // Remove the slot from the dictionary
+            itemDisplayed.Remove(slot);
+        }
+        else
+        {
+            Debug.LogWarning("Inventory slot or its GameObject representation not found.");
+        }
+    }
+
 }

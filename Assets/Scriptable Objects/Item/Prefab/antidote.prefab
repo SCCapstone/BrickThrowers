@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1607431156268769011}
   - component: {fileID: 5152994825773267820}
   - component: {fileID: 3368198803329025252}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: antidote
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.011716291, y: 0.04100722}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -129,7 +129,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.25, y: 1.25}
+  m_Size: {x: 0.85164344, y: 1.1679856}
   m_EdgeRadius: 0
 --- !u!114 &3368198803329025252
 MonoBehaviour:

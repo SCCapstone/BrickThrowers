@@ -17,3 +17,4 @@ MonoBehaviour:
   type: 0
   itemName: Flashlight
   description: Lights a direction.
+  prefabModel: {fileID: 6803123034363564257, guid: 95c2b371a1062e440abacebc8e638090, type: 3}

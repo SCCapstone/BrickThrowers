@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
+
 /// <summary>
 /// Stores the list of items in the inventory, and manages inventory slots.
 /// </summary>
@@ -28,7 +29,7 @@ public class InventoryObject : ScriptableObject
         //        return;
         //    }
         //}
-        if(Container.Items.Count >= LIMIT)
+        if (Container.Items.Count >= LIMIT)
         {
             Debug.Log("Inventory is full");
             return false;
@@ -36,6 +37,7 @@ public class InventoryObject : ScriptableObject
         Container.Items.Add(new InventorySlot(_item.Id, _item, _amount));
         return true;
     }
+
     // For now it will have to remove the first item on the list.
     public Item RemoveItem()
     {
@@ -54,7 +56,6 @@ public class InventoryObject : ScriptableObject
         Container.Items.Remove(Container.Items.Find(x => x.item == item));
 
         return item;
-
     }
 
     /// <summary>
@@ -76,6 +77,7 @@ public class InventoryObject : ScriptableObject
         //formatter.Serialize(stream, Container);
         //stream.Close();
     }
+
     /// <summary>
     /// Load the inventory from a file
     /// </summary>
@@ -85,7 +87,10 @@ public class InventoryObject : ScriptableObject
         if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
+            FileStream file = File.Open(
+                string.Concat(Application.persistentDataPath, savePath),
+                FileMode.Open
+            );
             JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
             file.Close();
 
@@ -103,6 +108,7 @@ public class InventoryObject : ScriptableObject
         Container.Items.Clear();
     }
 }
+
 /// <summary>
 /// A class that holds the inventory of the player.
 /// </summary>
@@ -121,6 +127,7 @@ public class InventorySlot
     public int ID;
     public Item item;
     public int amount;
+
     public InventorySlot(int _id, Item _item, int _amount)
     {
         ID = _id;

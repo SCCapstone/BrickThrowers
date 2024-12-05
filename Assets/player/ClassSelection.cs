@@ -1,4 +1,5 @@
 // kjthao
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,5 +60,6 @@ public class ClassSelection : MonoBehaviour
 
         currentPlayer = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
     }
-    */
+    
 }
+*/

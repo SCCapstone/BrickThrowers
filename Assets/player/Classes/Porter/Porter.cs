@@ -1,4 +1,5 @@
 // kjthao
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,3 +19,4 @@ public class Porter : Player
         Debug.Log($"Poster gains {extraInventorySlots} extra inventory slots.");
     }
 }
+*/

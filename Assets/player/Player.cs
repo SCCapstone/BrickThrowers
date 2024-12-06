@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Defines what a player should do.
 /// </summary>
-public abstract class Player : Diver
+public class Player : Diver
 {
     /*
      * A player class should be a parent class where all the player related classes should inherit from.

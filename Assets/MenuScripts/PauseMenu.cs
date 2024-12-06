@@ -15,6 +15,7 @@ Solved! (had to go inside prefab that I created and asign the script there i thi
 {
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject optionsMenu;
+    public AudioClip bgMusic;
 
     public void Pause()
     {
@@ -24,8 +25,8 @@ Solved! (had to go inside prefab that I created and asign the script there i thi
 
     public void Lobby()
     {
-        //SceneManager.LoadScene(1); // can use scenename or the scene number
-
+        SceneManager.LoadSceneAsync(1); 
+        SoundManager.Instance.PlayBackgroundMusic(bgMusic);
     }
 
     public void Resume()

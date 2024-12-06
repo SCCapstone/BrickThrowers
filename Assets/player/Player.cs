@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -54,6 +55,9 @@ public class Player : Diver
     // Actions
     public static event Action<GameObject> onItemPickup;
     public static event Action onItemDrop;
+
+    //Xp and Currency
+    public int currentXp, maxXp, currency, currentLevel;
 
     void Start()
     {
@@ -231,4 +235,39 @@ public class Player : Diver
         onItemDrop?.Invoke();
 
     }
+
+    //Handling XP and Level up
+    private void HandleExperienceChange(int newExperience)
+    {
+        currentXp += newExperience;
+        if(currentXp >= maxXp)
+        {
+            LevelUp();
+        }
+    }
+
+    //Focuses on Levelup and increases Xp cap
+    private void LevelUp()
+    {
+      currentLevel++;
+      currency += 10;
+      maxXp += 100;
+      currentXp = 0;
+    }
+    
+    //Calls code
+    private void OnEnable()
+    {
+        ExperienceManager.Instance.onExperienceChange += HandleExperienceChange;
+    }
+
+    //Stops calling code
+    private void OnDisable()
+    {
+        ExperienceManager.Instance.onExperienceChange -= HandleExperienceChange;
+    }
+
+
+
+    
 }

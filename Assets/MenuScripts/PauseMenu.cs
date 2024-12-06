@@ -19,6 +19,7 @@ Solved! (had to go inside prefab that I created and asign the script there i thi
     public void Pause()
     {
         pauseMenu.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void Lobby()
@@ -30,6 +31,7 @@ Solved! (had to go inside prefab that I created and asign the script there i thi
     public void Resume()
     {
         pauseMenu.SetActive(false);
+        Time.timeScale = 1;
 
     }
 

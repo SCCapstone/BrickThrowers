@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
@@ -27,36 +28,33 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlayButtonClickSound() {
-        if (audioSource != null && buttonClickSFX != null)
-            {
-                audioSource.PlayOneShot(buttonClickSFX);
-            }
+        if (audioSource != null && buttonClickSFX != null) {
+            audioSource.PlayOneShot(buttonClickSFX);
+        }
     }
 
     public void PlayBackgroundMusic(AudioClip musicClip = null) {
-        // if (musicSource != null && bgMusic != null) {
-        //     musicSource.clip = bgMusic;
-        //     musicSource.loop = true;
-        //     musicSource.Play();
-        // }
-
         if (musicSource == null)
             return;
-        
+
         if (musicClip != null)
             musicSource.clip = musicClip;
-
-            if (musicSource.clip != null) {
-                if(!musicSource.isPlaying || musicSource.clip != musicClip) {
-                    musicSource.loop = true;
-                    musicSource.Play();
-                }
+        
+        if (musicSource.clip != null) {
+            if (!musicSource.isPlaying || musicSource.clip != musicClip) {
+                musicSource.loop = true;
+                musicSource.Play();
             }
+        }
     }
 
     public void StopBackgroundMusic() {
         if(musicSource != null) {
             musicSource.Stop();
         }
+    }
+
+    public void AssignButtonClickSound(Button button) {
+        button.onClick.AddListener(PlayButtonClickSound);
     }
 }

@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 6564560339975032447}
   - component: {fileID: 6294271146333921924}
   - component: {fileID: 6786568614622897726}
-  - component: {fileID: 2655070026552037186}
+  - component: {fileID: 7909726732688438534}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -249,7 +249,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2655070026552037186
+--- !u!114 &7909726732688438534
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,13 +258,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8348785886011485193}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3053bd0ca34d02745810dca3c91a5069, type: 3}
+  m_Script: {fileID: 11500000, guid: 48f883fdd2a3ae84dbb39ac0f977f225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oxygenLevel: 100
   speed: 40
   verticalSpeed: 40
+  fastSpeedMultiplier: 1.5
   waterDrag: 3
   waterGravityScale: 50
-  rb: {fileID: 6786568614622897726}
-  health: 100
-  inventory: {fileID: 11400000, guid: 75a4a2c43d5ce074b94b76fa30b8869f, type: 2}
+  maxOxygen: 100
+  oxygenDepletionRate: 1
+  lowStaminaMultiplier: 5
+  maxStamina: 20
+  staminaDepletionRate: 2
+  staminaRecoveryRate: 1
+  lowStaminaThreshold: 5
+  rb: {fileID: 0}
+  inventory: {fileID: 0}
+  nearestItems: []

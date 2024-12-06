@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf3bdf33c813004aa5acaafad12cce5, type: 3}
   m_Name: Chalice
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  Id: 1
+  display: {fileID: 21300000, guid: 7f6ef7bf658cfa44da2d259db462d9e8, type: 3}
   type: 1
   itemName: Chalice
   description: A nice looking cup.

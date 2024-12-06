@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class LobbyMenu : MonoBehaviour
 {
-    public void RunGame()
+    public void RunGame(int sceneIndexNum)
     {
-        SceneManager.LoadSceneAsync(2); // our samplescene scene
+        SceneManager.LoadSceneAsync(sceneIndexNum); //edited to handle multiple scenes
     }
 }

@@ -55,6 +55,9 @@ public class Player : Diver
     public static event Action<GameObject> onItemPickup;
     public static event Action onItemDrop;
 
+    // Keys
+    public KeyCode pickUpItemKey = KeyCode.F;
+    public KeyCode dropItemKey = KeyCode.C;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -70,11 +73,11 @@ public class Player : Diver
         base.Update();
         Movement();
         OxygenAndStamina();
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(dropItemKey))
         {
             DropItem();
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(pickUpItemKey))
         {
            onItemPickup?.Invoke(nearestItems[0]);
         }

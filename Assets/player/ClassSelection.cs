@@ -1,65 +1,29 @@
 // kjthao
-/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class ClassSelection : MonoBehaviour
 {
-    public Button diverButton;
-    public Button harpoonButton;
-    public Button porterButton;
+    public Player player;  // Reference to the player
 
-    private string selectedClass = "Diver";
-
-    void Start()
-    {
-        diverButton.onClick.AddListener(SelectDiver);
-        harpoonButton.onClick.AddListener(SelectHarpooner);
-        porterButton.onClick.AddListener(SelectPorter);
-    }
-
-    public void SelectDiver()
-    {
-        selectedClass = "Diver";
-        PlayerPrefs.SetString("SelectedClass", selectedClass); // saves the selection
-        Debug.Log("Selected class: Diver");
-        // SpawnPlayer(diverPrefab);
-    }
-
+    // Call this method when the "Harpooner" button is clicked
     public void SelectHarpooner()
     {
-        selectedClass = "Harpooner";
-        PlayerPrefs.SetString("SelectedClass", selectedClass); // saves the selection
-        Debug.Log("Selected class: Harpooner");
-        // SpawnPlayer(harpoonerPrefab);
+        Harpooner harpooner = player.GetComponent<Harpooner>();
+        if (harpooner != null)
+        {
+            harpooner.ChangeToHarpooner();  // Switch to Harpooner
+        }
     }
 
+    // Call this method when the "Porter" button is clicked
     public void SelectPorter()
     {
-        selectedClass = "Porter";
-        PlayerPrefs.SetString("SelectedClass", selectedClass); // saves the selection
-        Debug.Log("Selected class: Porter");
-        //SpawnPlayer(porterPrefab);
-    }
-
-    public string GetSelectedClass()
-    {
-        return selectedClass;
-    }
-
-    /*
-    private void SpawnPlayer(GameObject playerPrefab)
-    {
-        if (currentPlayer != null) // if choosen a diff class then this will remove the previous class
+        Porter porter = player.GetComponent<Porter>();
+        if (porter != null)
         {
-            Destroy(currentPlayer);
+            porter.ChangeToPorter();  // Switch to Porter
         }
-
-        currentPlayer = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
     }
-    
 }
-*/

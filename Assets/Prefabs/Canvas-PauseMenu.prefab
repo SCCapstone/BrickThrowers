@@ -259,7 +259,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1399667314537927685}
   optionsMenu: {fileID: 4414720569050176712, guid: 6faf908c5db015745b3ef2d6731dbce1, type: 3}
-  lobbyBgMusic: {fileID: 8300000, guid: d717c5f600299c041be08c508231b3b4, type: 3}
 --- !u!1 &1052395091419877908
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,7 +730,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 757782159865933883}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Lobby
+        m_MethodName: MainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

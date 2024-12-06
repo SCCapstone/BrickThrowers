@@ -6,24 +6,25 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    public Player player; // Reference to the Player script
-    public Sprite diverSprite; // Diver class sprite
-    public Sprite harpoonerSprite; // Harpooner class sprite
-    public Sprite porterSprite; // Porter class sprite
+    public GameObject diverPrefab;
+    public GameObject harpoonerPrefab;
+    public GameObject porterPrefab;
 
-    public void ChangeClass(string className)
+    void Start()
     {
-        switch (className)
+        string selectedClass = PlayerPrefs.GetString("SelectedClass", "Diver"); // since diver is the default/regular class
+
+        if (selectedClass == "Diver")
         {
-            case "Diver":
-                player.ChangeToDiver(diverSprite);
-                break;
-            case "Harpooner":
-                player.ChangeToHarpooner(harpoonerSprite);
-                break;
-            case "Porter":
-                player.ChangeToPorter(porterSprite);
-                break;
+            Instantiate(diverPrefab, Vector3.zero, Quaternion.identity);
+        }
+        else if (selectedClass == "Harpooner")
+        {
+            Instantiate(harpoonerPrefab, Vector3.zero, Quaternion.identity);
+        }
+        else if (selectedClass == "Porter")
+        {
+            Instantiate(porterPrefab, Vector2.zero, Quaternion.identity);
         }
     }
 }

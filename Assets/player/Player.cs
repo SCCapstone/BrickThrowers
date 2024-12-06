@@ -6,11 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Defines what a player should do.
 /// </summary>
-<<<<<<< HEAD
 public class Player : Diver
-=======
-public abstract class Player : MonoBehaviour
->>>>>>> 6e594d911df4d5f009219d7e0224b3302dc34f98
 {
     /*
      * A player class should be a parent class where all the player related classes should inherit from.
@@ -24,8 +20,6 @@ public abstract class Player : MonoBehaviour
      */
     
     [SerializeField]
-    public SpriteRenderer spriteRenderer;
-
     // Movement
     public float speed = 40f;
     public float verticalSpeed = 40f;
@@ -61,10 +55,6 @@ public abstract class Player : MonoBehaviour
     public static event Action<GameObject> onItemPickup;
     public static event Action onItemDrop;
 
-    // Classes
-    public virtual void ChangeToHarpooner() {}
-    public virtual void ChangeToPorter() {}
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -73,16 +63,11 @@ public abstract class Player : MonoBehaviour
         currentOxygen = maxOxygen;
         currentStamina = maxStamina;
         onItemPickup += AddItem;
-
-        if (spriteRenderer == null)
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
     }
 
     public void Update()
     {
-        //base.Update(); this is overriding the update
+        base.Update();
         Movement();
         OxygenAndStamina();
         if (Input.GetKeyDown(KeyCode.C))

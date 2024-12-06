@@ -1,5 +1,4 @@
 ﻿
-/*
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Diver : Class
+public class Diver : MonoBehaviour
 {
-    
     public int oxygenLevel = 100;
     private bool isStunned = false;             // Whether the diver is currently stunned
     private bool isBlinded = false;             // Whether the diver is currently blinded
     private float stunTimer = 0f;
     private float blindTimer = 0f;
-    
+
+
 
     public void Update()
     {
-        
         if (isStunned)
         {
             stunTimer -= Time.deltaTime;
@@ -39,10 +37,8 @@ public class Diver : Class
                 }
             }
         }
-        
     }
 
-    
     public void Stun(float duration)
     {
         isStunned = true;
@@ -72,6 +68,4 @@ public class Diver : Class
             // Handle game over or level restart
         }
     }
-    
 }
-*/

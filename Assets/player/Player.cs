@@ -25,6 +25,7 @@ public class Player : Diver
     public float speed = 40f;
     public float verticalSpeed = 40f;
     public float fastSpeedMultiplier = 1.5f;
+    public AudioSource swimsfx;
     private bool isSwimmingFast = false;
     
     // Water Physics
@@ -99,6 +100,8 @@ public class Player : Diver
             isSwimmingFast = false;
         }
         rb.velocity = new Vector2(x, y);
+        if (!swimsfx.isPlaying)
+            swimsfx.Play();
     }
 
     public void AddItem(GameObject _gameObj)

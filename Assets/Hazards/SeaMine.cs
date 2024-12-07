@@ -15,10 +15,6 @@ public class SeaMine : MonoBehaviour
             return;
 
         if (other.gameObject.CompareTag("Player")) {
-            // GameObject temp = new GameObject("TempAudio");
-            // AudioSource audioSource = temp.AddComponent<AudioSource>();
-            // audioSource.clip = explodeSFX;
-            // audioSource.Play();
             if (other.collider == specificCollider) {
                 hasCollided = true;
                 explodeSFX.Play();

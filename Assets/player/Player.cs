@@ -75,11 +75,11 @@ public class Player : Diver
         base.Update();
         Movement();
         OxygenAndStamina();
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(dropItemKey))
         {
             DropItem();
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(pickUpItemKey))
         {
            onItemPickup?.Invoke(nearestItems[0]);
         }

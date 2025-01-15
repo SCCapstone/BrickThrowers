@@ -60,6 +60,9 @@ public class Player : Diver
     //Xp and Currency
     public int currentXp, maxXp, currency, currentLevel;
 
+    public KeyCode pickUpItemKey = KeyCode.E;
+    public KeyCode dropItemKey = KeyCode.Q;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();

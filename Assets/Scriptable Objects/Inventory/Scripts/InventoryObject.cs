@@ -20,14 +20,6 @@ public class InventoryObject : ScriptableObject
     // Will have to remove later
     public bool AddItem(Item _item, int _amount)
     {
-        //for (int i = 0; i < Container.Items.Count; i++)
-        //{
-        //    if (Container.Items[i].item.Id == _item.Id)
-        //    {
-        //        Container.Items[i].AddAmount(_amount);
-        //        return;
-        //    }
-        //}
         if(Container.Items.Count >= LIMIT)
         {
             Debug.Log("Inventory is full");

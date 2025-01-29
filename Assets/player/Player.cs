@@ -53,15 +53,16 @@ public class Player : Diver
     private bool nearItem; // If the player is near an item, this is true.
     public List<GameObject> nearestItems = new List<GameObject>();
 
-    // Actions
+    // Item Interaction
     public static event Action<GameObject> onItemPickup;
     public static event Action onItemDrop;
+    public KeyCode pickUpItemKey = KeyCode.E;
+    public KeyCode dropItemKey = KeyCode.Q;
 
     //Xp and Currency
     public int currentXp, maxXp, currency, currentLevel;
 
-    public KeyCode pickUpItemKey = KeyCode.E;
-    public KeyCode dropItemKey = KeyCode.Q;
+
 
     void Start()
     {

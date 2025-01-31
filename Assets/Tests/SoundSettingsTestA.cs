@@ -38,9 +38,9 @@ public class SoundSettingsTestA
     {
         // note: this checks if the slider is staying within the min and max range. (We dont want it to go over)
 
-        volumeSlider.value = 1.5f; // setting it a lil over 1.0 (which is the max)
+        volumeSlider.value = 1.2f; // setting it a lil over 1.0 (which is the max)
         Assert.AreEqual(1f, volumeSlider.value);
-        volumeSlider.value = -0.5f; // setting it a lil below 0f (which is the min)
+        volumeSlider.value = -0.3f; // setting it a lil below 0f (which is the min)
         Assert.AreEqual(0f, volumeSlider.value);
     }
 

@@ -44,7 +44,7 @@ public class PlayerTests
     public IEnumerator PlayerCollectsEquipmentItem()
     {
         // Wait for user input to click key E.
-        Debug.Log("Waiting for player to click key E to collect item.")
+        Debug.Log("Waiting for player to click key E to collect item.");
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
 
         // Determine if the item is added into the inventory.

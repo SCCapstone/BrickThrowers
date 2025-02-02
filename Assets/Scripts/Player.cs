@@ -128,7 +128,6 @@ public class Player : Diver
     {
         if (collision.gameObject.CompareTag("Item"))
         {
-            Debug.Log("enter item range");
             nearestItems.Add(collision.gameObject);
             nearItem = true;
         }
@@ -142,7 +141,6 @@ public class Player : Diver
     {
         if (collision.gameObject.CompareTag("Item"))
         {
-            Debug.Log("exit item range");
             // find the gameObject within the nearest items list, and then remove it.
             nearestItems.Remove(collision.gameObject);
             nearItem = false;
@@ -263,16 +261,16 @@ public class Player : Diver
     }
     
     //Calls code
-    private void OnEnable()
-    {
-        ExperienceManager.Instance.onExperienceChange += HandleExperienceChange;
-    }
+    //private void OnEnable()
+    //{
+    //    ExperienceManager.Instance.onExperienceChange += HandleExperienceChange;
+    //}
 
-    //Stops calling code
-    private void OnDisable()
-    {
-        ExperienceManager.Instance.onExperienceChange -= HandleExperienceChange;
-    }
+    ////Stops calling code
+    //private void OnDisable()
+    //{
+    //    ExperienceManager.Instance.onExperienceChange -= HandleExperienceChange;
+    //}
 
 
 

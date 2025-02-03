@@ -32,6 +32,7 @@ We are to use Google's C# style guide for this project. The style guide can be f
 In 492 you will write automated tests. When you do you will need to add a
 section that explains how to run them.
 
+To run unit tests, do the following: Windows > General > Test Runner > Run All - (note: green check marks indicate a successful run!)
 The unit tests are in `/test/unit`.
 
 The behavioral tests are in `/test/casper/`.

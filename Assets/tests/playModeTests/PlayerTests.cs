@@ -1,4 +1,4 @@
-using System;
+`   using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -80,9 +80,6 @@ public class PlayerTests
     /*
      * Test to determine if a player can pick up an item.
      */
-
-
-     /*
     [UnityTest]
     public IEnumerator PlayerCollectsEquipmentItem()
     {
@@ -96,11 +93,5 @@ public class PlayerTests
         Assert.IsTrue(player.inventory.Container.Items.Count > 0);
         Assert.AreEqual(itemDatabase.items[0].Id, player.inventory.Container.Items[0].item.Id);
         Assert.AreEqual(itemDatabase.items[0].itemName, player.inventory.Container.Items[0].item.Name);
-
-
-
-
     }
-
-    */
 }

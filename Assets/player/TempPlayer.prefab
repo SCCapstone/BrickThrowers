@@ -419,7 +419,6 @@ GameObject:
   - component: {fileID: 7729310634631522524}
   - component: {fileID: 8008190802021006484}
   - component: {fileID: 4266255823342324771}
-  - component: {fileID: 3342097322618125578}
   - component: {fileID: 6489362396185637889}
   m_Layer: 0
   m_Name: TempPlayer
@@ -571,29 +570,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 9159250986113533160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 903e83971bcab1f48a35f7f0d991a90c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 2004933834005372472}
-  rotationSpeed: 100
-  flashlight: {fileID: 8262336731833588720}
---- !u!114 &3342097322618125578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9159250986113533160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f883fdd2a3ae84dbb39ac0f977f225, type: 3}
+  m_Script: {fileID: 11500000, guid: daff346405a48e64197173b5e0e62a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   oxygenLevel: 100
   speed: 40
   verticalSpeed: 40
   fastSpeedMultiplier: 1.5
-  swimsfx: {fileID: 6489362396185637889}
+  swimsfx: {fileID: 0}
   waterDrag: 3
   waterGravityScale: 50
   maxOxygen: 100
@@ -603,8 +587,8 @@ MonoBehaviour:
   staminaDepletionRate: 2
   staminaRecoveryRate: 1
   lowStaminaThreshold: 5
-  rb: {fileID: 7729310634631522524}
-  inventory: {fileID: 11400000, guid: 75a4a2c43d5ce074b94b76fa30b8869f, type: 2}
+  rb: {fileID: 0}
+  inventory: {fileID: 0}
   nearestItems: []
   pickUpItemKey: 101
   dropItemKey: 113

@@ -1696,6 +1696,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738910bcdc24aff41837bedd0bac3f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryPrefab: {fileID: 0}
+  inventory: {fileID: 0}
 --- !u!1 &1049129489
 GameObject:
   m_ObjectHideFlags: 0
@@ -2391,6 +2393,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d414afaeedcbb8444b56105840455db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
+  optionsMenu: {fileID: 0}
+  bgMusic: {fileID: 0}
 --- !u!1 &1349582082
 GameObject:
   m_ObjectHideFlags: 0
@@ -2803,6 +2808,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5123260a2b4c548bf5a4d7b9f56f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oxygenBar: {fileID: 0}
+  staminaBar: {fileID: 0}
+  normalColor: {r: 0, g: 1, b: 0, a: 1}
+  lowColor: {r: 1, g: 0, b: 0, a: 1}
+  lowThreshold: 0
+  smoothSpeed: 5
 --- !u!4 &1577357188 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8831656856919510856, guid: 77620cc6171250d4193086653463b8a4, type: 3}

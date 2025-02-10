@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,23 +9,17 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject itemCursor;
+    private GameObject itemCursor; // Where the cursor is for navigation via arrow keys
 
     [SerializeField]
-    private GameObject slotHolder;
+    private GameObject slotHolder; // The GaomeObject that holds all the slots prefabs
 
     [SerializeField]
-    private ItemClass itemToAdd;
+    private SlotClass[] startingItems; // Starting items that the player should have
 
-    [SerializeField]
-    private ItemClass itemToRemove;
+    private SlotClass[] items; // Items possessed by the player
 
-    [SerializeField]
-    private SlotClass[] startingItems;
-
-    private SlotClass[] items;
-
-    private GameObject[] slots; // how many slots that the GameObject has
+    private GameObject[] slots; // how many slots that SlotsHodler has
 
     private SlotClass tempSlot;
     private SlotClass movingSlot;
@@ -54,9 +47,6 @@ public class InventoryManager : MonoBehaviour
         }
 
         RefreshUI();
-
-        Add(itemToAdd);
-        ///Remove(itemToRemove);
     }
 
     private void Update()
@@ -66,18 +56,6 @@ public class InventoryManager : MonoBehaviour
         if (isMovingItem)
         {
             itemCursor.GetComponent<Image>().sprite = movingSlot.Item.itemIcon;
-        }
-
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            //Debug.Log(GetClosestSlot().Item);
-            //if (isMovingItem)
-            //{
-            //    EndItemMove();
-            //}
-            //else
-            //    BeginItemMove();
         }
     }
 
@@ -107,21 +85,6 @@ public class InventoryManager : MonoBehaviour
         // check if inventory contains items
         SlotClass slot = Contains(item);
 
-        // If there is not a null slot and is stackable, then add another item.
-        //if (slot != null && item.isStackable)
-        //    slot.Quantity += 1;
-        //else
-        //{
-        //    for (int i = 0; i < items.Length; i++)
-        //    {
-        //        if (items[i].Item == null)
-        //        {
-        //            items[i] = new SlotClass(item, quantity);
-        //            break;
-        //        }
-        //    }
-        //}
-
         for (int i = 0; i < items.Length; i++)
         {
             if (items[i].Item == null)
@@ -137,32 +100,6 @@ public class InventoryManager : MonoBehaviour
 
     public bool Remove(ItemClass item)
     {
-        //SlotClass temp = Contains(item);
-        //if (!temp.Equals(null))
-        //{
-        //    if (temp.Quantity >= 1)
-        //        temp.Quantity -= 1;
-        //    else
-        //    {
-        //        int slotToRemove = 0;
-
-        //        for (int i = 0; i < items.Length; i++)
-        //        {
-        //            if (items[i].Item.Equals(item))
-        //            {
-        //                slotToRemove = i;
-        //                break;
-        //            }
-        //        }
-
-        //        items[slotToRemove].Clear();
-        //    }
-        //}
-        //else
-        //{
-        //    return false;
-        //}
-
         int slotToRemove = 0;
 
         for (int i = 0; i < items.Length; i++)

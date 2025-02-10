@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ab0278e7d9dd6458f2cb8b579933a8, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  itemID: 0
   itemName: Flashlight
   itemIcon: {fileID: 21300000, guid: 7ca65945630f70a46bc2d81afd2bbc65, type: 3}
+  isStackable: 0
   toolType: 0

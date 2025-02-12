@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -46,6 +47,7 @@ public class Player : Diver
     private float currentStamina;
 
     public Rigidbody2D rb;
+    public SpriteRenderer playerSprite;
     private Vector2 movement;
 
     // Inventory
@@ -60,6 +62,15 @@ public class Player : Diver
     //Xp and Currency
     public int currentXp, maxXp, currency, currentLevel;
 
+    // Submarine Controls
+    public float submarineSpeed = 70f;
+    public GameObject submarine;
+    public Rigidbody2D submarineRb;
+    
+    private bool isInSubmarine = false;
+    private bool nearSubmarine = false;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -73,19 +84,28 @@ public class Player : Diver
     public void Update()
     {
         base.Update();
-        Movement();
+        if (isInSubmarine) {
+            MoveSubmarine();
+        } else {
+            Movement();
+        }
+
+        if (nearSubmarine && Input.GetKeyDown(KeyCode.L)) {
+            ToggleSubmarine();
+        }
         OxygenAndStamina();
-        if (Input.GetKeyDown(dropItemKey))
-        {
-            DropItem();
-        }
-        if (Input.GetKeyDown(pickUpItemKey))
-        {
-           onItemPickup?.Invoke(nearestItems[0]);
-        }
+        // if (Input.GetKeyDown(dropItemKey))
+        // {
+        //     DropItem();
+        // }
+        // if (Input.GetKeyDown(pickUpItemKey))
+        // {
+        //    onItemPickup?.Invoke(nearestItems[0]);
+        // }
     }
 
-    private void Movement() {
+    private void Movement()
+    {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         float x = horizontalInput * speed;
@@ -128,6 +148,11 @@ public class Player : Diver
             nearestItems.Add(collision.gameObject);
             nearItem = true;
         }
+
+        if (collision.gameObject == submarine)
+        {
+            nearSubmarine = true;
+        }
     }
 
     /// <summary>
@@ -142,6 +167,10 @@ public class Player : Diver
             // find the gameObject within the nearest items list, and then remove it.
             nearestItems.Remove(collision.gameObject);
             nearItem = false;
+        }
+        if (collision.gameObject == submarine)
+        {
+            nearSubmarine = false;
         }
     }
 
@@ -270,7 +299,47 @@ public class Player : Diver
         ExperienceManager.Instance.onExperienceChange -= HandleExperienceChange;
     }
 
+    private void MoveSubmarine()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        float x = horizontalInput * speed;
+        float y = verticalInput * verticalSpeed;
+        // if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
+        // {
+        //     isSwimmingFast = true;
+        //     x *= fastSpeedMultiplier;
+        // }
+        // else
+        // {
+        //     isSwimmingFast = false;
+        // }
+        // rb.velocity = new Vector2(x, y);
+        // if (!swimsfx.isPlaying)
+        //     swimsfx.Play();
 
+        Vector2 move = new Vector2(horizontalInput,verticalInput) * submarineSpeed;
+        submarineRb.velocity = move;
+    }
+
+    private void ToggleSubmarine() 
+    {
+        isInSubmarine = !isInSubmarine;
+
+        if (isInSubmarine)
+        {
+            playerSprite.enabled = false;
+            rb.simulated = false;
+            transform.position = submarine.transform.position;
+
+        }
+        else 
+        {
+            playerSprite.enabled = true;
+            rb.simulated = true;
+            transform.position = submarine.transform.position + new Vector3(0, -1, 0);
+        }
+    }
 
     
 }

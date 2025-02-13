@@ -49,13 +49,10 @@ public class Player : Diver
     private Vector2 movement;
 
     // Inventory
-    public InventoryObject inventory;
     private bool nearItem; // If the player is near an item, this is true.
     public List<GameObject> nearestItems = new List<GameObject>();
 
     // Item Interaction
-    public static event Action<GameObject> onItemPickup;
-    public static event Action onItemDrop;
     public KeyCode pickUpItemKey = KeyCode.E;
     public KeyCode dropItemKey = KeyCode.Q;
 
@@ -71,7 +68,6 @@ public class Player : Diver
         rb.drag = waterDrag;
         currentOxygen = maxOxygen;
         currentStamina = maxStamina;
-        onItemPickup += AddItem;
     }
 
     public void Update()
@@ -79,14 +75,6 @@ public class Player : Diver
         base.Update();
         Movement();
         OxygenAndStamina();
-        if (Input.GetKeyDown(dropItemKey))
-        {
-            DropItem();
-        }
-        if (Input.GetKeyDown(pickUpItemKey))
-        {
-           onItemPickup?.Invoke(nearestItems[0]);
-        }
     }
 
     private void Movement() {
@@ -110,14 +98,7 @@ public class Player : Diver
 
     public void AddItem(GameObject _gameObj)
     {
-        GroundItem item = _gameObj.GetComponent<GroundItem>();
-        // Error: When destroying the gameObject, there is nothing to create it again.
-        // So, create a clone of the gameObject, send that into the Item contructor, and
-        // destroy the original.
-        // Clone should not be present in the scene.
-        bool add_good = inventory.AddItem(new Item(item.item, _gameObj), 1);
-        if (add_good)
-            _gameObj.SetActive(false);
+        
     }
 
     /// <summary>
@@ -207,37 +188,16 @@ public class Player : Diver
     // Activities when you quit application
     private void OnApplicationQuit()
     {
-        onItemPickup -= AddItem;
-        inventory.Container.Items.Clear();
+        
+        
     }
+
     /// <summary>
     /// Not ideal, but the current implementation is disabling the item when adding it to inventory, and changing position and enable when item is added.
     /// </summary>
     public void DropItem()
     {
-        // Remove an item to return it to this function, then drop the item in the scene world.
-        // The item is not a child of the player GameObject. It is a separate GameObject in the scene world.
-
-        // If the inventory is empty, return.
-        if (inventory.Container.Items.Count <= 0)
-            return;
-        Item item = inventory.RemoveItem();
-        if (item == null)
-        {
-            return;
-        }
-        Vector3 playerPosition = transform.position;
-        Vector3 dropPosition = transform.forward;
-        Vector3 itemPosition = playerPosition + dropPosition;
-
-        // Change the item's position to the item position variable.
-        item.prefab.transform.position = itemPosition;
-
-        // enable the item in the scene world.
-        item.prefab.SetActive(true);
-
-        // Problem: the function above does not operate correctly. The gameObject inventory slot is not removed.
-        onItemDrop?.Invoke();
+        
 
     }
 

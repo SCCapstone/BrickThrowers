@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Misc", menuName = "ErenCore/Item/Misc")]
+[CreateAssetMenu(fileName = "Artifacts", menuName = "Items/Artifacts")]
 public class MiscClass : ItemClass
 {
     // Artifact specific classes

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Consumable", menuName = "ErenCore/Item/Consumable")]
+[CreateAssetMenu(fileName = "Consumable", menuName = "Items/Consumable")]
 public class ConsumableClass : ItemClass
 {
     [Header("Consumable")]

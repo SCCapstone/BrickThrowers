@@ -2,22 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tool", menuName = "ErenCore/Item/Tool")]
-public class ToolClass : ItemClass
+[CreateAssetMenu(fileName = "Equipment", menuName = "Items/Equipment")]
+public class EquipmentClass : ItemClass
 {
     [Header("Tool")]
     public ToolType toolType;
     public enum ToolType
     {
         flashlight,
-        harpoon
     }
     public override ItemClass GetItem()
     {
         return this;
     }
 
-    public ToolClass GetTool()
+    public EquipmentClass GetTool()
     {
         return this;
     }

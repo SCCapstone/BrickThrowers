@@ -12,7 +12,14 @@ public class InventoryManager : MonoBehaviour
     private GameObject itemCursor; // Where the cursor is for navigation via arrow keys
 
     [SerializeField]
-    private GameObject slotHolder; // The GaomeObject that holds all the slots prefabs
+    private GameObject slotHolder; // The GameObject that holds all the slots prefabs
+
+    // Test items to add or remove
+    [SerializeField]
+    private ItemClass itemToAdd;
+
+    [SerializeField]
+    private ItemClass itemToRemove;
 
     [SerializeField]
     private SlotClass[] startingItems; // Starting items that the player should have
@@ -21,7 +28,7 @@ public class InventoryManager : MonoBehaviour
 
     private GameObject[] slots; // how many slots that SlotsHodler has
 
-    private SlotClass tempSlot;
+    private SlotClass tempSlot; // Cursor variables
     private SlotClass movingSlot;
     private SlotClass originalSlot;
     private bool isMovingItem;
@@ -47,6 +54,8 @@ public class InventoryManager : MonoBehaviour
         }
 
         RefreshUI();
+        Add(itemToAdd);
+
     }
 
     private void Update()
@@ -80,6 +89,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds an item into a player's inventory.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public bool Add(ItemClass item)
     {
         // check if inventory contains items

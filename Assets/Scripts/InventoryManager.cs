@@ -53,8 +53,9 @@ public class InventoryManager : MonoBehaviour
             slots[i] = slotHolder.transform.GetChild(i).gameObject;
         }
 
-        RefreshUI();
+        //RefreshUI();
         Add(itemToAdd);
+        //Remove(itemToRemove);
 
     }
 
@@ -111,7 +112,11 @@ public class InventoryManager : MonoBehaviour
         RefreshUI();
         return true;
     }
-
+    /// <summary>
+    /// Removes an item from a player's inventory.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public bool Remove(ItemClass item)
     {
         int slotToRemove = 0;
@@ -213,4 +218,11 @@ public class InventoryManager : MonoBehaviour
     //    return true;
     //}
     //#endregion
+
+    #region Arrow Cursor Navigation
+    // quote
+
+
+
+    #endregion
 }

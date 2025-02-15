@@ -48,14 +48,6 @@ public class Player : Diver
     public Rigidbody2D rb;
     private Vector2 movement;
 
-    // Inventory
-    private bool nearItem; // If the player is near an item, this is true.
-    public List<GameObject> nearestItems = new List<GameObject>();
-
-    // Item Interaction
-    public KeyCode pickUpItemKey = KeyCode.E;
-    public KeyCode dropItemKey = KeyCode.Q;
-
     //Xp and Currency
     public int currentXp, maxXp, currency, currentLevel;
 
@@ -96,38 +88,6 @@ public class Player : Diver
             swimsfx.Play();
     }
 
-    public void AddItem(GameObject _gameObj)
-    {
-        
-    }
-
-    /// <summary>
-    /// If the player is near an item, switch to true.
-    /// </summary>
-    /// <param name="collision"></param>
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Item"))
-        {
-            nearestItems.Add(collision.gameObject);
-            nearItem = true;
-        }
-    }
-
-    /// <summary>
-    /// If the player has left item vicinity, this is false.
-    /// </summary>
-    /// <param name="collision"></param>
-    public void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Item"))
-        {
-            // find the gameObject within the nearest items list, and then remove it.
-            nearestItems.Remove(collision.gameObject);
-            nearItem = false;
-        }
-    }
-
     /// <summary>
     /// Manages oxygen and stamina
     /// </summary>
@@ -153,7 +113,6 @@ public class Player : Diver
         }
 
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-        // Item Interact
 
     }
 
@@ -185,21 +144,6 @@ public class Player : Diver
     public void SuppressMovement(bool val) {}
     public int GetNearbyDivers() {return 0;}
 
-    // Activities when you quit application
-    private void OnApplicationQuit()
-    {
-        
-        
-    }
-
-    /// <summary>
-    /// Not ideal, but the current implementation is disabling the item when adding it to inventory, and changing position and enable when item is added.
-    /// </summary>
-    public void DropItem()
-    {
-        
-
-    }
 
     //Handling XP and Level up
     private void HandleExperienceChange(int newExperience)

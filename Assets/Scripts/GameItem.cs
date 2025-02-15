@@ -5,6 +5,5 @@ using UnityEngine;
 public class GameItem : MonoBehaviour
 {
     // The type of item associated with every collectable that appears in the game.
-    [SerializeField]
-    private ItemClass gameItem;
+    public ItemClass gameItem;
 }

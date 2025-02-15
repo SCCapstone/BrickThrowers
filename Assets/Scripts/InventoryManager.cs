@@ -1,3 +1,8 @@
+/*
+ * Copyright 2025 Scott Do
+ * 2/15/2025
+ * This script is used to manage the player's inventory.
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,10 +33,10 @@ public class InventoryManager : MonoBehaviour
 
     private GameObject[] slots; // how many slots that SlotsHodler has
 
-    private SlotClass tempSlot; // Cursor variables
-    private SlotClass movingSlot;
-    private SlotClass originalSlot;
-    private bool isMovingItem;
+    private SlotClass cursorLocation; // Current cursor location
+
+    public KeyCode inventoryMoveRight = KeyCode.RightShift; // Arrow keys for cursor movement in the inventory
+    private const int SLOT_DISTANCE = 110;
 
     private void Start()
     {
@@ -61,12 +66,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-        itemCursor.SetActive(isMovingItem);
-        itemCursor.transform.position = Input.mousePosition;
-        if (isMovingItem)
-        {
-            itemCursor.GetComponent<Image>().sprite = movingSlot.Item.itemIcon;
-        }
+        MoveCursor();
     }
 
     #region Inventory Utilities
@@ -221,6 +221,16 @@ public class InventoryManager : MonoBehaviour
 
     #region Arrow Cursor Navigation
     // quote
+
+    private bool MoveCursor()
+    {
+        if(Input.GetKeyDown(inventoryMoveRight))
+        {
+            itemCursor.transform.position = new Vector2(itemCursor.transform.position.x + SLOT_DISTANCE, itemCursor.transform.position.y);
+        }
+
+        return true;
+    }
 
 
 

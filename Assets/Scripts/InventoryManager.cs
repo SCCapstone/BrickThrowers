@@ -37,6 +37,7 @@ public class InventoryManager : MonoBehaviour
 
     public KeyCode inventoryMoveRight = KeyCode.RightShift; // Arrow keys for cursor movement in the inventory
     private const int SLOT_DISTANCE = 110;
+    private int currentPos = 0;
 
     private void Start()
     {
@@ -226,9 +227,16 @@ public class InventoryManager : MonoBehaviour
     {
         if(Input.GetKeyDown(inventoryMoveRight))
         {
+            // With each click, the cursor moves right. As it stands, there are three inventory slots. 
+            // When the third slot has been reached and the right arrow key is pressed, the cursor will move to the first slot.
             itemCursor.transform.position = new Vector2(itemCursor.transform.position.x + SLOT_DISTANCE, itemCursor.transform.position.y);
+            currentPos++;
+            if (currentPos > 2)
+            {
+                itemCursor.transform.position = new Vector2(itemCursor.transform.position.x - (SLOT_DISTANCE * 3), itemCursor.transform.position.y);
+                currentPos = 0;
+            }
         }
-
         return true;
     }
 

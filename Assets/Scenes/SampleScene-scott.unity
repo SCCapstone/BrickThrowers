@@ -648,9 +648,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemCursor: {fileID: 669969315}
   slotHolder: {fileID: 404154384}
-  itemToAdd: {fileID: 0}
-  itemToRemove: {fileID: 0}
-  startingItems: []
+  startingItems:
+  - item: {fileID: 11400000, guid: fa17277ca8bc57c44bf8e516ab0479b2, type: 2}
+  - item: {fileID: 11400000, guid: 9368d606459685c48901c92f1b328b0b, type: 2}
+  - item: {fileID: 11400000, guid: 6a97c176c736ed14f89f746c56ef8c26, type: 2}
+  items: []
   inventoryMoveRight: 303
 --- !u!1 &468660896
 GameObject:

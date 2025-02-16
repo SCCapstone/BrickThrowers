@@ -19,16 +19,10 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private GameObject slotHolder; // The GameObject that holds all the slots prefabs
 
-    // Test items to add or remove
-    [SerializeField]
-    private ItemClass itemToAdd;
-
-    [SerializeField]
-    private ItemClass itemToRemove;
-
     [SerializeField]
     private SlotClass[] startingItems; // Starting items that the player should have
 
+    [SerializeField]
     private SlotClass[] items; // Items possessed by the player
 
     private GameObject[] slots; // how many slots that SlotsHodler has
@@ -37,6 +31,7 @@ public class InventoryManager : MonoBehaviour
 
     public KeyCode inventoryMoveRight = KeyCode.RightShift; // Arrow keys for cursor movement in the inventory
     private const int SLOT_DISTANCE = 110;
+    [SerializeField]
     private int currentPos = 0;
 
     private void Start()
@@ -59,14 +54,12 @@ public class InventoryManager : MonoBehaviour
             slots[i] = slotHolder.transform.GetChild(i).gameObject;
         }
 
-        //RefreshUI();
-        Add(itemToAdd);
-        //Remove(itemToRemove);
-
+        cursorLocation = items[0];
     }
 
     private void Update()
     {
+        RefreshUI();
         MoveCursor();
     }
 
@@ -98,6 +91,15 @@ public class InventoryManager : MonoBehaviour
     /// <returns></returns>
     public bool Add(ItemClass item)
     {
+        // If all slots have been occupied, then the item cannot be added.
+        foreach (SlotClass slotTemp in items)
+        {
+            if (slotTemp.Item != null)
+            {
+                slotTemp.Item = item;
+                break;
+            }
+        }
         // check if inventory contains items
         SlotClass slot = Contains(item);
 
@@ -118,23 +120,41 @@ public class InventoryManager : MonoBehaviour
     /// </summary>
     /// <param name="item"></param>
     /// <returns></returns>
-    public bool Remove(ItemClass item)
+    private ItemClass Remove(ItemClass item)
     {
         int slotToRemove = 0;
 
         for (int i = 0; i < items.Length; i++)
         {
-            if (items[i].Item.Equals(item))
+            if (items[i].Item == item)
             {
                 slotToRemove = i;
                 break;
             }
         }
-
+        ItemClass temp = items[slotToRemove].Item;
         items[slotToRemove].Clear();
 
         RefreshUI();
-        return true;
+        return temp;
+    }
+
+    /*
+     * The function is called by the ItemCollectionManager script. When called, this function should remove the item
+     * where the current cursor is located. It will then create the GameObject of the item and place it in the world.
+     */
+    public void DropItem()
+    {
+        // First, at the cursor, determine if there is an item. If not, disregard the command.
+        if (cursorLocation.Item == null)
+            return;
+
+        // Else there is an item, remove it from the inventory and drop it in the world.
+        // Start by keeping a reference to the item to gain access to the GameObject prefab.
+        // Then, instantiate the item in the world.
+        ItemClass temp = Remove(cursorLocation.Item);
+        // Instantiate the item in the world relative to the player's position; it should be in front of the player.
+        Instantiate(temp.prefab, new Vector3(transform.parent.position.x + 1, transform.parent.position.y, transform.parent.position.z), Quaternion.identity);
     }
 
     public SlotClass Contains(ItemClass item)
@@ -231,16 +251,16 @@ public class InventoryManager : MonoBehaviour
             // When the third slot has been reached and the right arrow key is pressed, the cursor will move to the first slot.
             itemCursor.transform.position = new Vector2(itemCursor.transform.position.x + SLOT_DISTANCE, itemCursor.transform.position.y);
             currentPos++;
+
             if (currentPos > 2)
             {
                 itemCursor.transform.position = new Vector2(itemCursor.transform.position.x - (SLOT_DISTANCE * 3), itemCursor.transform.position.y);
                 currentPos = 0;
             }
+            cursorLocation = items[currentPos];
         }
         return true;
     }
-
-
 
     #endregion
 }

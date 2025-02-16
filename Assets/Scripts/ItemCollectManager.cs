@@ -27,7 +27,6 @@ public class ItemCollectManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Item"))
         {
             nearestItems.Add(collision.gameObject);
-            Debug.Log("Near item");
             nearItem = true;
         }
     }
@@ -42,7 +41,6 @@ public class ItemCollectManager : MonoBehaviour
         {
             // find the gameObject within the nearest items list, and then remove it.
             nearestItems.Remove(collision.gameObject);
-            Debug.Log("Bye item");
             nearItem = false;
         }
     }
@@ -55,13 +53,16 @@ public class ItemCollectManager : MonoBehaviour
         if (Input.GetKeyDown(pickUpItemKey) && nearItem && GameObject.FindWithTag("Item"))
         {
             // Add the item to the inventory
-            inventory.Add(nearestItems[0].GetComponent<GameItem>().gameItem);
-            Destroy(nearestItems[0]);
+            bool success = inventory.Add(nearestItems[0].GetComponent<GameItem>().gameItem);
+            if (success)
+            {
+                Destroy(nearestItems[0]);
+            }
             inventory.RefreshUI();
         }
         if (Input.GetKeyDown(dropItemKey))
         {
-
+            inventory.DropItem();
         }
 
     }

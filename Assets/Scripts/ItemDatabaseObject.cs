@@ -3,10 +3,10 @@ using UnityEngine;
 /// <summary>
 /// Database object.
 /// </summary>
-[CreateAssetMenu(fileName = "Item Database", menuName = "Inventory System/Items/Database")]
+[CreateAssetMenu(fileName = "Item Database", menuName = "Inventory/Items/Database")]
 public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiver
 {
-    public ItemObject[] items; // list of all items in game
+    public ItemClass[] itemsDatabase; // list of all items in game
     //public Dictionary<ItemObject, int> GetID = new Dictionary<ItemObject, int>(); // dictionary of items and their ID
 
     /// <summary>
@@ -14,25 +14,10 @@ public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiv
     /// </summary>
     public void OnAfterDeserialize()
     {
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < itemsDatabase.Length; i++)
         {
-            items[i].Id = i;
+            itemsDatabase[i].itemID = i;
         }
-    }
-    /// <summary>
-    /// Return the item by its ID.
-    /// </summary>
-    /// <param name="_id"></param>
-    /// <returns></returns>
-    public ItemObject GetItemById(int _id)
-    {
-        if (_id >= items.Length)
-        {
-            return null;
-        }
-
-        return items[_id];
-
     }
 
     public void OnBeforeSerialize()

@@ -14,13 +14,11 @@ public class PlayerTests
     
     private GameObject antidoteItem = Resources.Load<GameObject>("antidoteTest");
     private GameObject playerPrefab = Resources.Load<GameObject>("TempPlayerTest");
-    private ItemDatabaseObject itemDatabase = Resources.Load<ItemDatabaseObject>("Item Database");
 
     private GameObject playerObject;
     private Player player;
 
     private GameObject itemObject;
-    private GroundItem item;
     
 
     
@@ -51,56 +49,5 @@ public class PlayerTests
     }
     
 
-    /*
-    private void CreateItem()
-    {
-        itemObject = GameObject.Instantiate(antidoteItem);
-        item = itemObject.GetComponent<GroundItem>();
-
-    }
-    */
-
-    //Asserts player is properly loaded
-    //Asserts player is affected by water
-     [UnityTest]
-    public IEnumerator PlayTest(){
-        
-        Transform playerTransform = playerObject.transform;
-        yield return new WaitForSeconds(1f);
-        Assert.NotNull(playerObject);
-        float startPos =playerTransform.position.y;
-        yield return new WaitForSeconds(1f);
-        float newPos = playerTransform.position.y;
-        
-        Assert.AreNotEqual(startPos,newPos);
-    }
-
-
-
-    /*
-     * Test to determine if a player can pick up an item.
-     */
-
-
-     /*
-    [UnityTest]
-    public IEnumerator PlayerCollectsEquipmentItem()
-    {
-        // Wait for user input to click key E.
-        Debug.Log("Waiting for player to click key E to collect item.");
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
-
-        // Determine if the item is added into the inventory.
-        Assert.IsFalse(itemObject.activeSelf);
-        yield return null;
-        Assert.IsTrue(player.inventory.Container.Items.Count > 0);
-        Assert.AreEqual(itemDatabase.items[0].Id, player.inventory.Container.Items[0].item.Id);
-        Assert.AreEqual(itemDatabase.items[0].itemName, player.inventory.Container.Items[0].item.Name);
-
-
-
-
-    }
-
-    */
+ 
 }

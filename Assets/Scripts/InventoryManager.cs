@@ -27,8 +27,6 @@ public class InventoryManager : MonoBehaviour
 
     private GameObject[] slots; // how many slots that SlotsHodler has
 
-    private SlotClass cursorLocation; // Current cursor location
-
     public KeyCode inventoryMoveRight = KeyCode.RightShift; // Arrow keys for cursor movement in the inventory
     private const int SLOT_DISTANCE = 110;
     [SerializeField]
@@ -53,8 +51,6 @@ public class InventoryManager : MonoBehaviour
         {
             slots[i] = slotHolder.transform.GetChild(i).gameObject;
         }
-
-        cursorLocation = items[0];
     }
 
     private void Update()
@@ -146,13 +142,13 @@ public class InventoryManager : MonoBehaviour
     public void DropItem()
     {
         // First, at the cursor, determine if there is an item. If not, disregard the command.
-        if (cursorLocation.Item == null)
+        if (items[currentPos].Item == null)
             return;
 
         // Else there is an item, remove it from the inventory and drop it in the world.
         // Start by keeping a reference to the item to gain access to the GameObject prefab.
         // Then, instantiate the item in the world.
-        ItemClass temp = Remove(cursorLocation.Item);
+        ItemClass temp = Remove(items[currentPos].Item);
         // Instantiate the item in the world relative to the player's position; it should be in front of the player.
         Instantiate(temp.prefab, new Vector3(transform.parent.position.x + 1, transform.parent.position.y, transform.parent.position.z), Quaternion.identity);
     }
@@ -257,7 +253,6 @@ public class InventoryManager : MonoBehaviour
                 itemCursor.transform.position = new Vector2(itemCursor.transform.position.x - (SLOT_DISTANCE * 3), itemCursor.transform.position.y);
                 currentPos = 0;
             }
-            cursorLocation = items[currentPos];
         }
         return true;
     }

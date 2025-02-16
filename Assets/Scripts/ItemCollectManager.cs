@@ -62,7 +62,9 @@ public class ItemCollectManager : MonoBehaviour
         }
         if (Input.GetKeyDown(dropItemKey))
         {
+            Debug.Log("the button has been clicked");
             inventory.DropItem();
+            inventory.RefreshUI();
         }
 
     }

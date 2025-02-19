@@ -22,7 +22,6 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private SlotClass[] startingItems; // Starting items that the player should have
 
-    [SerializeField]
     private SlotClass[] items; // Items possessed by the player
 
     private GameObject[] slots; // how many slots that SlotsHodler has
@@ -31,6 +30,9 @@ public class InventoryManager : MonoBehaviour
     private const int SLOT_DISTANCE = 110;
     [SerializeField]
     private int currentPos = 0;
+
+    [SerializeField] 
+    private Player player; // Player reference
 
     private void Start()
     {
@@ -87,6 +89,11 @@ public class InventoryManager : MonoBehaviour
     /// <returns></returns>
     public bool Add(ItemClass item)
     {
+        /*
+         * Bug: When adding an item, if there already is an item, it will replace with the next item and
+         * make the picked up item. The result is that there are two of the same item and the original first item
+         * picked up is lost.
+         */
         // If all slots have been occupied, then the item cannot be added.
         foreach (SlotClass slotTemp in items)
         {
@@ -197,9 +204,12 @@ public class InventoryManager : MonoBehaviour
     public bool UseItem()
     {
         if (items[currentPos].Item == null)
+        {
+            Debug.Log("you have no item");
             return false;
+        }
 
-        items[currentPos].Item.Use();
+        items[currentPos].Item.Use(player);
         return true;
     }
     #endregion

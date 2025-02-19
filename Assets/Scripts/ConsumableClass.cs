@@ -15,9 +15,4 @@ public class ConsumableClass : ItemClass
     {
         return this;
     }
-
-    public ConsumableClass GetConsumable()
-    {
-        return this;
-    }
 }

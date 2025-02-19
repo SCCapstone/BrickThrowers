@@ -11,6 +11,7 @@ public class ItemCollectManager : MonoBehaviour
     // Item Interaction
     public KeyCode pickUpItemKey = KeyCode.E;
     public KeyCode dropItemKey = KeyCode.Q;
+    public KeyCode useItemKey = KeyCode.R;
 
     // Inventory
     private bool nearItem; // If the player is near an item, this is true.
@@ -58,14 +59,15 @@ public class ItemCollectManager : MonoBehaviour
             {
                 Destroy(nearestItems[0]);
             }
-            inventory.RefreshUI();
         }
         if (Input.GetKeyDown(dropItemKey))
         {
-            Debug.Log("the button has been clicked");
             inventory.DropItem();
-            inventory.RefreshUI();
         }
-
+        if (Input.GetKeyDown(useItemKey))
+        {
+            inventory.UseItem();
+        }
+        inventory.RefreshUI();
     }
 }

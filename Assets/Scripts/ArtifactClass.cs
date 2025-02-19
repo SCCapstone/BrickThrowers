@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Artifacts", menuName = "Items/Artifacts")]
-public class MiscClass : ItemClass
+public class ArtifactClass : ItemClass
 {
     // Artifact specific classes
     [Header("Misc")]
@@ -16,11 +16,6 @@ public class MiscClass : ItemClass
         garbage
     }
     public override ItemClass GetItem()
-    {
-        return this;
-    }
-
-    public MiscClass GetMisc()
     {
         return this;
     }

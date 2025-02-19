@@ -139,11 +139,11 @@ public class InventoryManager : MonoBehaviour
      * The function is called by the ItemCollectionManager script. When called, this function should remove the item
      * where the current cursor is located. It will then create the GameObject of the item and place it in the world.
      */
-    public void DropItem()
+    public bool DropItem()
     {
         // First, at the cursor, determine if there is an item. If not, disregard the command.
         if (items[currentPos].Item == null)
-            return;
+            return false;
 
         // Else there is an item, remove it from the inventory and drop it in the world.
         // Start by keeping a reference to the item to gain access to the GameObject prefab.
@@ -151,6 +151,7 @@ public class InventoryManager : MonoBehaviour
         ItemClass temp = Remove(items[currentPos].Item);
         // Instantiate the item in the world relative to the player's position; it should be in front of the player.
         Instantiate(temp.prefab, new Vector3(transform.parent.position.x + 1, transform.parent.position.y, transform.parent.position.z), Quaternion.identity);
+        return true;
     }
 
     public SlotClass Contains(ItemClass item)
@@ -164,77 +165,6 @@ public class InventoryManager : MonoBehaviour
     }
 
     #endregion // Inventory Utilities
-
-    //#region Cusor Moving
-    //private bool BeginItemMove()
-    //{
-    //    originalSlot = GetClosestSlot();
-    //    if (originalSlot == null || originalSlot.Item == null)
-    //        return false;
-
-    //    movingSlot = new SlotClass(originalSlot);
-    //    originalSlot.Clear();
-    //    isMovingItem = true;
-    //    RefreshUI();
-    //    return true;
-    //}
-
-    //private SlotClass GetClosestSlot()
-    //{
-    //    for (int i = 0; i < slots.Length; i++)
-    //    {
-    //        if (Vector2.Distance(slots[i].transform.position, Input.mousePosition) <= 32)
-    //        {
-    //            return items[i];
-    //        }
-    //    }
-    //    return null;
-    //}
-
-    //private bool EndItemMove()
-    //{
-    //    originalSlot = GetClosestSlot();
-    //    if (originalSlot == null)
-    //    {
-    //        Add(movingSlot.Item, movingSlot.Quantity);
-    //        movingSlot.Clear();
-    //    }
-    //    else
-    //    {
-    //        if (originalSlot.Item != null)
-    //        {
-    //            if (originalSlot.Item.Equals(movingSlot.Item)) // same item, should stack
-    //            {
-    //                if (originalSlot.Item.isStackable)
-    //                {
-    //                    originalSlot.Quantity += movingSlot.Quantity;
-    //                    movingSlot.Clear();
-    //                }
-    //                else
-    //                    return false;
-    //            }
-    //            else
-    //            {
-    //                //swap them
-    //                tempSlot = new SlotClass(originalSlot);
-    //                originalSlot.Item = movingSlot.Item;
-    //                movingSlot.Item = tempSlot.Item;
-    //                RefreshUI();
-    //                return true;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            // place item there
-    //            originalSlot.Item = movingSlot.Item;
-    //            movingSlot.Clear();
-    //        }
-    //    }
-    //    isMovingItem = false;
-    //    RefreshUI();
-    //    return true;
-    //}
-    //#endregion
 
     #region Arrow Cursor Navigation
     // quote
@@ -257,5 +187,20 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
+    #endregion
+
+    #region Item Using
+    /// <summary>
+    /// Use the items in the current cursor.
+    /// </summary>
+    /// <returns>The success or failure of the operation.</returns>
+    public bool UseItem()
+    {
+        if (items[currentPos].Item == null)
+            return false;
+
+        items[currentPos].Item.Use();
+        return true;
+    }
     #endregion
 }

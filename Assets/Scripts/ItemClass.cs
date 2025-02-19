@@ -14,5 +14,12 @@ public abstract class ItemClass : ScriptableObject
 
     // Every item class that is a child of this need to return an item.
     public abstract ItemClass GetItem();
-    
+
+    // Every item has a function to benefit the player.
+    // This function is called with the player intends to use an item.
+    public virtual void Use()
+    {
+        Debug.Log("Using item: " + itemName);
+    }
+
 }

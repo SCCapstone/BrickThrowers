@@ -20,4 +20,9 @@ public class EquipmentClass : ItemClass
     {
         return this;
     }
+
+    public override bool Use(Player player)
+    {
+        throw new System.NotImplementedException();
+    }
 }

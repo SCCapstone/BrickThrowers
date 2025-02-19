@@ -51,6 +51,9 @@ public class Player : Diver
     //Xp and Currency
     public int currentXp, maxXp, currency, currentLevel;
 
+    // Status effects
+    [SerializeField]
+    public bool isPoisoned = false;
 
 
     void Start()

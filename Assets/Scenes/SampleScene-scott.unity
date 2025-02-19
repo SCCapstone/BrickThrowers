@@ -1503,6 +1503,10 @@ PrefabInstance:
       propertyPath: swimsfx
       value: 
       objectReference: {fileID: 2027822275}
+    - target: {fileID: 4266255823342324771, guid: 471ad1b9e75e33841afc29e125ad3ff5, type: 3}
+      propertyPath: isPoisoned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9159250986113533160, guid: 471ad1b9e75e33841afc29e125ad3ff5, type: 3}
       propertyPath: m_Name
       value: Player

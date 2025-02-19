@@ -209,7 +209,12 @@ public class InventoryManager : MonoBehaviour
             return false;
         }
 
-        items[currentPos].Item.Use(player);
+        bool itemUsed = items[currentPos].Item.Use(player);
+        if (itemUsed)
+        {
+            // Destroy the item after it has been used.
+            Remove(items[currentPos].Item);
+        }
         return true;
     }
     #endregion

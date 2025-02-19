@@ -17,10 +17,6 @@ public abstract class ItemClass : ScriptableObject
 
     // Every item has a function to benefit the player.
     // This function is called with the player intends to use an item.
-    public virtual bool Use(Player player)
-    {
-        Debug.Log(itemName + " used");
-        return true;
-    }
+    public abstract bool Use(Player player);
 
 }

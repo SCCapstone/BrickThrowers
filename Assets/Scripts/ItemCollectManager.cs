@@ -68,6 +68,5 @@ public class ItemCollectManager : MonoBehaviour
         {
             inventory.UseItem();
         }
-        inventory.RefreshUI();
     }
 }

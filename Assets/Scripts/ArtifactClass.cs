@@ -6,8 +6,9 @@ using UnityEngine;
 public class ArtifactClass : ItemClass
 {
     // Artifact specific classes
-    [Header("Misc")]
+    [Header("Artifact Details")]
     public ArtifactType artifactType;
+    public int value;
 
     public enum ArtifactType
     {
@@ -15,6 +16,7 @@ public class ArtifactClass : ItemClass
         common,
         garbage
     }
+
     public override ItemClass GetItem()
     {
         return this;
@@ -22,6 +24,11 @@ public class ArtifactClass : ItemClass
 
     public override bool Use(Player player)
     {
-        throw new System.NotImplementedException();
+        // Artifacts cannot be used
+        return false;
+    }
+    public override int GetValue()
+    {
+        return value;
     }
 }

@@ -14,7 +14,6 @@ public class ItemCollectManager : MonoBehaviour
     public KeyCode useItemKey = KeyCode.R;
 
     // Inventory
-    private bool nearItem; // If the player is near an item, this is true.
     public List<GameObject> nearestItems = new List<GameObject>();
 
 
@@ -28,7 +27,6 @@ public class ItemCollectManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Item"))
         {
             nearestItems.Add(collision.gameObject);
-            nearItem = true;
         }
     }
 
@@ -42,7 +40,6 @@ public class ItemCollectManager : MonoBehaviour
         {
             // find the gameObject within the nearest items list, and then remove it.
             nearestItems.Remove(collision.gameObject);
-            nearItem = false;
         }
     }
 
@@ -51,10 +48,11 @@ public class ItemCollectManager : MonoBehaviour
      */
     public void Update()
     {
-        if (Input.GetKeyDown(pickUpItemKey) && nearItem && GameObject.FindWithTag("Item"))
+        if (Input.GetKeyDown(pickUpItemKey) && GameObject.FindWithTag("Item"))
         {
             // Add the item to the inventory
             bool success = inventory.Add(nearestItems[0].GetComponent<GameItem>().gameItem);
+
             if (success)
             {
                 Destroy(nearestItems[0]);

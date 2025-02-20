@@ -55,6 +55,10 @@ public class Player : Diver
     [SerializeField]
     public bool isPoisoned = false;
 
+    // Value gained from exploration
+    [SerializeField]
+    public int accumulatedValue = 0; // Total value gained during expeditions
+
 
     void Start()
     {

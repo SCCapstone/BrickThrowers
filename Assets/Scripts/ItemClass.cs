@@ -5,6 +5,12 @@ using UnityEngine;
 
 public abstract class ItemClass : ScriptableObject
 {
+    public enum ItemType
+    {
+        artifact,
+        equipment,
+        consumable
+    }
     // Things every item has.
     [Header("Item")]
     public int itemID;
@@ -18,5 +24,13 @@ public abstract class ItemClass : ScriptableObject
     // Every item has a function to benefit the player.
     // This function is called with the player intends to use an item.
     public abstract bool Use(Player player);
+    /// <summary>
+    /// Run this when calling for an artifact's value.
+    /// </summary>
+    /// <returns></returns>
+    public virtual int GetValue()
+    {
+        return 0;
+    }
 
 }

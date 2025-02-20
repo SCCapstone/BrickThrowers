@@ -28,10 +28,11 @@ public class InventoryManager : MonoBehaviour
 
     public KeyCode inventoryMoveRight = KeyCode.RightShift; // Arrow keys for cursor movement in the inventory
     private const int SLOT_DISTANCE = 110;
+
     [SerializeField]
     private int currentPos = 0;
 
-    [SerializeField] 
+    [SerializeField]
     private Player player; // Player reference
 
     private void Start()
@@ -94,18 +95,17 @@ public class InventoryManager : MonoBehaviour
          * make the picked up item. The result is that there are two of the same item and the original first item
          * picked up is lost.
          */
-        // If all slots have been occupied, then the item cannot be added.
-        foreach (SlotClass slotTemp in items)
-        {
-            if (slotTemp.Item != null)
+        // First, check if the item is valid. If not, return false.
+        if (item == null)
+            return false;
+        // Then, determine if the inventory is full. If it is, return false.
+        if (items[items.Length - 1].Item != null)
             {
-                slotTemp.Item = item;
-                break;
-            }
+            Debug.Log("too many items mate.");
+            return false; 
         }
-        // check if inventory contains items
-        SlotClass slot = Contains(item);
 
+        // If the inventory is not full, add the item to the first available slot.
         for (int i = 0; i < items.Length; i++)
         {
             if (items[i].Item == null)
@@ -115,9 +115,15 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        RefreshUI();
+        // In the case that the item is an artifact, add the value to the player's accumulated value.
+        if (item.GetType() == typeof(ArtifactClass))
+        {
+            player.accumulatedValue += item.GetValue();
+        }
+        
         return true;
     }
+
     /// <summary>
     /// Removes an item from a player's inventory.
     /// </summary>
@@ -157,18 +163,28 @@ public class InventoryManager : MonoBehaviour
         // Then, instantiate the item in the world.
         ItemClass temp = Remove(items[currentPos].Item);
         // Instantiate the item in the world relative to the player's position; it should be in front of the player.
-        Instantiate(temp.prefab, new Vector3(transform.parent.position.x + 1, transform.parent.position.y, transform.parent.position.z), Quaternion.identity);
+        Instantiate(
+            temp.prefab,
+            new Vector3(
+                transform.parent.position.x + 1,
+                transform.parent.position.y,
+                transform.parent.position.z
+            ),
+            Quaternion.identity
+        );
         return true;
     }
 
-    public SlotClass Contains(ItemClass item)
+    public bool Contains(ItemClass item)
     {
         foreach (SlotClass slot in items)
         {
             if (slot != null && item == (slot.Item))
-                return slot;
+            {
+                return true;
+            }
         }
-        return null;
+        return false;
     }
 
     #endregion // Inventory Utilities
@@ -178,16 +194,22 @@ public class InventoryManager : MonoBehaviour
 
     private bool MoveCursor()
     {
-        if(Input.GetKeyDown(inventoryMoveRight))
+        if (Input.GetKeyDown(inventoryMoveRight))
         {
-            // With each click, the cursor moves right. As it stands, there are three inventory slots. 
+            // With each click, the cursor moves right. As it stands, there are three inventory slots.
             // When the third slot has been reached and the right arrow key is pressed, the cursor will move to the first slot.
-            itemCursor.transform.position = new Vector2(itemCursor.transform.position.x + SLOT_DISTANCE, itemCursor.transform.position.y);
+            itemCursor.transform.position = new Vector2(
+                itemCursor.transform.position.x + SLOT_DISTANCE,
+                itemCursor.transform.position.y
+            );
             currentPos++;
 
             if (currentPos > 2)
             {
-                itemCursor.transform.position = new Vector2(itemCursor.transform.position.x - (SLOT_DISTANCE * 3), itemCursor.transform.position.y);
+                itemCursor.transform.position = new Vector2(
+                    itemCursor.transform.position.x - (SLOT_DISTANCE * 3),
+                    itemCursor.transform.position.y
+                );
                 currentPos = 0;
             }
         }

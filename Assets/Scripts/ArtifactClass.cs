@@ -1,3 +1,7 @@
+/*
+ * Copyright 2025 Scott Do
+ * 2/15/2025
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +18,7 @@ public class ArtifactClass : ItemClass
     {
         rare,
         common,
-        garbage
+        garbage,
     }
 
     public override ItemClass GetItem()
@@ -27,6 +31,8 @@ public class ArtifactClass : ItemClass
         // Artifacts cannot be used
         return false;
     }
+
+    /// <returns>The value of the artifact.</returns>
     public override int GetValue()
     {
         return value;

@@ -100,9 +100,9 @@ public class InventoryManager : MonoBehaviour
             return false;
         // Then, determine if the inventory is full. If it is, return false.
         if (items[items.Length - 1].Item != null)
-            {
+        {
             Debug.Log("too many items mate.");
-            return false; 
+            return false;
         }
 
         // If the inventory is not full, add the item to the first available slot.
@@ -120,7 +120,7 @@ public class InventoryManager : MonoBehaviour
         {
             player.accumulatedValue += item.GetValue();
         }
-        
+
         return true;
     }
 

@@ -1,3 +1,7 @@
+/*
+ * Copyright 2025 Scott Do
+ * 2/15/2025
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +9,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Equipment", menuName = "Items/Equipment")]
 public class EquipmentClass : ItemClass
 {
-    [Header("Tool")]
-    public ToolType toolType;
-    public enum ToolType
-    {
-        flashlight,
-    }
     public override ItemClass GetItem()
     {
         return this;

@@ -1,3 +1,7 @@
+/*
+ * Copyright 2025 Scott Do
+ * 2/15/2025
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +19,6 @@ public class ItemCollectManager : MonoBehaviour
 
     // Inventory
     public List<GameObject> nearestItems = new List<GameObject>();
-
 
     // Start is called before the first frame update
     /// <summary>

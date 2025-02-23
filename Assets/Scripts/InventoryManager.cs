@@ -22,17 +22,18 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private SlotClass[] startingItems; // Starting items that the player should have
 
-    [SerializeField]
     private SlotClass[] items; // Items possessed by the player
 
     private GameObject[] slots; // how many slots that SlotsHodler has
 
-    private SlotClass cursorLocation; // Current cursor location
-
     public KeyCode inventoryMoveRight = KeyCode.RightShift; // Arrow keys for cursor movement in the inventory
     private const int SLOT_DISTANCE = 110;
+
     [SerializeField]
     private int currentPos = 0;
+
+    [SerializeField]
+    private Player player; // Player reference
 
     private void Start()
     {
@@ -53,8 +54,6 @@ public class InventoryManager : MonoBehaviour
         {
             slots[i] = slotHolder.transform.GetChild(i).gameObject;
         }
-
-        cursorLocation = items[0];
     }
 
     private void Update()
@@ -83,7 +82,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-
     /// <summary>
     /// Adds an item into a player's inventory.
     /// </summary>
@@ -91,18 +89,22 @@ public class InventoryManager : MonoBehaviour
     /// <returns></returns>
     public bool Add(ItemClass item)
     {
-        // If all slots have been occupied, then the item cannot be added.
-        foreach (SlotClass slotTemp in items)
+        /*
+         * Bug: When adding an item, if there already is an item, it will replace with the next item and
+         * make the picked up item. The result is that there are two of the same item and the original first item
+         * picked up is lost.
+         */
+        // First, check if the item is valid. If not, return false.
+        if (item == null)
+            return false;
+        // Then, determine if the inventory is full. If it is, return false.
+        if (items[items.Length - 1].Item != null)
         {
-            if (slotTemp.Item != null)
-            {
-                slotTemp.Item = item;
-                break;
-            }
+            Debug.Log("too many items mate.");
+            return false;
         }
-        // check if inventory contains items
-        SlotClass slot = Contains(item);
 
+        // If the inventory is not full, add the item to the first available slot.
         for (int i = 0; i < items.Length; i++)
         {
             if (items[i].Item == null)
@@ -112,9 +114,15 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        RefreshUI();
+        // In the case that the item is an artifact, add the value to the player's accumulated value.
+        if (item.GetType() == typeof(ArtifactClass))
+        {
+            player.accumulatedValue += item.GetValue();
+        }
+
         return true;
     }
+
     /// <summary>
     /// Removes an item from a player's inventory.
     /// </summary>
@@ -143,124 +151,97 @@ public class InventoryManager : MonoBehaviour
      * The function is called by the ItemCollectionManager script. When called, this function should remove the item
      * where the current cursor is located. It will then create the GameObject of the item and place it in the world.
      */
-    public void DropItem()
+    public bool DropItem()
     {
         // First, at the cursor, determine if there is an item. If not, disregard the command.
-        if (cursorLocation.Item == null)
-            return;
+        if (items[currentPos].Item == null)
+            return false;
 
         // Else there is an item, remove it from the inventory and drop it in the world.
         // Start by keeping a reference to the item to gain access to the GameObject prefab.
         // Then, instantiate the item in the world.
-        ItemClass temp = Remove(cursorLocation.Item);
+        ItemClass temp = Remove(items[currentPos].Item);
         // Instantiate the item in the world relative to the player's position; it should be in front of the player.
-        Instantiate(temp.prefab, new Vector3(transform.parent.position.x + 1, transform.parent.position.y, transform.parent.position.z), Quaternion.identity);
+        Instantiate(
+            temp.prefab,
+            new Vector3(
+                transform.parent.position.x + 1,
+                transform.parent.position.y,
+                transform.parent.position.z
+            ),
+            Quaternion.identity
+        );
+        return true;
     }
 
-    public SlotClass Contains(ItemClass item)
+    /// <summary>
+    /// Determines if the inventory contains a specific item.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns>True if the item is in the inventory, otherwise false.</returns>
+    public bool Contains(ItemClass item)
     {
         foreach (SlotClass slot in items)
         {
             if (slot != null && item == (slot.Item))
-                return slot;
+            {
+                return true;
+            }
         }
-        return null;
+        return false;
     }
 
     #endregion // Inventory Utilities
-
-    //#region Cusor Moving
-    //private bool BeginItemMove()
-    //{
-    //    originalSlot = GetClosestSlot();
-    //    if (originalSlot == null || originalSlot.Item == null)
-    //        return false;
-
-    //    movingSlot = new SlotClass(originalSlot);
-    //    originalSlot.Clear();
-    //    isMovingItem = true;
-    //    RefreshUI();
-    //    return true;
-    //}
-
-    //private SlotClass GetClosestSlot()
-    //{
-    //    for (int i = 0; i < slots.Length; i++)
-    //    {
-    //        if (Vector2.Distance(slots[i].transform.position, Input.mousePosition) <= 32)
-    //        {
-    //            return items[i];
-    //        }
-    //    }
-    //    return null;
-    //}
-
-    //private bool EndItemMove()
-    //{
-    //    originalSlot = GetClosestSlot();
-    //    if (originalSlot == null)
-    //    {
-    //        Add(movingSlot.Item, movingSlot.Quantity);
-    //        movingSlot.Clear();
-    //    }
-    //    else
-    //    {
-    //        if (originalSlot.Item != null)
-    //        {
-    //            if (originalSlot.Item.Equals(movingSlot.Item)) // same item, should stack
-    //            {
-    //                if (originalSlot.Item.isStackable)
-    //                {
-    //                    originalSlot.Quantity += movingSlot.Quantity;
-    //                    movingSlot.Clear();
-    //                }
-    //                else
-    //                    return false;
-    //            }
-    //            else
-    //            {
-    //                //swap them
-    //                tempSlot = new SlotClass(originalSlot);
-    //                originalSlot.Item = movingSlot.Item;
-    //                movingSlot.Item = tempSlot.Item;
-    //                RefreshUI();
-    //                return true;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            // place item there
-    //            originalSlot.Item = movingSlot.Item;
-    //            movingSlot.Clear();
-    //        }
-    //    }
-    //    isMovingItem = false;
-    //    RefreshUI();
-    //    return true;
-    //}
-    //#endregion
 
     #region Arrow Cursor Navigation
     // quote
 
     private bool MoveCursor()
     {
-        if(Input.GetKeyDown(inventoryMoveRight))
+        if (Input.GetKeyDown(inventoryMoveRight))
         {
-            // With each click, the cursor moves right. As it stands, there are three inventory slots. 
+            // With each click, the cursor moves right. As it stands, there are three inventory slots.
             // When the third slot has been reached and the right arrow key is pressed, the cursor will move to the first slot.
-            itemCursor.transform.position = new Vector2(itemCursor.transform.position.x + SLOT_DISTANCE, itemCursor.transform.position.y);
+            itemCursor.transform.position = new Vector2(
+                itemCursor.transform.position.x + SLOT_DISTANCE,
+                itemCursor.transform.position.y
+            );
             currentPos++;
 
             if (currentPos > 2)
             {
-                itemCursor.transform.position = new Vector2(itemCursor.transform.position.x - (SLOT_DISTANCE * 3), itemCursor.transform.position.y);
+                itemCursor.transform.position = new Vector2(
+                    itemCursor.transform.position.x - (SLOT_DISTANCE * 3),
+                    itemCursor.transform.position.y
+                );
                 currentPos = 0;
             }
-            cursorLocation = items[currentPos];
         }
         return true;
     }
 
+    #endregion
+
+    #region Item Using
+    /// <summary>
+    /// Use the items in the current cursor.
+    /// </summary>
+    /// <returns>The success or failure of the operation.</returns>
+    public bool UseItem()
+    {
+        if (items[currentPos].Item == null)
+        {
+            Debug.Log("you have no item");
+            return false;
+        }
+
+        bool itemUsed = items[currentPos].Item.Use(player);
+        if (items[currentPos].Item.GetType() == typeof(ConsumableClass) && itemUsed)
+        {
+            // Destroy the item after it has been used.
+            Remove(items[currentPos].Item);
+        }
+        return true;
+    }
     #endregion
 }

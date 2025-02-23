@@ -1,3 +1,7 @@
+/*
+ * Copyright 2025 Scott Do
+ * 2/15/2025
+ */
 using UnityEngine;
 
 /// <summary>
@@ -7,6 +11,7 @@ using UnityEngine;
 public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiver
 {
     public ItemClass[] itemsDatabase; // list of all items in game
+
     //public Dictionary<ItemObject, int> GetID = new Dictionary<ItemObject, int>(); // dictionary of items and their ID
 
     /// <summary>
@@ -20,8 +25,5 @@ public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiv
         }
     }
 
-    public void OnBeforeSerialize()
-    {
-
-    }
+    public void OnBeforeSerialize() { }
 }

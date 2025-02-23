@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemCollectManager : MonoBehaviour
+public class ItemInteractManager : MonoBehaviour
 {
     // Inventory manager for player
     [SerializeField]

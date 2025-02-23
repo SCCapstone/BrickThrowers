@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2471425078445532814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8816821191942686074}
+  m_Layer: 0
+  m_Name: FlashlightPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8816821191942686074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2471425078445532814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4335949729039523122}
+  m_Father: {fileID: 2004933834005372472}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3049713214640290295
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,6 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8284274045357820778}
   - component: {fileID: 816003289975496211}
+  - component: {fileID: 5381478305377791607}
   m_Layer: 7
   m_Name: ItemCollider
   m_TagString: Untagged
@@ -216,7 +249,24 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 0.65
+--- !u!114 &5381478305377791607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220961116616260019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8edf7f51c1bb645a195d0ae5c44e4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
+  pickUpItemKey: 101
+  dropItemKey: 113
+  useItemKey: 114
+  nearestItems: []
 --- !u!1 &8262336731833588720
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4335949729039523122
 Transform:
   m_ObjectHideFlags: 0
@@ -243,11 +293,11 @@ Transform:
   m_GameObject: {fileID: 8262336731833588720}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.14, y: -1.43, z: 0}
-  m_LocalScale: {x: 1.4238104, y: 1.4238104, z: 1.4238104}
+  m_LocalPosition: {x: 5.8, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 0.91, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2004933834005372472}
+  m_Father: {fileID: 8816821191942686074}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!331 &9004780661839227384
 SpriteMask:
@@ -441,10 +491,10 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3272213839145326774}
-  - {fileID: 4335949729039523122}
   - {fileID: 9115386338426624405}
   - {fileID: 8284274045357820778}
   - {fileID: 2114332680786506081}
+  - {fileID: 8816821191942686074}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1161383369301233706
@@ -588,14 +638,12 @@ MonoBehaviour:
   staminaRecoveryRate: 1
   lowStaminaThreshold: 5
   rb: {fileID: 0}
-  inventory: {fileID: 0}
-  nearestItems: []
-  pickUpItemKey: 101
-  dropItemKey: 113
   currentXp: 0
   maxXp: 0
   currency: 0
   currentLevel: 0
+  isPoisoned: 0
+  accumulatedValue: 0
 --- !u!82 &6489362396185637889
 AudioSource:
   m_ObjectHideFlags: 0

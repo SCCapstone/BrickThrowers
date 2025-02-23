@@ -82,7 +82,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-
     /// <summary>
     /// Adds an item into a player's inventory.
     /// </summary>
@@ -175,6 +174,11 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Determines if the inventory contains a specific item.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns>True if the item is in the inventory, otherwise false.</returns>
     public bool Contains(ItemClass item)
     {
         foreach (SlotClass slot in items)
@@ -232,7 +236,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         bool itemUsed = items[currentPos].Item.Use(player);
-        if (itemUsed)
+        if (items[currentPos].Item.GetType() == typeof(ConsumableClass) && itemUsed)
         {
             // Destroy the item after it has been used.
             Remove(items[currentPos].Item);

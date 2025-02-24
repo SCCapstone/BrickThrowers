@@ -74,6 +74,10 @@ public class Player : Diver
         base.Update();
         Movement();
         OxygenAndStamina();
+        if (isPoisoned)
+        {
+            ApplyPoison();
+        }
     }
 
     private void Movement() {

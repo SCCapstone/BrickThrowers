@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explodeSFX: {fileID: 0}
-  specificCollider: {fileID: 0}
+  specificCollider: {fileID: 8721719916008700468}
 --- !u!58 &8721719916008700468
 CircleCollider2D:
   m_ObjectHideFlags: 0

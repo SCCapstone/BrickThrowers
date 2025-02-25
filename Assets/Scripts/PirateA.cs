@@ -68,7 +68,7 @@ public class PirateA : MonoBehaviour
         Player playerComponent = player.GetComponent<Player>();
         if (playerComponent != null)
         {
-            playerComponent.TakeDamage(damage);
+            playerComponent.TakeOxygenDamage(damage);
             Debug.Log("PirateA attacked the player!");
         }
     }

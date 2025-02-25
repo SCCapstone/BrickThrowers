@@ -782,9 +782,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2004933834005372472}
   - component: {fileID: 1161383369301233706}
+  - component: {fileID: 4266255823342324771}
   - component: {fileID: 7729310634631522524}
   - component: {fileID: 8008190802021006484}
-  - component: {fileID: 4266255823342324771}
   - component: {fileID: 6489362396185637889}
   m_Layer: 0
   m_Name: Player
@@ -866,6 +866,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4266255823342324771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9159250986113533160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48f883fdd2a3ae84dbb39ac0f977f225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oxygenLevel: 100
+  speed: 40
+  verticalSpeed: 40
+  fastSpeedMultiplier: 1.5
+  swimsfx: {fileID: 6489362396185637889}
+  baseSpeed: 40
+  baseVerticalSpeed: 40
+  waterDrag: 3
+  waterGravityScale: 50
+  maxOxygen: 100
+  oxygenDepletionRate: 1
+  lowStaminaMultiplier: 5
+  maxStamina: 20
+  staminaDepletionRate: 2
+  staminaRecoveryRate: 1
+  lowStaminaThreshold: 5
+  rb: {fileID: 7729310634631522524}
+  currentXp: 0
+  maxXp: 0
+  currency: 0
+  currentLevel: 0
+  isPoisoned: 0
+  accumulatedValue: 0
+  sprintKey: 304
 --- !u!50 &7729310634631522524
 Rigidbody2D:
   serializedVersion: 4
@@ -892,7 +928,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &8008190802021006484
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -928,39 +964,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &4266255823342324771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9159250986113533160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f883fdd2a3ae84dbb39ac0f977f225, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oxygenLevel: 100
-  speed: 40
-  verticalSpeed: 40
-  fastSpeedMultiplier: 1.5
-  swimsfx: {fileID: 6489362396185637889}
-  waterDrag: 3
-  waterGravityScale: 50
-  maxOxygen: 100
-  oxygenDepletionRate: 1
-  lowStaminaMultiplier: 5
-  maxStamina: 20
-  staminaDepletionRate: 2
-  staminaRecoveryRate: 1
-  lowStaminaThreshold: 5
-  rb: {fileID: 7729310634631522524}
-  currentXp: 0
-  maxXp: 0
-  currency: 0
-  currentLevel: 0
-  isPoisoned: 0
-  accumulatedValue: 0
 --- !u!82 &6489362396185637889
 AudioSource:
   m_ObjectHideFlags: 0

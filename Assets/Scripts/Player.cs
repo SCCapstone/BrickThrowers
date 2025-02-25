@@ -20,6 +20,7 @@ public class Player : Diver
      * Players all emit some form of light, so they should have a light source attached to them.
      */
     
+  
     [SerializeField]
     // Movement
     public float speed = 40f;
@@ -27,7 +28,10 @@ public class Player : Diver
     public float fastSpeedMultiplier = 1.5f;
     public AudioSource swimsfx;
     private bool isSwimmingFast = false;
-    
+
+    public float baseSpeed = 40f;
+    public float baseVerticalSpeed = 40f;
+
     // Water Physics
     public float waterDrag = 3f;
     public float waterGravityScale = 50f;
@@ -59,6 +63,9 @@ public class Player : Diver
     [SerializeField]
     public int accumulatedValue = 0; // Total value gained during expeditions
 
+    // Keybinds
+    public KeyCode sprintKey = KeyCode.LeftShift;
+
 
     void Start()
     {
@@ -74,10 +81,7 @@ public class Player : Diver
         base.Update();
         Movement();
         OxygenAndStamina();
-        if (isPoisoned)
-        {
-            ApplyPoison();
-        }
+        Sprint();
     }
 
     private void Movement() {
@@ -130,15 +134,58 @@ public class Player : Diver
     public float GetOxygenLevel() => currentOxygen;
     public float GetStaminaLevel() => currentStamina;
 
+    /// <summary>
+    /// Allows the player to swim faster.
+    /// </summary>
+    public void Sprint()
+    {
+        if (Input.GetKey(sprintKey) && currentStamina > 0)
+        {
+            isSwimmingFast = true;
+            // Use the base speeds multiplied by the sprint factor.
+            speed = baseSpeed * fastSpeedMultiplier;
+            verticalSpeed = baseVerticalSpeed * fastSpeedMultiplier;
+        }
+        else
+        {
+            isSwimmingFast = false;
+            // Revert back to the normal speeds.
+            speed = baseSpeed;
+            verticalSpeed = baseVerticalSpeed;
+        }
+    }
+
+
     // Added because was in Lionfish.cs, and causing compile errors
-    public void ApplyPoison() {}
+    /// <summary>
+    /// Applies a "Poison" effect to the player. Posion should cause increased oxygen decay, and halt
+    /// stamina recovery.
+    /// </summary>
+    [ContextMenu("Apply Poison")]
+    public void ApplyPoison() 
+    {
+        isPoisoned = true;
+        oxygenDepletionRate *= 5;
+        staminaRecoveryRate = 0;
+    }
 
-    // Added because was in PirateA.cs, and causing compile errors
-    public void TakeDamage(int val) {}
+    /// <summary>
+    /// Undos the "Poison" effect on the player. Restores oxygen decay and stamina recovery to normal.
+    /// </summary>
+    [ContextMenu("Relieve Poison")]
+    public void RelievePoison()
+    {
+        isPoisoned = false;
+        oxygenDepletionRate /= 5;
+        staminaRecoveryRate = 1;
+    }
 
-    // Added because was in Shark.cs, and causing compile errors
-    // Also, does this not conflict with TakeDamage?
-    public void TakeOxygenDamage(int val) {}
+    //// Added because was in PirateA.cs, and causing compile errors
+    //public void TakeDamage(int val) {}
+
+    //// Added because was in Shark.cs, and causing compile errors
+    //// Also, does this not conflict with TakeDamage?
+    //public void TakeOxygenDamage(int val) {}
 
     // Added because was in PirateB.cs, and causing compile errors
     public bool HasArtifact() {return true;}

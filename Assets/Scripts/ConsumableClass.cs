@@ -26,32 +26,13 @@ public class ConsumableClass : ItemClass
     {
         if (consumableType == ConsumableType.antidote)
         {
-            return RelievePoison(player);
+            player.RelievePoison();
+            return true;
         }
         // More use cases.
 
 
         // At this point, none of the use cases were met. The item is not used.
         return false;
-    }
-
-    /// <summary>
-    /// Relieves the poision effect from the player.
-    /// </summary>
-    /// <param name="player"></param>
-    /// <returns></returns>
-    private bool RelievePoison(Player player)
-    {
-        if (player.isPoisoned)
-        {
-            player.isPoisoned = false;
-            Debug.Log("Player used " + itemName + " and is no longer poisoned.");
-            return true;
-        }
-        else
-        {
-            Debug.Log("Player used " + itemName + " but is not poisoned.");
-            return false;
-        }
     }
 }

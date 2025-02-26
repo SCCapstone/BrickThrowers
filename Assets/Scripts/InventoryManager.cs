@@ -13,8 +13,8 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject itemCursor; // Where the cursor is for navigation via arrow keys
+    //[SerializeField]
+    //private GameObject itemCursor; // Where the cursor is for navigation via arrow keys
 
     [SerializeField]
     private GameObject slotHolder; // The GameObject that holds all the slots prefabs
@@ -82,6 +82,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// Adds an item into a player's inventory.
     /// </summary>
@@ -198,6 +199,35 @@ public class InventoryManager : MonoBehaviour
 
     private bool MoveCursor()
     {
+        try
+        {
+            // When the player clicks the Right Shift button, the cursor will move to the right.
+            // When it does so, the previous cursor will disable the Image component and the new cursor will enable it.
+            if (Input.GetKeyDown(inventoryMoveRight))
+            {
+                // Get the current position of the cursor. Disable the Image component of the cursor.
+                slots[currentPos].transform.GetChild(1).GetComponent<Image>().enabled = false;
+                currentPos++;
+
+                // Check if the cursor has reached the end of the inventory. If so, reset the cursor to the first slot.
+                if (currentPos > slots.Length - 1)
+                {
+                    currentPos = 0;
+                }
+                slots[currentPos].transform.GetChild(1).GetComponent<Image>().enabled = true;
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
+        }
+    }
+
+    /*
+     *     private bool MoveCursor()
+    {
         if (Input.GetKeyDown(inventoryMoveRight))
         {
             // With each click, the cursor moves right. As it stands, there are three inventory slots.
@@ -219,6 +249,7 @@ public class InventoryManager : MonoBehaviour
         }
         return true;
     }
+    */
 
     #endregion
 

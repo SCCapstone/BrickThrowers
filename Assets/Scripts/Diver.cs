@@ -6,15 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Diver : MonoBehaviour
+public abstract class Diver : MonoBehaviour
 {
-    public int oxygenLevel = 100;
+    public float oxygenLevel = 100;
     private bool isStunned = false;             // Whether the diver is currently stunned
     private bool isBlinded = false;             // Whether the diver is currently blinded
     private float stunTimer = 0f;
     private float blindTimer = 0f;
 
-
+    public static event Action onDeath; // Signal that the diver has died
 
     public void Update()
     {
@@ -53,8 +53,7 @@ public class Diver : MonoBehaviour
         Debug.Log("Diver is blinded by squid ink!");
         // Trigger vision-obscuring effect here, like fading screen or overlaying dark filter
     }
-
-    public void TakeOxygenDamage(int damage)
+    public void TakeOxygenDamage(float damage)
     {
         if (isStunned) return;  // Diver takes no action while stunned
         if (isBlinded) return;  // Optional: Divers could take reduced or no actions when blinded
@@ -65,7 +64,8 @@ public class Diver : MonoBehaviour
         if (oxygenLevel <= 0)
         {
             Debug.Log("Diver has run out of oxygen!");
-            // Handle game over or level restart
+            onDeath?.Invoke();
+
         }
     }
 }

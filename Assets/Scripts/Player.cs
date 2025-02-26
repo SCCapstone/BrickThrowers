@@ -21,7 +21,7 @@ public class Player : Diver
      */
     
   
-    [SerializeField]
+    
     // Movement
     public float speed = 40f;
     public float verticalSpeed = 40f;
@@ -46,7 +46,7 @@ public class Player : Diver
     public float staminaRecoveryRate = 1f;
     public float lowStaminaThreshold = 5f;
 
-    private float currentOxygen;
+    // Stamina (oxygen for Players will be covered by the Diver's oxygenLevel)
     private float currentStamina;
 
     public Rigidbody2D rb;
@@ -72,7 +72,6 @@ public class Player : Diver
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = waterGravityScale;
         rb.drag = waterDrag;
-        currentOxygen = maxOxygen;
         currentStamina = maxStamina;
     }
 
@@ -115,8 +114,8 @@ public class Player : Diver
             oxygenDepletion *= lowStaminaMultiplier;
         }
 
-        currentOxygen -= oxygenDepletion;
-        currentOxygen = Mathf.Clamp(currentOxygen, 0, maxOxygen);
+        oxygenLevel -= oxygenDepletion;
+        oxygenLevel = Mathf.Clamp(oxygenLevel, 0, maxOxygen);
 
         if (isSwimmingFast)
         {
@@ -131,7 +130,7 @@ public class Player : Diver
 
     }
 
-    public float GetOxygenLevel() => currentOxygen;
+    public float GetOxygenLevel() => oxygenLevel;
     public float GetStaminaLevel() => currentStamina;
 
     /// <summary>
@@ -154,7 +153,6 @@ public class Player : Diver
             verticalSpeed = baseVerticalSpeed;
         }
     }
-
 
     // Added because was in Lionfish.cs, and causing compile errors
     /// <summary>

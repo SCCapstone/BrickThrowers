@@ -8,7 +8,7 @@ public class Anglerfish : MonoBehaviour
     public float lightIntensity = 3f;           // Maximum light intensity
     public float flickerFrequency = 0.1f;       // Frequency of light flicker
     public float detectionRange = 5f;           // Range at which the anglerfish interacts with the player
-    public int oxygenDamage = 10;               // Amount of oxygen damage to apply to the player
+    public float oxygenDamage = 0.1f;               // Amount of oxygen damage to apply to the player
 
     private Rigidbody2D rb;
     private Vector2 swimDirection;

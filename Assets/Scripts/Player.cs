@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Defines what a player should do.
@@ -59,9 +60,9 @@ public class Player : Diver
     [SerializeField]
     public bool isPoisoned = false;
 
-    // Value gained from exploration
-    [SerializeField]
-    public int accumulatedValue = 0; // Total value gained during expeditions
+    //// Value gained from exploration
+    //[SerializeField]
+    //public int accumulatedValue = 0; // Total value gained during expeditions
 
     // Keybinds
     public KeyCode sprintKey = KeyCode.LeftShift;

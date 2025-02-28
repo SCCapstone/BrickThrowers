@@ -116,10 +116,10 @@ public class InventoryManager : MonoBehaviour
         }
 
         // In the case that the item is an artifact, add the value to the player's accumulated value.
-        if (item.GetType() == typeof(ArtifactClass))
-        {
-            player.accumulatedValue += item.GetValue();
-        }
+        //if (item.GetType() == typeof(ArtifactClass))
+        //{
+        //    player.accumulatedValue += item.GetValue();
+        //}
 
         return true;
     }
@@ -224,32 +224,6 @@ public class InventoryManager : MonoBehaviour
             return false;
         }
     }
-
-    /*
-     *     private bool MoveCursor()
-    {
-        if (Input.GetKeyDown(inventoryMoveRight))
-        {
-            // With each click, the cursor moves right. As it stands, there are three inventory slots.
-            // When the third slot has been reached and the right arrow key is pressed, the cursor will move to the first slot.
-            itemCursor.transform.position = new Vector2(
-                itemCursor.transform.position.x + SLOT_DISTANCE,
-                itemCursor.transform.position.y
-            );
-            currentPos++;
-
-            if (currentPos > 2)
-            {
-                itemCursor.transform.position = new Vector2(
-                    itemCursor.transform.position.x - (SLOT_DISTANCE * 3),
-                    itemCursor.transform.position.y
-                );
-                currentPos = 0;
-            }
-        }
-        return true;
-    }
-    */
 
     #endregion
 

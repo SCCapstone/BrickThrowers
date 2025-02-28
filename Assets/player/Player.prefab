@@ -164,7 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03456abcde6d6f34eae807c71d55df85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemCursor: {fileID: 5012127869685062097}
   slotHolder: {fileID: 7335966046746230471}
   startingItems: []
   inventoryMoveRight: 303
@@ -883,12 +882,21 @@ MonoBehaviour:
   verticalSpeed: 40
   fastSpeedMultiplier: 1.5
   swimsfx: {fileID: 6489362396185637889}
+  playerMovement:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 8264c358-45b2-4cb9-95a1-10488d118d33
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   baseSpeed: 40
   baseVerticalSpeed: 40
   waterDrag: 3
   waterGravityScale: 50
   maxOxygen: 100
-  oxygenDepletionRate: 1
+  oxygenDepletionRate: 0.01
   lowStaminaMultiplier: 5
   maxStamina: 20
   staminaDepletionRate: 2
@@ -900,7 +908,6 @@ MonoBehaviour:
   currency: 0
   currentLevel: 0
   isPoisoned: 0
-  accumulatedValue: 0
   sprintKey: 304
 --- !u!50 &7729310634631522524
 Rigidbody2D:

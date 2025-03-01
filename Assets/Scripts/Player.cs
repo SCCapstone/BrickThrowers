@@ -24,6 +24,7 @@ public class Player : Diver
     // Input actions
     public PlayerInputActions playerControls;
     private InputAction move;
+    private InputAction sprint;
 
     // Movement
     public float speed = 40f;
@@ -82,12 +83,15 @@ public class Player : Diver
     private void OnEnable()
     {
         move = playerControls.Player.Move;
+        sprint = playerControls.Player.Sprint;
         move.Enable();
+        sprint.Enable();
     }
 
     private void OnDisable()
     {
         move.Disable();
+        sprint.Disable();
     }
 
     void Start()
@@ -161,7 +165,7 @@ public class Player : Diver
     /// </summary>
     public void Sprint()
     {
-        if (Input.GetKey(sprintKey) && currentStamina > 0)
+        if (sprint.IsPressed() && currentStamina > 0)
         {
             isSwimmingFast = true;
             // Use the base speeds multiplied by the sprint factor.

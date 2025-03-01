@@ -1070,10 +1070,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9072963632450373599, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 9159250986113533160, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
       propertyPath: m_Name
       value: Player

@@ -222,22 +222,26 @@ public class InventoryManager : MonoBehaviour
     #endregion // Inventory Utilities
 
     #region Arrow Cursor Navigation
+    /// <summary>
+    /// Moves the cursor based on the input value.
+    /// </summary>
+    /// <param name="context"></param>
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
-        // Get the direction value (-1 for left, +1 for right)
         float moveValue = context.ReadValue<float>();
 
-        // If a movement coroutine is already running, stop it (to reset the repeat timer)
         if (moveCoroutine != null)
             StopCoroutine(moveCoroutine);
 
-        // Start a coroutine to move the cursor repeatedly while the key is held down.
         moveCoroutine = StartCoroutine(MoveCursorRepeatedly(moveValue));
     }
 
+    /// <summary>
+    /// Stops the coroutine when the key is released.
+    /// </summary>
+    /// <param name="context"></param>
     private void OnMoveCanceled(InputAction.CallbackContext context)
     {
-        // Stop the repeated movement when the key is released.
         if (moveCoroutine != null)
         {
             StopCoroutine(moveCoroutine);
@@ -245,13 +249,15 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // Coroutine to repeatedly move the cursor at a fixed interval
+    /// <summary>
+    /// Runs the cursor movement repeatedly while the key is held down.
+    /// </summary>
+    /// <param name="moveValue"></param>
+    /// <returns></returns>
     private IEnumerator MoveCursorRepeatedly(float moveValue)
     {
-        // Immediately perform one move
         MoveCursor(moveValue);
 
-        // Then continue moving every 'moveDelay' seconds as long as the key remains held down.
         while (true)
         {
             yield return new WaitForSeconds(moveDelay);
@@ -259,7 +265,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    // Decide which move function to call based on the input value.
+    /// <summary>
+    /// Determines which direction to move the cursor.
+    /// </summary>
+    /// <param name="moveValue"></param>
     private void MoveCursor(float moveValue)
     {
         if (moveValue > 0)
@@ -272,15 +281,17 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Moves the cursor to the right.
+    /// </summary>
+    /// <returns></returns>
     private bool MoveCursorRight()
     {
         try
         {
-            // Get the current position of the cursor. Disable the Image component of the cursor.
             slots[currentPos].transform.GetChild(1).GetComponent<Image>().enabled = false;
             currentPos++;
 
-            // Check if the cursor has reached the end of the inventory. If so, reset the cursor to the first slot.
             if (currentPos > slots.Length - 1)
             {
                 currentPos = 0;
@@ -295,15 +306,17 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Moves the cursor to the left.
+    /// </summary>
+    /// <returns></returns>
     private bool MoveCursorLeft()
     {
         try
         {
-            /// Get the current position of the cursor. Disable the Image component of the cursor.
             slots[currentPos].transform.GetChild(1).GetComponent<Image>().enabled = false;
             currentPos--;
 
-            // Check if the cursor has reached the beginning of the inventory. If so, reset the cursor to the last slot.
             if (currentPos < 0)
             {
                 currentPos = slots.Length - 1;

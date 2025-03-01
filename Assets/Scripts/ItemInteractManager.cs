@@ -5,9 +5,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ItemInteractManager : MonoBehaviour
 {
+    // Input actions
+    private PlayerInputActions inputActions;
+    private InputAction pickUpItemAction;
+    private InputAction dropItemAction;
+    private InputAction useItemAction;
+
     // Inventory manager for player
     [SerializeField]
     private InventoryManager inventory;
@@ -19,6 +26,34 @@ public class ItemInteractManager : MonoBehaviour
 
     // Inventory
     public List<GameObject> nearestItems = new List<GameObject>();
+
+    #region Action Initialization
+
+    private void Awake()
+    {
+        inputActions = new PlayerInputActions();
+    }
+
+    private void OnEnable()
+    {
+        pickUpItemAction = inputActions.Player.PickUp;
+        dropItemAction = inputActions.Player.Drop;
+        useItemAction = inputActions.Player.Use;
+        pickUpItemAction.Enable();
+        dropItemAction.Enable();
+        useItemAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        pickUpItemAction.Disable();
+        dropItemAction.Disable();
+        useItemAction.Disable();
+    }
+
+    #endregion
+
+    #region Collision
 
     // Start is called before the first frame update
     /// <summary>
@@ -45,13 +80,14 @@ public class ItemInteractManager : MonoBehaviour
             nearestItems.Remove(collision.gameObject);
         }
     }
+    #endregion
 
     /*
      * When the player clicks the pick up key, the item is added into the inventory.
      */
     public void Update()
     {
-        if (Input.GetKeyDown(pickUpItemKey) && GameObject.FindWithTag("Item"))
+        if (pickUpItemAction.WasPressedThisFrame() && GameObject.FindWithTag("Item"))
         {
             // Add the item to the inventory
             bool success = inventory.Add(nearestItems[0].GetComponent<GameItem>().gameItem);
@@ -61,11 +97,11 @@ public class ItemInteractManager : MonoBehaviour
                 Destroy(nearestItems[0]);
             }
         }
-        if (Input.GetKeyDown(dropItemKey))
+        if (dropItemAction.WasPressedThisFrame())
         {
             inventory.DropItem();
         }
-        if (Input.GetKeyDown(useItemKey))
+        if (useItemAction.WasPerformedThisFrame())
         {
             inventory.UseItem();
         }

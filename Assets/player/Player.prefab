@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 2
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -164,11 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ec549e4bfa89740a7cf2948999d8aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemCursor: {fileID: 5012127869685062097}
-  slotHolder: {fileID: 7335966046746230471}
   startingItems: []
-  inventoryMoveRight: 303
-  currentPos: 0
+  slotHolder: {fileID: 7335966046746230471}
   player: {fileID: 4266255823342324771}
 --- !u!1 &3049713214640290295
 GameObject:
@@ -888,7 +885,7 @@ MonoBehaviour:
   waterDrag: 3
   waterGravityScale: 50
   maxOxygen: 100
-  oxygenDepletionRate: 1
+  oxygenDepletionRate: 0.01
   lowStaminaMultiplier: 5
   maxStamina: 20
   staminaDepletionRate: 2
@@ -900,7 +897,6 @@ MonoBehaviour:
   currency: 0
   currentLevel: 0
   isPoisoned: 0
-  accumulatedValue: 0
   sprintKey: 304
 --- !u!50 &7729310634631522524
 Rigidbody2D:

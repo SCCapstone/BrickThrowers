@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903e83971bcab1f48a35f7f0d991a90c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2004933834005372472}
+  player: {fileID: 0}
   rotationSpeed: 100
   flashlight: {fileID: 8262336731833588720}
 --- !u!1 &3048694082122345384
@@ -971,7 +971,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fcecb875999df754196b2e6aa005380d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9508460a2fc72e14e9a8b9479d8ac4b3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

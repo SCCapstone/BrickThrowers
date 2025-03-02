@@ -1752,11 +1752,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4414720569050176712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92d0d20ce9241ab49ac4e096b408ffa6, type: 3}
+  m_Script: {fileID: 11500000, guid: d414afaeedcbb8444b56105840455db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
-  optionsMenu: {fileID: 0}
+  optionsMenu: {fileID: 4414720569050176712}
   bgMusic: {fileID: 0}
 --- !u!1 &4622252693151672403
 GameObject:
@@ -3859,7 +3859,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fda868430ccdbff43a08d66f94738966, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79c55e954b8aa17469cd013c4cbdfe9f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -67,9 +67,8 @@ public class Player : Diver
     [SerializeField]
     public bool isPoisoned = false;
 
-    //// Value gained from exploration
-    //[SerializeField]
-    //public int accumulatedValue = 0; // Total value gained during expeditions
+    // Debug mode
+    private bool godMode = false;
 
     // Keybinds
     public KeyCode sprintKey = KeyCode.LeftShift;
@@ -86,12 +85,15 @@ public class Player : Diver
         sprint = playerControls.Player.Sprint;
         move.Enable();
         sprint.Enable();
+
+        PauseMenu.onGodMode += GodMode;
     }
 
     private void OnDisable()
     {
         move.Disable();
         sprint.Disable();
+        PauseMenu.onGodMode -= GodMode;
     }
 
     void Start()
@@ -253,5 +255,34 @@ public class Player : Diver
         currency += 10;
         maxXp += 100;
         currentXp = 0;
+    }
+
+    /// <summary>
+    /// Turns on a cheat mode for the player. This should be used for debugging purposes only.
+    /// The player should not be able to use this in the final game.
+    /// This prevents oxygen depletion, loss of stamina when sprinting, 
+    /// </summary>
+    private void GodMode()
+    {
+        // First, invert the bool. This covers the button being used to enable/disable god mode.
+        godMode = !godMode;
+
+        if (godMode)
+        {
+            // If there is god mode, then the player should not lose oxygen or stamina.
+            oxygenDepletionRate = 0;
+            staminaDepletionRate = 0;
+        }
+        else
+        {
+            // No god mode? Return to normal.
+            oxygenDepletionRate = 1;
+            staminaDepletionRate = 2;
+        }
+    }
+
+    public override bool GodModeStatus()
+    {
+        return godMode;
     }
 }

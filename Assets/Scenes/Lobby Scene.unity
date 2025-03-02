@@ -1372,19 +1372,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8993673532604636494, guid: 9221c96166687da428426c17c59e0b91, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8993673532604636494, guid: 9221c96166687da428426c17c59e0b91, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 805543460}
     - target: {fileID: 8993673532604636494, guid: 9221c96166687da428426c17c59e0b91, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RunGame
+      value: GoToMainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 8993673532604636494, guid: 9221c96166687da428426c17c59e0b91, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: LobbyMenu, GameAssembly
+      value: BackToMainMenu, GameAssembly
       objectReference: {fileID: 0}
     - target: {fileID: 8993673532604636494, guid: 9221c96166687da428426c17c59e0b91, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
@@ -1418,6 +1418,8 @@ GameObject:
   - component: {fileID: 805543453}
   - component: {fileID: 805543457}
   - component: {fileID: 805543458}
+  - component: {fileID: 805543459}
+  - component: {fileID: 805543460}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1543,6 +1545,30 @@ MonoBehaviour:
   mapPanel: {fileID: 1946232248}
   countdownBeep: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
   startBeep: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+--- !u!114 &805543459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805543452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80725c928c6fc5a4c884a583b4543f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &805543460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805543452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0531067b8e4a1fb41aa7dd790d8f1de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &874548611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1794,10 +1820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6188942085721446712, guid: 9610785ec3a215a409349311acbf3d60, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 1396877222}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9610785ec3a215a409349311acbf3d60, type: 3}
 --- !u!1 &1004872124
@@ -2546,81 +2569,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272349242}
   m_CullTransparentMesh: 1
---- !u!1 &1396877221
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1396877222}
-  - component: {fileID: 1396877224}
-  - component: {fileID: 1396877223}
-  m_Layer: 5
-  m_Name: Dark Panel (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1396877222
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396877221}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2081606089}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.5194397, y: 0}
-  m_SizeDelta: {x: 1054.5999, y: 1405.7119}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1396877223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396877221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.7019608}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1396877224
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396877221}
-  m_CullTransparentMesh: 1
 --- !u!1 &1460130126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2969,6 +2917,14 @@ PrefabInstance:
     - target: {fileID: 411283588091635538, guid: 0412a35d061a6554e90e1022eac9d621, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078055117157727688, guid: 0412a35d061a6554e90e1022eac9d621, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 679033964}
+    - target: {fileID: 1078055117157727688, guid: 0412a35d061a6554e90e1022eac9d621, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 1939050234595820444, guid: 0412a35d061a6554e90e1022eac9d621, type: 3}
       propertyPath: m_LocalScale.x

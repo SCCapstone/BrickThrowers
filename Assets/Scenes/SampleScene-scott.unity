@@ -2373,6 +2373,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6478302805352836156, guid: 5c01c2a65a8efd447bd4a8e72eb5691a, type: 3}
+      propertyPath: bgMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 3149845712ce71947ad66e753ea3ccbe, type: 3}
     - target: {fileID: 6569253064022522403, guid: 5c01c2a65a8efd447bd4a8e72eb5691a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1

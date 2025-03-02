@@ -9,31 +9,37 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject itemCursor; // Where the cursor is for navigation via arrow keys
-
-    [SerializeField]
-    private GameObject slotHolder; // The GameObject that holds all the slots prefabs
-
-    [SerializeField]
-    private SlotClass[] startingItems; // Starting items that the player should have
-
-    private SlotClass[] items; // Items possessed by the player
-
-    private GameObject[] slots; // how many slots that SlotsHodler has
-
-    public KeyCode inventoryMoveRight = KeyCode.RightShift; // Arrow keys for cursor movement in the inventory
+    // Constants
     private const int SLOT_DISTANCE = 110;
 
+    // Input actions
+    private PlayerInputActions inputActions;
+    private InputAction moveInventory;
+
+    // Item Management
     [SerializeField]
+    private SlotClass[] startingItems;
+    private SlotClass[] items;
+    private GameObject[] slots;
     private int currentPos = 0;
 
+    // Prefabs and Game Objects
     [SerializeField]
-    private Player player; // Player reference
+    private GameObject slotHolder;
+
+    [SerializeField]
+    private Player player;
+
+    // Cursor delay
+    public float moveDelay = 0.2f;
+    private Coroutine moveCoroutine;
+
+    #region Setup
 
     private void Start()
     {
@@ -56,11 +62,32 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        inputActions = new PlayerInputActions();
+    }
+
+    private void OnEnable()
+    {
+        moveInventory = inputActions.Player.InventoryManagement;
+        moveInventory.Enable();
+        moveInventory.performed += OnMovePerformed;
+        moveInventory.canceled += OnMoveCanceled;
+    }
+
+    private void OnDisable()
+    {
+        moveInventory.performed -= OnMovePerformed;
+        moveInventory.canceled -= OnMoveCanceled;
+        moveInventory.Disable();
+    }
+
     private void Update()
     {
         RefreshUI();
-        MoveCursor();
     }
+
+    #endregion
 
     #region Inventory Utilities
     [ContextMenu("Refresh Inventory")]
@@ -82,6 +109,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// Adds an item into a player's inventory.
     /// </summary>
@@ -115,10 +143,10 @@ public class InventoryManager : MonoBehaviour
         }
 
         // In the case that the item is an artifact, add the value to the player's accumulated value.
-        if (item.GetType() == typeof(ArtifactClass))
-        {
-            player.accumulatedValue += item.GetValue();
-        }
+        //if (item.GetType() == typeof(ArtifactClass))
+        //{
+        //    player.accumulatedValue += item.GetValue();
+        //}
 
         return true;
     }
@@ -194,32 +222,114 @@ public class InventoryManager : MonoBehaviour
     #endregion // Inventory Utilities
 
     #region Arrow Cursor Navigation
-    // quote
-
-    private bool MoveCursor()
+    /// <summary>
+    /// Moves the cursor based on the input value.
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnMovePerformed(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(inventoryMoveRight))
-        {
-            // With each click, the cursor moves right. As it stands, there are three inventory slots.
-            // When the third slot has been reached and the right arrow key is pressed, the cursor will move to the first slot.
-            itemCursor.transform.position = new Vector2(
-                itemCursor.transform.position.x + SLOT_DISTANCE,
-                itemCursor.transform.position.y
-            );
-            currentPos++;
+        float moveValue = context.ReadValue<float>();
 
-            if (currentPos > 2)
-            {
-                itemCursor.transform.position = new Vector2(
-                    itemCursor.transform.position.x - (SLOT_DISTANCE * 3),
-                    itemCursor.transform.position.y
-                );
-                currentPos = 0;
-            }
-        }
-        return true;
+        if (moveCoroutine != null)
+            StopCoroutine(moveCoroutine);
+
+        moveCoroutine = StartCoroutine(MoveCursorRepeatedly(moveValue));
     }
 
+    /// <summary>
+    /// Stops the coroutine when the key is released.
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnMoveCanceled(InputAction.CallbackContext context)
+    {
+        if (moveCoroutine != null)
+        {
+            StopCoroutine(moveCoroutine);
+            moveCoroutine = null;
+        }
+    }
+
+    /// <summary>
+    /// Runs the cursor movement repeatedly while the key is held down.
+    /// </summary>
+    /// <param name="moveValue"></param>
+    /// <returns></returns>
+    private IEnumerator MoveCursorRepeatedly(float moveValue)
+    {
+        MoveCursor(moveValue);
+
+        while (true)
+        {
+            yield return new WaitForSeconds(moveDelay);
+            MoveCursor(moveValue);
+        }
+    }
+
+    /// <summary>
+    /// Determines which direction to move the cursor.
+    /// </summary>
+    /// <param name="moveValue"></param>
+    private void MoveCursor(float moveValue)
+    {
+        if (moveValue > 0)
+        {
+            MoveCursorRight();
+        }
+        else if (moveValue < 0)
+        {
+            MoveCursorLeft();
+        }
+    }
+
+    /// <summary>
+    /// Moves the cursor to the right.
+    /// </summary>
+    /// <returns></returns>
+    private bool MoveCursorRight()
+    {
+        try
+        {
+            slots[currentPos].transform.GetChild(1).GetComponent<Image>().enabled = false;
+            currentPos++;
+
+            if (currentPos > slots.Length - 1)
+            {
+                currentPos = 0;
+            }
+            slots[currentPos].transform.GetChild(1).GetComponent<Image>().enabled = true;
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Moves the cursor to the left.
+    /// </summary>
+    /// <returns></returns>
+    private bool MoveCursorLeft()
+    {
+        try
+        {
+            slots[currentPos].transform.GetChild(1).GetComponent<Image>().enabled = false;
+            currentPos--;
+
+            if (currentPos < 0)
+            {
+                currentPos = slots.Length - 1;
+            }
+            slots[currentPos].transform.GetChild(1).GetComponent<Image>().enabled = true;
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
+        }
+    }
     #endregion
 
     #region Item Using

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Defines what a player should do.
@@ -19,15 +20,19 @@ public class Player : Diver
      * Actual in-game player classes should inherit from this class and implement their own unique properties and methods.
      * Players all emit some form of light, so they should have a light source attached to them.
      */
-    
-  
-    [SerializeField]
+
+    // Input actions
+    public PlayerInputActions playerControls;
+    private InputAction move;
+    private InputAction sprint;
+
     // Movement
     public float speed = 40f;
     public float verticalSpeed = 40f;
     public float fastSpeedMultiplier = 1.5f;
     public AudioSource swimsfx;
     private bool isSwimmingFast = false;
+    private Vector2 moveDirection;
 
     public float baseSpeed = 40f;
     public float baseVerticalSpeed = 40f;
@@ -46,59 +51,80 @@ public class Player : Diver
     public float staminaRecoveryRate = 1f;
     public float lowStaminaThreshold = 5f;
 
-    private float currentOxygen;
+    // Stamina (oxygen for Players will be covered by the Diver's oxygenLevel)
     private float currentStamina;
 
     public Rigidbody2D rb;
     private Vector2 movement;
 
     //Xp and Currency
-    public int currentXp, maxXp, currency, currentLevel;
+    public int currentXp,
+        maxXp,
+        currency,
+        currentLevel;
 
     // Status effects
     [SerializeField]
     public bool isPoisoned = false;
 
-    // Value gained from exploration
-    [SerializeField]
-    public int accumulatedValue = 0; // Total value gained during expeditions
+    //// Value gained from exploration
+    //[SerializeField]
+    //public int accumulatedValue = 0; // Total value gained during expeditions
 
     // Keybinds
     public KeyCode sprintKey = KeyCode.LeftShift;
 
+    #region Setup Functions
+    private void Awake()
+    {
+        playerControls = new PlayerInputActions();
+    }
+
+    private void OnEnable()
+    {
+        move = playerControls.Player.Move;
+        sprint = playerControls.Player.Sprint;
+        move.Enable();
+        sprint.Enable();
+    }
+
+    private void OnDisable()
+    {
+        move.Disable();
+        sprint.Disable();
+    }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = waterGravityScale;
         rb.drag = waterDrag;
-        currentOxygen = maxOxygen;
         currentStamina = maxStamina;
     }
 
     public void Update()
     {
         base.Update();
-        Movement();
         OxygenAndStamina();
         Sprint();
+
+        moveDirection = move.ReadValue<Vector2>();
     }
 
-    private void Movement() {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        float x = horizontalInput * speed;
-        float y = verticalInput * verticalSpeed;
-        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
-        {
-            isSwimmingFast = true;
-            x *= fastSpeedMultiplier;
-        }
-        else
-        {
-            isSwimmingFast = false;
-        }
-        rb.velocity = new Vector2(x, y);
+    private void FixedUpdate()
+    {
+        //rb.velocity = new Vector2(moveDirection.x * speed, moveDirection.y * verticalSpeed);
+        Movement(new Vector2(moveDirection.x * speed, moveDirection.y * verticalSpeed));
+    }
+    #endregion Setup Functions
+
+    /// <summary>
+    /// Determines movement and plays SFX of movement.
+    /// </summary>
+    /// <param name="moveVec"></param>
+    private void Movement(Vector2 moveVec)
+    {
+        rb.velocity = moveVec;
         if (!swimsfx.isPlaying)
             swimsfx.Play();
     }
@@ -115,8 +141,8 @@ public class Player : Diver
             oxygenDepletion *= lowStaminaMultiplier;
         }
 
-        currentOxygen -= oxygenDepletion;
-        currentOxygen = Mathf.Clamp(currentOxygen, 0, maxOxygen);
+        oxygenLevel -= oxygenDepletion;
+        oxygenLevel = Mathf.Clamp(oxygenLevel, 0, maxOxygen);
 
         if (isSwimmingFast)
         {
@@ -128,10 +154,10 @@ public class Player : Diver
         }
 
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-
     }
 
-    public float GetOxygenLevel() => currentOxygen;
+    public float GetOxygenLevel() => oxygenLevel;
+
     public float GetStaminaLevel() => currentStamina;
 
     /// <summary>
@@ -139,7 +165,7 @@ public class Player : Diver
     /// </summary>
     public void Sprint()
     {
-        if (Input.GetKey(sprintKey) && currentStamina > 0)
+        if (sprint.IsPressed() && currentStamina > 0)
         {
             isSwimmingFast = true;
             // Use the base speeds multiplied by the sprint factor.
@@ -155,14 +181,13 @@ public class Player : Diver
         }
     }
 
-
     // Added because was in Lionfish.cs, and causing compile errors
     /// <summary>
     /// Applies a "Poison" effect to the player. Posion should cause increased oxygen decay, and halt
     /// stamina recovery.
     /// </summary>
     [ContextMenu("Apply Poison")]
-    public void ApplyPoison() 
+    public void ApplyPoison()
     {
         isPoisoned = true;
         oxygenDepletionRate *= 5;
@@ -188,26 +213,34 @@ public class Player : Diver
     //public void TakeOxygenDamage(int val) {}
 
     // Added because was in PirateB.cs, and causing compile errors
-    public bool HasArtifact() {return true;}
-    public void RemoveArtifact() {}
+    public bool HasArtifact()
+    {
+        return true;
+    }
+
+    public void RemoveArtifact() { }
 
     // Added becasue was in Squid.cs, and casuing compile errors
-    public void Blind(float duration) {}
+    public void Blind(float duration) { }
 
     // Added because was in Jellyfish.cs, and causing compile errors
-    public void Stun(float duration) {}
+    public void Stun(float duration) { }
 
     // Added becasue was in Octopus.cs, and causing compile errors.
-    public void SuppressLight(bool val) {}
-    public void SuppressMovement(bool val) {}
-    public int GetNearbyDivers() {return 0;}
+    public void SuppressLight(bool val) { }
 
+    public void SuppressMovement(bool val) { }
+
+    public int GetNearbyDivers()
+    {
+        return 0;
+    }
 
     //Handling XP and Level up
     private void HandleExperienceChange(int newExperience)
     {
         currentXp += newExperience;
-        if(currentXp >= maxXp)
+        if (currentXp >= maxXp)
         {
             LevelUp();
         }
@@ -216,25 +249,9 @@ public class Player : Diver
     //Focuses on Levelup and increases Xp cap
     private void LevelUp()
     {
-      currentLevel++;
-      currency += 10;
-      maxXp += 100;
-      currentXp = 0;
+        currentLevel++;
+        currency += 10;
+        maxXp += 100;
+        currentXp = 0;
     }
-    
-    //Calls code
-    //private void OnEnable()
-    //{
-    //    ExperienceManager.Instance.onExperienceChange += HandleExperienceChange;
-    //}
-
-    ////Stops calling code
-    //private void OnDisable()
-    //{
-    //    ExperienceManager.Instance.onExperienceChange -= HandleExperienceChange;
-    //}
-
-
-
-    
 }

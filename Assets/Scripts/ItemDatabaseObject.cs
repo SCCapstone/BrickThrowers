@@ -12,8 +12,6 @@ public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiv
 {
     public ItemClass[] itemsDatabase; // list of all items in game
 
-    //public Dictionary<ItemObject, int> GetID = new Dictionary<ItemObject, int>(); // dictionary of items and their ID
-
     /// <summary>
     /// Deseralize this data object to something useful for Unity to use, like a database.
     /// </summary>

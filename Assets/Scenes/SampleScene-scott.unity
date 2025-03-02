@@ -818,34 +818,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1106818533652397695, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1181964324527390134, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1181964324527390134, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1181964324527390134, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1181964324527390134, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1181964324527390134, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1181964324527390134, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2004933834005372472, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
       propertyPath: m_LocalPosition.x
       value: 183
@@ -884,54 +856,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2004933834005372472, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7491035925989356397, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7491035925989356397, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7491035925989356397, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7491035925989356397, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7491035925989356397, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7491035925989356397, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8976750997077393262, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8976750997077393262, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8976750997077393262, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8976750997077393262, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8976750997077393262, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8976750997077393262, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9159250986113533160, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}

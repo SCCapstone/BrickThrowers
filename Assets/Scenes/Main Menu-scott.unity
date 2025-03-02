@@ -343,26 +343,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1079766430662506315, guid: 1bef566c0662ec14299f272e123b2ed5, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1586636999}
-    - target: {fileID: 1079766430662506315, guid: 1bef566c0662ec14299f272e123b2ed5, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetMusicVolume
-      objectReference: {fileID: 0}
-    - target: {fileID: 1117517509610094035, guid: 1bef566c0662ec14299f272e123b2ed5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1610038393}
-    - target: {fileID: 1117517509610094035, guid: 1bef566c0662ec14299f272e123b2ed5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetActive
-      objectReference: {fileID: 0}
-    - target: {fileID: 2948965611559865323, guid: 1bef566c0662ec14299f272e123b2ed5, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 246cc2fc6845a804490ff292c4380173, type: 3}
     - target: {fileID: 4727915890631453613, guid: 1bef566c0662ec14299f272e123b2ed5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -452,6 +432,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bef566c0662ec14299f272e123b2ed5, type: 3}
+--- !u!1 &1142758966 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3395863445782420739, guid: fdeaaaf93c5fd794c96e8aedb0e3ddca, type: 3}
+  m_PrefabInstance: {fileID: 1191911780}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1191911780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -464,6 +449,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 877.59766
       objectReference: {fileID: 0}
+    - target: {fileID: 2731057556301777818, guid: fdeaaaf93c5fd794c96e8aedb0e3ddca, type: 3}
+      propertyPath: optionsMenu
+      value: 
+      objectReference: {fileID: 1142758966}
     - target: {fileID: 2842884931702929275, guid: fdeaaaf93c5fd794c96e8aedb0e3ddca, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -718,11 +707,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myMixer: {fileID: 24100000, guid: d73fc82eecc519b40b352035028061ca, type: 2}
   musicSlider: {fileID: 1906231834}
---- !u!1 &1610038393 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3089693048255031835, guid: fdeaaaf93c5fd794c96e8aedb0e3ddca, type: 3}
-  m_PrefabInstance: {fileID: 1191911780}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1613343040 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 290428387854398711, guid: 1bef566c0662ec14299f272e123b2ed5, type: 3}

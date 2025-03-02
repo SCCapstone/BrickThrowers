@@ -976,15 +976,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 97117259430700645, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 97117259430700645, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 97117259430700645, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4414720569050176712, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
       propertyPath: m_Name
@@ -1068,11 +1068,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7455306917107016690, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7455306917107016690, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7724529887449125920, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7724529887449125920, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 290428387854398711}
+    - target: {fileID: 7724529887449125920, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7724529887449125920, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 97117259430700645, guid: 6faf908c5db015745b3ef2d6731dbce1, type: 3}
       propertyPath: m_AnchorMax.x

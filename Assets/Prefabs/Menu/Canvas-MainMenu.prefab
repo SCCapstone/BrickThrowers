@@ -986,6 +986,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2764914239477959316, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: VolumeSettings, GameAssembly
+      objectReference: {fileID: 0}
     - target: {fileID: 4414720569050176712, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
       propertyPath: m_Name
       value: Options Panel

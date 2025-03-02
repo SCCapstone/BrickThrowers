@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: 5feb65c7e90bff04dae1ebf6ad88f5a4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Lobby Scene.unity
     guid: 53535fd8b5ac22a49b600f1542a012f4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
@@ -19,8 +19,8 @@ EditorBuildSettings:
     guid: c72a57d643168a340b89ca9e49c58e30
   - enabled: 1
     path: Assets/Scenes/SampleScene-scott.unity
-    guid: 8e20f0287bbf7fb42b71af6f0b854e64
-  - enabled: 1
+    guid: 27161eccc99e240448af829e6d3b009f
+  - enabled: 0
     path: Assets/Scenes/SampleScene-scott-test.unity
     guid: a625262962444d24286e193d494df33e
   m_configObjects:

@@ -11,14 +11,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lobby Scene.unity
     guid: 53535fd8b5ac22a49b600f1542a012f4
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Scenes/BasicMap.unity
     guid: c72a57d643168a340b89ca9e49c58e30
   - enabled: 1
     path: Assets/Scenes/SampleScene-scott.unity
-    guid: 8efb27ec43f45454b8893215ebbcf5b8
+    guid: 27161eccc99e240448af829e6d3b009f
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 0
+    path: Assets/Scenes/SampleScene-scott-test.unity
+    guid: a625262962444d24286e193d494df33e
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: a016b425a95b5d14e8f631961a3ec766, type: 2}

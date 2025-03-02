@@ -597,6 +597,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5520161607405636033, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5636245785286435833, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 2
@@ -641,6 +645,18 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.73485
       objectReference: {fileID: 0}
+    - target: {fileID: 7276976279872701690, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276976279872701690, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7276976279872701690, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7836452721555462725, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -668,6 +684,14 @@ PrefabInstance:
     - target: {fileID: 7836452721555462725, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919996345885393869, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919996345885393869, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8659945429056685518, guid: e11a452b020c6954cb493bb3ee303f41, type: 3}
       propertyPath: m_AnchoredPosition.y

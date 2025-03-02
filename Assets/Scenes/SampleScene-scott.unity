@@ -818,6 +818,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1106818533652397695, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 1181964324527390134, guid: c3b33c117bef8d4468e3413d1beab568, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2269,6 +2273,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 78815229978395929, guid: 5c01c2a65a8efd447bd4a8e72eb5691a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 726263422727359179, guid: 5c01c2a65a8efd447bd4a8e72eb5691a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2352,10 +2360,6 @@ PrefabInstance:
     - target: {fileID: 1399667314537927685, guid: 5c01c2a65a8efd447bd4a8e72eb5691a, type: 3}
       propertyPath: m_Name
       value: Canvas-PauseMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399667314537927685, guid: 5c01c2a65a8efd447bd4a8e72eb5691a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4396983683210641332, guid: 5c01c2a65a8efd447bd4a8e72eb5691a, type: 3}
       propertyPath: m_AnchorMax.x

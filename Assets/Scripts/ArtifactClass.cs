@@ -13,6 +13,7 @@ public class ArtifactClass : ItemClass
     [Header("Artifact Details")]
     public ArtifactType artifactType;
     public int value;
+    private bool isCollected = false;
 
     public enum ArtifactType
     {
@@ -36,5 +37,16 @@ public class ArtifactClass : ItemClass
     public override int GetValue()
     {
         return value;
+    }
+
+    public bool SwapCollectStatus()
+    {
+        isCollected = !isCollected;
+        return isCollected;
+    }
+
+    public bool Collected()
+    {
+        return isCollected;
     }
 }

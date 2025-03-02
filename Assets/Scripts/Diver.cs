@@ -57,6 +57,7 @@ public abstract class Diver : MonoBehaviour
     {
         if (isStunned) return;  // Diver takes no action while stunned
         if (isBlinded) return;  // Optional: Divers could take reduced or no actions when blinded
+        if (GodModeStatus()) return; // Diver takes no damage if in god mode
 
         oxygenLevel -= damage;
         Debug.Log("Diver's oxygen level: " + oxygenLevel);
@@ -68,4 +69,9 @@ public abstract class Diver : MonoBehaviour
 
         }
     }
+
+    // Determines if the diver is in god mode.
+    // All pirates should always have this set to false.
+    // Player is the only one that can toggle this.
+    public abstract bool GodModeStatus();
 }

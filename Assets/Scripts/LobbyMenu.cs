@@ -7,15 +7,16 @@ using UnityEngine.SceneManagement;
 
 public class LobbyMenu : MonoBehaviour
 {
-    public AudioClip playMusic;
-    public AudioClip bgMusic;
+    private LobbyCountdown lobbyCountdown;
 
+    private void Start()
+    {
+        lobbyCountdown = FindObjectOfType<LobbyCountdown>();
+    }
+    
     public void RunGame(int sceneIndexNum)
     {
-        if (sceneIndexNum == 3 || sceneIndexNum == 2)
-            SoundManager.Instance.PlayBackgroundMusic(playMusic);
-        else
-            SoundManager.Instance.PlayBackgroundMusic(bgMusic);
-        SceneManager.LoadSceneAsync(sceneIndexNum); //edited to handle multiple scenes
+        lobbyCountdown.StartCountdown(sceneIndexNum);
+        //SceneManager.LoadSceneAsync(sceneIndexNum); //edited to handle multiple scenes
     }
 }

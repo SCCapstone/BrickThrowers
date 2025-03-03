@@ -86,6 +86,10 @@ public class Player : Diver
         base.Update();
         if (isInSubmarine) {
             MoveSubmarine();
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                ToggleSubmarine();
+            }
         } else {
             Movement();
         }
@@ -171,6 +175,7 @@ public class Player : Diver
         if (collision.gameObject == submarine)
         {
             nearSubmarine = false;
+            Debug.Log("Left the sub");
         }
     }
 
@@ -179,6 +184,12 @@ public class Player : Diver
     /// </summary>
     private void OxygenAndStamina()
     {
+        if (isInSubmarine)
+        {
+            currentOxygen += oxygenDepletionRate * Time.deltaTime * 2;
+            currentOxygen = Mathf.Clamp(currentOxygen, 0, maxOxygen);
+        }
+
         float oxygenDepletion = oxygenDepletionRate * Time.deltaTime;
 
         if (currentStamina <= lowStaminaThreshold)
@@ -301,22 +312,12 @@ public class Player : Diver
 
     private void MoveSubmarine()
     {
+        if (!isInSubmarine || submarineRb == null ) return;
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         float x = horizontalInput * speed;
         float y = verticalInput * verticalSpeed;
-        // if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
-        // {
-        //     isSwimmingFast = true;
-        //     x *= fastSpeedMultiplier;
-        // }
-        // else
-        // {
-        //     isSwimmingFast = false;
-        // }
-        // rb.velocity = new Vector2(x, y);
-        // if (!swimsfx.isPlaying)
-        //     swimsfx.Play();
 
         Vector2 move = new Vector2(horizontalInput,verticalInput) * submarineSpeed;
         submarineRb.velocity = move;
@@ -331,13 +332,17 @@ public class Player : Diver
             playerSprite.enabled = false;
             rb.simulated = false;
             transform.position = submarine.transform.position;
-
+            transform.SetParent(submarine.transform);
+            Debug.Log("Entering sub");
         }
         else 
         {
             playerSprite.enabled = true;
             rb.simulated = true;
+            transform.SetParent(null);
             transform.position = submarine.transform.position + new Vector3(0, -1, 0);
+            Debug.Log("Leaving sub");
+            submarineRb.velocity = Vector2.zero;
         }
     }
 

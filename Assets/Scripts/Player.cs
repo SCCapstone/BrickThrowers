@@ -51,7 +51,9 @@ public class Player : Diver
     public float staminaDepletionRate = 2f;
     public float staminaRecoveryRate = 1f;
     public float lowStaminaThreshold = 5f;
-
+    
+    public GameObject SummaryScreen;
+    private bool isDead;
     // Stamina (oxygen for Players will be covered by the Diver's oxygenLevel)
     private float currentStamina;
 
@@ -64,6 +66,8 @@ public class Player : Diver
         maxXp,
         currency,
         currentLevel;
+
+    public int artifactsGot = 0;
 
     // Status effects
     [SerializeField]
@@ -143,6 +147,8 @@ public class Player : Diver
         }
         OxygenAndStamina();
         Sprint();
+        gameOver();
+        moveDirection = move.ReadValue<Vector2>();
     }
 
     private void FixedUpdate()
@@ -257,8 +263,35 @@ public class Player : Diver
     // Added because was in PirateB.cs, and causing compile errors
     public bool HasArtifact()
     {
+        
         return true;
     }
+
+
+
+        //Counts up the artifacts you have gotten
+    public string ArtifactCount()
+    {
+        if (HasArtifact()){
+        artifactsGot += 1;
+        }
+        string artifactstaken = artifactsGot.ToString();
+        return artifactstaken;
+
+    }
+
+
+
+    public void gameOver(){
+        if(GetOxygenLevel() <= 0 && !isDead){
+            isDead = true;
+
+            SummaryScreen.SetActive(true);
+           
+        }
+    }
+
+    
 
     public void RemoveArtifact() { }
 

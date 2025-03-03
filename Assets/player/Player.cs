@@ -66,6 +66,9 @@ public class Player : Diver
     public float submarineSpeed = 70f;
     public GameObject submarine;
     public Rigidbody2D submarineRb;
+    public GameObject visibilityRadius;
+    public float visibilityScaleFactor = 1.8f;
+
     
     private bool isInSubmarine = false;
     private bool nearSubmarine = false;
@@ -331,16 +334,23 @@ public class Player : Diver
         {
             playerSprite.enabled = false;
             rb.simulated = false;
-            transform.position = submarine.transform.position;
+            Vector3 subScale = visibilityRadius.transform.localScale;
+            subScale *= visibilityScaleFactor;
+            visibilityRadius.transform.localScale = subScale;
+            // transform.position = submarine.transform.position;
             transform.SetParent(submarine.transform);
+            transform.localPosition = Vector2.zero;
             Debug.Log("Entering sub");
         }
         else 
         {
             playerSprite.enabled = true;
             rb.simulated = true;
+            Vector3 subScale = visibilityRadius.transform.localScale;
+            subScale /= visibilityScaleFactor;
+            visibilityRadius.transform.localScale = subScale;
             transform.SetParent(null);
-            transform.position = submarine.transform.position + new Vector3(0, -1, 0);
+            // transform.position = submarine.transform.position + new Vector3(0, -1, 0);
             Debug.Log("Leaving sub");
             submarineRb.velocity = Vector2.zero;
         }

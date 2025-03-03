@@ -816,13 +816,19 @@ MonoBehaviour:
   staminaDepletionRate: 2
   staminaRecoveryRate: 1
   lowStaminaThreshold: 5
-  rb: {fileID: 0}
+  rb: {fileID: 7729310634631522524}
+  playerSprite: {fileID: 5144279821008140657}
   currentXp: 0
   maxXp: 0
   currency: 0
   currentLevel: 0
   isPoisoned: 0
   sprintKey: 304
+  submarineSpeed: 70
+  submarine: {fileID: 0}
+  submarineRb: {fileID: 0}
+  visibilityRadius: {fileID: 4121263498419148496}
+  visibilityScaleFactor: 1.8
 --- !u!50 &7729310634631522524
 Rigidbody2D:
   serializedVersion: 4

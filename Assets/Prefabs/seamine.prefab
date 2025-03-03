@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86f1116d2400c144aa1fea6c5338029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeSFX: {fileID: 0}
+  explodeSFX: {fileID: 563303007183700840}
   specificCollider: {fileID: 8721719916008700468}
 --- !u!58 &8721719916008700468
 CircleCollider2D:
@@ -315,7 +315,7 @@ AudioSource:
   m_GameObject: {fileID: 3962436499904225884}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: d73fc82eecc519b40b352035028061ca, type: 2}
   m_audioClip: {fileID: 8300000, guid: 891b3a0187643b44095d97aba84e5620, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

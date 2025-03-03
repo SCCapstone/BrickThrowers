@@ -25,6 +25,7 @@ public class Player : Diver
     public PlayerInputActions playerControls;
     private InputAction move;
     private InputAction sprint;
+    private InputAction subInteract;
 
     // Movement
     public float speed = 40f;
@@ -57,6 +58,7 @@ public class Player : Diver
     private float currentStamina;
 
     public Rigidbody2D rb;
+    public SpriteRenderer playerSprite;
     private Vector2 movement;
 
     //Xp and Currency
@@ -77,6 +79,18 @@ public class Player : Diver
     // Keybinds
     public KeyCode sprintKey = KeyCode.LeftShift;
 
+    // Submarine Controls
+    public float submarineSpeed = 70f;
+    public GameObject submarine;
+    public Rigidbody2D submarineRb;
+    public GameObject visibilityRadius;
+    public float visibilityScaleFactor = 1.8f;
+
+    // Submarine variables
+    private bool isInSubmarine = false;
+    private bool nearSubmarine = false;
+    //private KeyCode subInteract = KeyCode.L;
+
     #region Setup Functions
     private void Awake()
     {
@@ -87,8 +101,10 @@ public class Player : Diver
     {
         move = playerControls.Player.Move;
         sprint = playerControls.Player.Sprint;
+        subInteract = playerControls.Player.InteractSubmarine;
         move.Enable();
         sprint.Enable();
+        subInteract.Enable();
 
         PauseMenu.onGodMode += GodMode;
     }
@@ -97,6 +113,7 @@ public class Player : Diver
     {
         move.Disable();
         sprint.Disable();
+        subInteract.Disable();
         PauseMenu.onGodMode -= GodMode;
     }
 
@@ -111,6 +128,23 @@ public class Player : Diver
     public void Update()
     {
         base.Update();
+        if (isInSubmarine)
+        {
+            Debug.Log("i got here");
+            MoveSubmarine();
+            if (subInteract.WasPressedThisFrame())
+            {
+                ToggleSubmarine();
+            }
+        }
+        else
+        {
+            moveDirection = move.ReadValue<Vector2>();
+        }
+        if (nearSubmarine && subInteract.WasPressedThisFrame())
+        {
+            ToggleSubmarine();
+        }
         OxygenAndStamina();
         Sprint();
         gameOver();
@@ -119,8 +153,10 @@ public class Player : Diver
 
     private void FixedUpdate()
     {
-        //rb.velocity = new Vector2(moveDirection.x * speed, moveDirection.y * verticalSpeed);
-        Movement(new Vector2(moveDirection.x * speed, moveDirection.y * verticalSpeed));
+        if (!isInSubmarine)
+        {
+            Movement(new Vector2(moveDirection.x * speed, moveDirection.y * verticalSpeed));
+        }
     }
     #endregion Setup Functions
 
@@ -140,6 +176,12 @@ public class Player : Diver
     /// </summary>
     private void OxygenAndStamina()
     {
+        if (isInSubmarine)
+        {
+            oxygenLevel += oxygenDepletionRate * Time.deltaTime * 2;
+            oxygenLevel = Mathf.Clamp(oxygenLevel, 0, maxOxygen);
+        }
+
         float oxygenDepletion = oxygenDepletionRate * Time.deltaTime;
 
         if (currentStamina <= lowStaminaThreshold)
@@ -288,10 +330,11 @@ public class Player : Diver
         currentXp = 0;
     }
 
+    #region Cheat Mode
     /// <summary>
     /// Turns on a cheat mode for the player. This should be used for debugging purposes only.
     /// The player should not be able to use this in the final game.
-    /// This prevents oxygen depletion, loss of stamina when sprinting, 
+    /// This prevents oxygen depletion, loss of stamina when sprinting,
     /// </summary>
     private void GodMode()
     {
@@ -316,4 +359,69 @@ public class Player : Diver
     {
         return godMode;
     }
+    #endregion
+    #region Collision
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject == submarine)
+        {
+            nearSubmarine = true;
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject == submarine)
+        {
+            nearSubmarine = false;
+            Debug.Log("Left the sub");
+        }
+    }
+    #endregion
+    #region Submarine movement
+    private void MoveSubmarine()
+    {
+        if (!isInSubmarine || submarineRb == null)
+            return;
+
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        float x = horizontalInput * speed;
+        float y = verticalInput * verticalSpeed;
+
+        Vector2 move = new Vector2(horizontalInput, verticalInput) * submarineSpeed;
+        submarineRb.velocity = move;
+    }
+
+    private void ToggleSubmarine()
+    {
+        isInSubmarine = !isInSubmarine;
+
+        if (isInSubmarine)
+        {
+            playerSprite.enabled = false;
+            rb.simulated = false;
+            Vector3 subScale = visibilityRadius.transform.localScale;
+            subScale *= visibilityScaleFactor;
+            visibilityRadius.transform.localScale = subScale;
+            // transform.position = submarine.transform.position;
+            transform.SetParent(submarine.transform);
+            transform.localPosition = Vector2.zero;
+            Debug.Log("Entering sub");
+        }
+        else
+        {
+            playerSprite.enabled = true;
+            rb.simulated = true;
+            Vector3 subScale = visibilityRadius.transform.localScale;
+            subScale /= visibilityScaleFactor;
+            visibilityRadius.transform.localScale = subScale;
+            transform.SetParent(null);
+            transform.position = submarine.transform.position + new Vector3(0, -1, -1);
+            Debug.Log("Leaving sub");
+            submarineRb.velocity = Vector2.zero;
+        }
+    }
+
+    #endregion
 }

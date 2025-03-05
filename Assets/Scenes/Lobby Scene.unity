@@ -1096,7 +1096,7 @@ GameObject:
   - component: {fileID: 805543459}
   - component: {fileID: 805543460}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: LobbyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3719,6 +3719,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 805543456}
     m_Modifications:
+    - target: {fileID: 740018206963735329, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740018206963735329, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740018206963735329, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244462436148117126, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244462436148117126, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244462436148117126, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244462436148117126, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5082327642739179400, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3799,6 +3827,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5457743231843218731, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5919725837916716850, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3806,6 +3838,10 @@ PrefabInstance:
     - target: {fileID: 5919725837916716850, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 6019939599180895226, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6913206494210679110, guid: 1cdfc4be538bd5c4992d481f71328e60, type: 3}
       propertyPath: m_Name

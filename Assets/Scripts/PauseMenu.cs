@@ -55,6 +55,7 @@ public class PauseMenu : MonoBehaviour
     {
         try
         {
+            Debug.Log("invoke cheat mode");
             onGodMode?.Invoke();
         }
         catch (Exception e)

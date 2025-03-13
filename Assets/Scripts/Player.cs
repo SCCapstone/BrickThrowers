@@ -1,9 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Video;
+using Debug = UnityEngine.Debug;
 
 /// <summary>
 /// Defines what a player should do.
@@ -53,7 +58,12 @@ public class Player : Diver
     public float lowStaminaThreshold = 5f;
     
     public GameObject SummaryScreen;
+    public GameObject Clock;
+    public TimerScript timer;
+    public float playerTime;
     private bool isDead;
+
+    public float gameTime;
     // Stamina (oxygen for Players will be covered by the Diver's oxygenLevel)
     private float currentStamina;
 
@@ -123,6 +133,7 @@ public class Player : Diver
         rb.gravityScale = waterGravityScale;
         rb.drag = waterDrag;
         currentStamina = maxStamina;
+        
     }
 
     public void Update()
@@ -280,16 +291,29 @@ public class Player : Diver
 
     }
 
+    //Getting timer for player
+    public float getTimer()
+    {
+      playerTime =  timer.TimeLeft;
+      Debug.Log(playerTime);
+      return playerTime;
+
+    }
 
 
     public void gameOver(){
-        if(GetOxygenLevel() <= 0 && !isDead){
+        if(GetOxygenLevel() <= 0 && !isDead || getTimer() == 0){
             isDead = true;
 
             SummaryScreen.SetActive(true);
            
         }
+
+        
+        
+
     }
+
 
     
 

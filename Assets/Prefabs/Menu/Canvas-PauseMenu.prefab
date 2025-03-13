@@ -566,11 +566,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1399667314537927685}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d414afaeedcbb8444b56105840455db1, type: 3}
+  m_Script: {fileID: 11500000, guid: 86f0345be507db644a1cc3988b7ae917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 593152375966845198}
-  optionsMenu: {fileID: 78815229978395929}
+  optionsMenu: {fileID: 2560413485468696101}
   bgMusic: {fileID: 0}
 --- !u!1 &2142668400319803728
 GameObject:
@@ -1289,11 +1289,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
---- !u!1 &78815229978395929 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4414720569050176712, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}
-  m_PrefabInstance: {fileID: 4349420605558774225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7620008064396820713 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6188942085721446712, guid: c7dd80ca72057194293b4c0dfe5ce667, type: 3}

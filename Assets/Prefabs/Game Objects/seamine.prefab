@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 10.24, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1553340556701517936
@@ -165,7 +165,7 @@ SpriteRenderer:
   m_Size: {x: 10.24, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &3962436499904225884
@@ -246,7 +246,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e7ad0dc20cea961409e6af3d1a98e1f2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 183fa156c8072bd4cb92208454bf1f85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -266,11 +266,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3962436499904225884}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a86f1116d2400c144aa1fea6c5338029, type: 3}
+  m_Script: {fileID: 11500000, guid: 6673f7eb98d59694299f1a8dc3b9e5a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeSFX: {fileID: 563303007183700840}
-  specificCollider: {fileID: 8721719916008700468}
+  explodeSFX: {fileID: 0}
+  specificCollider: {fileID: 0}
 --- !u!58 &8721719916008700468
 CircleCollider2D:
   m_ObjectHideFlags: 0

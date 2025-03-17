@@ -1388,6 +1388,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &3376312110908650974
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,12 +1678,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4414720569050176712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e41f1748f68cd642b1c26a21feb94fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 04491aaba5ae96b4687316202e30a769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMixer: {fileID: 24100000, guid: d73fc82eecc519b40b352035028061ca, type: 2}
-  masterVolume: {fileID: 2764914239477959316}
-  musicSlider: {fileID: 1092899937795004856}
+  audioMixer: {fileID: 24100000, guid: d73fc82eecc519b40b352035028061ca, type: 2}
 --- !u!114 &277392738994465396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3215,9 +3225,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8168399059361980455}
-        m_TargetAssemblyTypeName: VolumeSettings, GameAssembly
-        m_MethodName: SetMasterVolume
-        m_Mode: 1
+        m_TargetAssemblyTypeName: SettingsMenu, GameAssembly
+        m_MethodName: SetVolume
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3888,9 +3898,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8168399059361980455}
-        m_TargetAssemblyTypeName: VolumeSettings, Assembly-CSharp
-        m_MethodName: SetMusicVolume
-        m_Mode: 1
+        m_TargetAssemblyTypeName: SettingsMenu, GameAssembly
+        m_MethodName: SetVolume
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

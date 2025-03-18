@@ -1948,7 +1948,7 @@ GameObject:
   - component: {fileID: 6188942085721446712}
   - component: {fileID: 7400560329518199487}
   m_Layer: 5
-  m_Name: Options Panel-scott
+  m_Name: Options Panel-GodMode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

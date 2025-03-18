@@ -1678,10 +1678,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4414720569050176712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04491aaba5ae96b4687316202e30a769, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e41f1748f68cd642b1c26a21feb94fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: d73fc82eecc519b40b352035028061ca, type: 2}
+  myMixer: {fileID: 24100000, guid: d73fc82eecc519b40b352035028061ca, type: 2}
+  masterVolume: {fileID: 2764914239477959316}
+  musicSlider: {fileID: 1092899937795004856}
 --- !u!114 &277392738994465396
 MonoBehaviour:
   m_ObjectHideFlags: 0

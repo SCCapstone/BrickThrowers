@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 903e83971bcab1f48a35f7f0d991a90c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 2004933834005372472}
   rotationSpeed: 100
   flashlight: {fileID: 8262336731833588720}
 --- !u!1 &3048694082122345384
@@ -804,7 +804,7 @@ MonoBehaviour:
   speed: 40
   verticalSpeed: 40
   fastSpeedMultiplier: 1.5
-  swimsfx: {fileID: 0}
+  swimsfx: {fileID: 6489362396185637889}
   baseSpeed: 40
   baseVerticalSpeed: 40
   waterDrag: 3
@@ -833,7 +833,7 @@ MonoBehaviour:
   submarineSpeed: 70
   submarine: {fileID: 0}
   submarineRb: {fileID: 0}
-  visibilityRadius: {fileID: 0}
+  visibilityRadius: {fileID: 4121263498419148496}
   visibilityScaleFactor: 1.8
 --- !u!50 &7729310634631522524
 Rigidbody2D:

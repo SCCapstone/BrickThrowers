@@ -290,7 +290,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""6c378012-a22e-4f12-a6fd-d960319095e9"",
                     ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=1),Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Sprint"",

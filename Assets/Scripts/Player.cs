@@ -40,15 +40,15 @@ public class Player : Diver
     private float currentSpeedMultiplier = 1f;
     private const float BASE_SPEED_MULTIPLIER = 1f;
     private const float FAST_SPEED_MULTIPLIER = 1.5f;
-    private const float SLOW_SPEED_MULTIPLIER = 0.5f;
+    private const float SLOW_SPEED_MULTIPLIER = 0.7f;
 
 
     public AudioSource swimsfx;
     private bool isSwimmingFast = false;
     private Vector2 moveDirection;
 
-    private float baseSpeed = 40f;
-    private float baseVerticalSpeed = 40f;
+    private float baseSpeed = 45f;
+    private float baseVerticalSpeed = 45f;
 
     // Water Physics
     public float waterDrag = 3f;

@@ -35,13 +35,20 @@ public class Player : Diver
     // Movement
     public float speed = 40f;
     public float verticalSpeed = 40f;
-    public float fastSpeedMultiplier = 1.5f;
+
+    // Multiplier
+    private float currentSpeedMultiplier = 1f;
+    private const float BASE_SPEED_MULTIPLIER = 1f;
+    private const float FAST_SPEED_MULTIPLIER = 1.5f;
+    private const float SLOW_SPEED_MULTIPLIER = 0.5f;
+
+
     public AudioSource swimsfx;
     private bool isSwimmingFast = false;
     private Vector2 moveDirection;
 
-    public float baseSpeed = 40f;
-    public float baseVerticalSpeed = 40f;
+    private float baseSpeed = 40f;
+    private float baseVerticalSpeed = 40f;
 
     // Water Physics
     public float waterDrag = 3f;
@@ -56,7 +63,7 @@ public class Player : Diver
     public float staminaDepletionRate = 2f;
     public float staminaRecoveryRate = 1f;
     public float lowStaminaThreshold = 5f;
-    
+
     public GameObject SummaryScreen;
     public GameObject Clock;
     public TimerScript timer;
@@ -64,6 +71,7 @@ public class Player : Diver
     private bool isDead;
 
     public float gameTime;
+
     // Stamina (oxygen for Players will be covered by the Diver's oxygenLevel)
     private float currentStamina;
 
@@ -99,24 +107,30 @@ public class Player : Diver
     // Submarine variables
     private bool isInSubmarine = false;
     private bool nearSubmarine = false;
+
     //private KeyCode subInteract = KeyCode.L;
 
     #region Setup Functions
     private void Awake()
     {
         playerControls = new PlayerInputActions();
+        sprint = GetComponent<PlayerInput>().actions["Sprint"];
+
+        sprint.started += OnSprintPress;
+        sprint.canceled += OnSprintRelease;
     }
 
     private void OnEnable()
     {
         move = playerControls.Player.Move;
-        sprint = playerControls.Player.Sprint;
         subInteract = playerControls.Player.InteractSubmarine;
+
         move.Enable();
-        sprint.Enable();
         subInteract.Enable();
 
         PauseMenu.onGodMode += GodMode;
+        SeaWeed.onPlayerSlowedDown += SeaweedSpeedSlowed;
+        SeaWeed.onPlayerSpeedRestored += SeaweedSpeedRestored;
     }
 
     private void OnDisable()
@@ -124,7 +138,10 @@ public class Player : Diver
         move.Disable();
         sprint.Disable();
         subInteract.Disable();
+
         PauseMenu.onGodMode -= GodMode;
+        SeaWeed.onPlayerSlowedDown -= SeaweedSpeedSlowed;
+        SeaWeed.onPlayerSpeedRestored -= SeaweedSpeedRestored;
     }
 
     void Start()
@@ -133,7 +150,6 @@ public class Player : Diver
         rb.gravityScale = waterGravityScale;
         rb.drag = waterDrag;
         currentStamina = maxStamina;
-        
     }
 
     public void Update()
@@ -141,7 +157,6 @@ public class Player : Diver
         base.Update();
         if (isInSubmarine)
         {
-            Debug.Log("i got here");
             MoveSubmarine();
             if (subInteract.WasPressedThisFrame())
             {
@@ -157,7 +172,6 @@ public class Player : Diver
             ToggleSubmarine();
         }
         OxygenAndStamina();
-        Sprint();
         gameOver();
         moveDirection = move.ReadValue<Vector2>();
     }
@@ -166,17 +180,19 @@ public class Player : Diver
     {
         if (!isInSubmarine)
         {
+            speed = baseSpeed * currentSpeedMultiplier;
+            verticalSpeed = baseVerticalSpeed * currentSpeedMultiplier;
             Movement(new Vector2(moveDirection.x * speed, moveDirection.y * verticalSpeed));
         }
     }
     #endregion Setup Functions
-
+    #region Movement, Oxygen, Stamina
     /// <summary>
     /// Determines movement and plays SFX of movement.
     /// </summary>
     /// <param name="moveVec"></param>
     private void Movement(Vector2 moveVec)
-    {
+    { 
         rb.velocity = moveVec;
         if (!swimsfx.isPlaying)
             swimsfx.Play();
@@ -222,23 +238,37 @@ public class Player : Diver
     /// <summary>
     /// Allows the player to swim faster.
     /// </summary>
-    public void Sprint()
+    //public void Sprint()
+    //{
+    //    if (sprint.IsPressed() && currentStamina > 0)
+    //    {
+    //        isSwimmingFast = true;
+    //        // Use the base speeds multiplied by the sprint factor.
+    //        speed = baseSpeed * FAST_SPEED_MULTIPLIER;
+    //        verticalSpeed = baseVerticalSpeed * FAST_SPEED_MULTIPLIER;
+    //    }
+    //    else
+    //    {
+    //        isSwimmingFast = false;
+    //        // Revert back to the normal speeds.
+    //        speed = baseSpeed;
+    //        verticalSpeed = baseVerticalSpeed;
+    //    }
+    //}
+
+    public void OnSprintPress(InputAction.CallbackContext context)
     {
-        if (sprint.IsPressed() && currentStamina > 0)
-        {
-            isSwimmingFast = true;
-            // Use the base speeds multiplied by the sprint factor.
-            speed = baseSpeed * fastSpeedMultiplier;
-            verticalSpeed = baseVerticalSpeed * fastSpeedMultiplier;
-        }
-        else
-        {
-            isSwimmingFast = false;
-            // Revert back to the normal speeds.
-            speed = baseSpeed;
-            verticalSpeed = baseVerticalSpeed;
-        }
+        isSwimmingFast = true;
+        currentSpeedMultiplier = FAST_SPEED_MULTIPLIER;
     }
+
+    public void OnSprintRelease(InputAction.CallbackContext context)
+    {
+        isSwimmingFast = false;
+        currentSpeedMultiplier = BASE_SPEED_MULTIPLIER;
+    }
+    #endregion
+    #region Status Effects
 
     // Added because was in Lionfish.cs, and causing compile errors
     /// <summary>
@@ -264,66 +294,71 @@ public class Player : Diver
         staminaRecoveryRate = 1;
     }
 
-    //// Added because was in PirateA.cs, and causing compile errors
-    //public void TakeDamage(int val) {}
-
-    //// Added because was in Shark.cs, and causing compile errors
-    //// Also, does this not conflict with TakeDamage?
-    //public void TakeOxygenDamage(int val) {}
-
-    // Added because was in PirateB.cs, and causing compile errors
-    public bool HasArtifact()
-    {
-        
-        return true;
-    }
-
-
-
-        //Counts up the artifacts you have gotten
-    public string ArtifactCount()
-    {
-        if (HasArtifact()){
-        artifactsGot += 1;
-        }
-        string artifactstaken = artifactsGot.ToString();
-        return artifactstaken;
-
-    }
-
-    //Getting timer for player
-    public float getTimer()
-    {
-      playerTime =  timer.TimeLeft;
-      Debug.Log(playerTime);
-      return playerTime;
-
-    }
-
-
-    public void gameOver(){
-        if(GetOxygenLevel() <= 0 && !isDead || getTimer() == 0){
-            isDead = true;
-
-            SummaryScreen.SetActive(true);
-           
-        }
-
-        
-        
-
-    }
-
-
-    
-
-    public void RemoveArtifact() { }
-
     // Added becasue was in Squid.cs, and casuing compile errors
     public void Blind(float duration) { }
 
     // Added because was in Jellyfish.cs, and causing compile errors
     public void Stun(float duration) { }
+
+    /// <summary>
+    /// Slows down the player's speed when they collide with seaweed.
+    /// </summary>
+    /// <param name="speed">The new speed value to apply after slowing down.</param>
+    public void SeaweedSpeedSlowed(float speed)
+    {
+        currentSpeedMultiplier = SLOW_SPEED_MULTIPLIER;
+        sprint.Disable();
+    }
+
+    /// <summary>
+    /// Returns the player's speed to normal after colliding with seaweed.
+    /// </summary>
+    /// <param name="speed"></param>
+    public void SeaweedSpeedRestored()
+    {
+        currentSpeedMultiplier = BASE_SPEED_MULTIPLIER;
+        sprint.Enable();
+
+    }
+
+    #endregion
+
+    // Added because was in PirateB.cs, and causing compile errors
+    public bool HasArtifact()
+    {
+        return true;
+    }
+
+    //Counts up the artifacts you have gotten
+    public string ArtifactCount()
+    {
+        if (HasArtifact())
+        {
+            artifactsGot += 1;
+        }
+        string artifactstaken = artifactsGot.ToString();
+        return artifactstaken;
+    }
+
+    //Getting timer for player
+    public float getTimer()
+    {
+        playerTime = timer.TimeLeft;
+        Debug.Log(playerTime);
+        return playerTime;
+    }
+
+    public void gameOver()
+    {
+        if (GetOxygenLevel() <= 0 && !isDead || getTimer() == 0)
+        {
+            isDead = true;
+
+            SummaryScreen.SetActive(true);
+        }
+    }
+
+    public void RemoveArtifact() { }
 
     // Added becasue was in Octopus.cs, and causing compile errors.
     public void SuppressLight(bool val) { }

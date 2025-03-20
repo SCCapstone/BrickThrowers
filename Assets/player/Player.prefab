@@ -804,7 +804,7 @@ MonoBehaviour:
   speed: 40
   verticalSpeed: 40
   fastSpeedMultiplier: 1.5
-  swimsfx: {fileID: 0}
+  swimsfx: {fileID: 6489362396185637889}
   baseSpeed: 40
   baseVerticalSpeed: 40
   waterDrag: 3
@@ -833,7 +833,7 @@ MonoBehaviour:
   submarineSpeed: 70
   submarine: {fileID: 0}
   submarineRb: {fileID: 0}
-  visibilityRadius: {fileID: 0}
+  visibilityRadius: {fileID: 4121263498419148496}
   visibilityScaleFactor: 1.8
 --- !u!50 &7729310634631522524
 Rigidbody2D:

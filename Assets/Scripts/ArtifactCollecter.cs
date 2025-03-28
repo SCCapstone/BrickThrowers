@@ -15,41 +15,27 @@ public class ArtifactCollecter : MonoBehaviour
      * I need to keep the value somewhere.
      */
 
-
-    // Actions
-    public static event Action<bool> onPlayerCollectArtifact;
-
     // Variables
-    public static int totalValue = 0; // Start with total value at a scene.
+    [SerializeField] public static int totalValue = 0; // Start with total value at a scene.
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("value = " + totalValue);
         if (collision.gameObject.CompareTag("Item"))
         {
-            // Each Game Item game object has a variable named gameItem that is an instance of the ItemClass script.
+            // Each Game Item game object has a variable named GameItem that is an instance of the ItemClass script.
             // Determine if this variable is a type of ArtifactClass. This can be done by checking the Item Type enum and if it is stated as an Artifact.
-            // If it is, cast the gameItem variable to an ArtifactClass.
+            // If it is, cast the gameItewm variable to an ArtifactClass.
             // If not, ignore this operation.
+            Debug.Log("value = " + totalValue);
 
-            if (
-                collision.gameObject.GetComponent<GameItem>().gameItem.itemType == ItemClass.ItemType.artifact
-            )
+            GameItem gameItem = collision.gameObject.GetComponent<GameItem>();
+            if (!gameItem.InDropZone && gameItem.gameItemClass.itemType == ItemClass.ItemType.artifact)
             {
-                ArtifactClass artifact = (ArtifactClass) collision.gameObject.GetComponent<GameItem>().gameItem;
-                if (!artifact.inDropZone)
-                {
-                    totalValue += artifact.value;
-                    artifact.inDropZone = true;
-                }
+                gameItem.InDropZone = true;
+                ArtifactClass artifact = (ArtifactClass)gameItem.gameItemClass;
+                totalValue += artifact.value;
             }
-            else
-            {
-                return;
-            }
+
         }
     }
-
-    
-
 }

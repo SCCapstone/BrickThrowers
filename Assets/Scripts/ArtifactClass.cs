@@ -13,7 +13,6 @@ public class ArtifactClass : ItemClass
     [Header("Artifact Details")]
     public ArtifactType artifactType;
     public int value;
-    public bool inDropZone = false; // Determines if the artifact is in a drop zone, default is false.
 
     public enum ArtifactType
     {

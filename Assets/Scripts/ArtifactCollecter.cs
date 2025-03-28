@@ -34,6 +34,7 @@ public class ArtifactCollecter : MonoBehaviour
                 gameItem.InDropZone = true;
                 ArtifactClass artifact = (ArtifactClass)gameItem.gameItemClass;
                 totalValue += artifact.value;
+                collision.gameObject.GetComponent<Rigidbody2D>().simulated = false;
             }
 
         }

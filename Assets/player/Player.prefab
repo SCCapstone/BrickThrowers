@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingItems: []
   slotHolder: {fileID: 7335966046746230471}
-  player: {fileID: 0}
+  player: {fileID: 4266255823342324771}
   moveDelay: 0.2
 --- !u!1 &3049713214640290295
 GameObject:

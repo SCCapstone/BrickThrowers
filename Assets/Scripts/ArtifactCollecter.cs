@@ -15,9 +15,6 @@ public class ArtifactCollecter : MonoBehaviour
      * I need to keep the value somewhere.
      */
 
-    // Variables
-    [SerializeField] public static int totalValue = 0; // Start with total value at a scene.
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Item"))

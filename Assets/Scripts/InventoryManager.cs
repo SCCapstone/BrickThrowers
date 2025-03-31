@@ -353,4 +353,17 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
     #endregion
+
+    public void RemoveArtifacts()
+    {
+        foreach (SlotClass slot in items)
+        {
+            if (slot != null && slot.Item.GetType() == typeof(ArtifactClass))
+            {
+                LevelManager.Instance.AddScore(slot.Item.GetValue());
+                Remove(slot);
+                Debug.Log("Removing Artifact");
+            }
+        }
+    }
 }

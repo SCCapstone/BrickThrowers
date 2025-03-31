@@ -110,6 +110,9 @@ public class Player : Diver
 
     //private KeyCode subInteract = KeyCode.L;
 
+    // Inventory Management
+    public static InventoryManager inventory;
+
     #region Setup Functions
     private void Awake()
     {
@@ -147,6 +150,7 @@ public class Player : Diver
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        inventory = GetComponent<InventoryManager>();
         rb.gravityScale = waterGravityScale;
         rb.drag = waterDrag;
         currentStamina = maxStamina;
@@ -467,6 +471,7 @@ public class Player : Diver
             transform.SetParent(submarine.transform);
             transform.localPosition = Vector2.zero;
             Debug.Log("Entering sub");
+            inventory.RemoveArtifacts();
         }
         else
         {

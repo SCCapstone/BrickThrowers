@@ -1,15 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
-    private Currency playerCurrency = new Currency();
-    private IDataService dataService = new JsonDataService();
+    private static Currency playerCurrency = new Currency();
+    private static IDataService dataService = new JsonDataService();
+    private const string CURRENCY_PATH = "currency.json";
 
-    public void SerializeJson()
+    private void SerializeJson()
     {
-        if (dataService.SaveData("currency.json", playerCurrency))
+        if (dataService.SaveData(CURRENCY_PATH, playerCurrency))
         {
             Debug.Log("Data saved successfully");
         }
@@ -19,9 +21,22 @@ public class CurrencyManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void LoadJsonCurrency()
     {
-        playerCurrency.currencyAmount = 100;
-        SerializeJson(); 
+        try
+        {
+            playerCurrency = dataService.LoadData<Currency>(CURRENCY_PATH);
+            
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Could not load file!");
+            throw e;
+        }
+    }
+
+    public Currency ReturnCurrency()
+    {
+        return playerCurrency;
     }
 }

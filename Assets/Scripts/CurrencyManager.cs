@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Currency playerCurrency = new Currency();
+    private IDataService dataService = new JsonDataService();
+
+    public void SerializeJson()
     {
-        
+        if (dataService.SaveData("currency.json", playerCurrency))
+        {
+            Debug.Log("Data saved successfully");
+        }
+        else
+        {
+            Debug.Log("Data failed to save");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        playerCurrency.currencyAmount = 100;
+        SerializeJson(); 
     }
 }

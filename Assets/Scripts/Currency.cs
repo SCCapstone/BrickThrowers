@@ -6,5 +6,5 @@ using UnityEngine;
 [Serializable]
 public class Currency
 {
-    public int totalValue = 0; // Start with total value at a scene.
+    public int currencyAmount = 0; // Start with total value at a scene.
 }

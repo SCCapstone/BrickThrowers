@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 718e24ad115fb7843bd22cb03d2fc440, type: 3}
-  m_Name: Flashlight
+  m_Name: Emerald
   m_EditorClassIdentifier: 
-  itemID: 0
-  itemName: 
-  itemIcon: {fileID: 0}
+  itemID: 17
+  itemName: Emerald
+  itemIcon: {fileID: 21300000, guid: b82d5872a967ffd4f86f16101b32b9c3, type: 3}
   prefab: {fileID: 0}
   artifactType: 0
   value: 0

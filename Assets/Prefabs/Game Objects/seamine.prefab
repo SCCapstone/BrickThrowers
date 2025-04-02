@@ -269,8 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86f1116d2400c144aa1fea6c5338029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeSFX: {fileID: 0}
-  specificCollider: {fileID: 0}
+  explodeSFX: {fileID: 563303007183700840}
 --- !u!58 &8721719916008700468
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -12,9 +12,6 @@ public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiv
 {
     public ItemClass[] itemsDatabase; // list of all items in game
 
-    /// <summary>
-    /// Deseralize this data object to something useful for Unity to use, like a database.
-    /// </summary>
     public void OnAfterDeserialize()
     {
         for (int i = 0; i < itemsDatabase.Length; i++)

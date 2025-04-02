@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingItems: []
   slotHolder: {fileID: 7335966046746230471}
-  player: {fileID: 0}
+  player: {fileID: 4266255823342324771}
   moveDelay: 0.2
 --- !u!1 &3049713214640290295
 GameObject:
@@ -803,10 +803,7 @@ MonoBehaviour:
   oxygenLevel: 100
   speed: 40
   verticalSpeed: 40
-  fastSpeedMultiplier: 1.5
   swimsfx: {fileID: 6489362396185637889}
-  baseSpeed: 40
-  baseVerticalSpeed: 40
   waterDrag: 3
   waterGravityScale: 50
   maxOxygen: 100
@@ -821,8 +818,8 @@ MonoBehaviour:
   timer: {fileID: 0}
   playerTime: 0
   gameTime: 0
-  rb: {fileID: 0}
-  playerSprite: {fileID: 0}
+  rb: {fileID: 7729310634631522524}
+  playerSprite: {fileID: 5144279821008140657}
   currentXp: 0
   maxXp: 0
   currency: 0

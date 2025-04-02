@@ -466,6 +466,8 @@ public class Player : Diver
             // transform.position = submarine.transform.position;
             transform.SetParent(submarine.transform);
             transform.localPosition = Vector2.zero;
+            // Unfreeze rigid body constrains
+            submarineRb.constraints = RigidbodyConstraints2D.None;
             Debug.Log("Entering sub");
         }
         else
@@ -478,6 +480,8 @@ public class Player : Diver
             transform.SetParent(null);
             transform.position = submarine.transform.position + new Vector3(0, -1, -1);
             Debug.Log("Leaving sub");
+            // Add constraints to the submarine, freezing the entire submersible.
+            submarineRb.constraints = RigidbodyConstraints2D.FreezeAll;
             submarineRb.velocity = Vector2.zero;
         }
     }

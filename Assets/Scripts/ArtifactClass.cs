@@ -22,16 +22,6 @@ public class ArtifactClass : ItemClass
         basic,
     }
 
-    // Action subscription
-    //private void OnEnable()
-    //{
-    //    ArtifactCollecter.onPlayerCollectArtifact += ChangeDropStatus;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    ArtifactCollecter.onPlayerCollectArtifact -= ChangeDropStatus;
-    //}
     public override ItemClass GetItem()
     {
         return this;

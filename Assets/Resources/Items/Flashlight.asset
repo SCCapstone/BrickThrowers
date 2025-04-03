@@ -17,3 +17,4 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 88a13f0c183a62e48ad25434108cda3a, type: 3}
   prefab: {fileID: 1701392776176077062, guid: 29a937a822dc6af4899414088ed2d350, type: 3}
   itemType: 1
+  cost: 100

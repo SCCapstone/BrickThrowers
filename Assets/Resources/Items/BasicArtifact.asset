@@ -17,5 +17,6 @@ MonoBehaviour:
   itemIcon: {fileID: 0}
   prefab: {fileID: 0}
   itemType: 0
+  cost: 0
   artifactType: 3
-  value: 0
+  value: 25

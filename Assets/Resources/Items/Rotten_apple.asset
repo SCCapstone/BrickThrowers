@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 718e24ad115fb7843bd22cb03d2fc440, type: 3}
   m_Name: Rotten_apple
   m_EditorClassIdentifier: 
-  itemID: 0
-  itemName: 
-  itemIcon: {fileID: 0}
+  itemID: 18
+  itemName: Rotten Apple
+  itemIcon: {fileID: 21300000, guid: 2de0d4f7b69b260448c39bafd6c3973a, type: 3}
   prefab: {fileID: 0}
-  artifactType: 0
+  artifactType: 2
   value: 0

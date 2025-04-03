@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5418247a52c8de149a86a655d1db03a8, type: 3}
-  m_Name: Artifacts
+  m_Name: UniqueArtifact
   m_EditorClassIdentifier: 
-  itemID: 0
-  itemName: 
+  itemID: 4
+  itemName: Unique Artifact
   itemIcon: {fileID: 0}
   prefab: {fileID: 0}
   itemType: 0

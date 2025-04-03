@@ -3386,7 +3386,7 @@ GameObject:
   - component: {fileID: 1821087123}
   - component: {fileID: 1821087122}
   m_Layer: 5
-  m_Name: CoinsTMP
+  m_Name: CoinsText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3625,7 +3625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190b68517c52b5f4686ba2df7d33e3a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currencyText: {fileID: 0}
+  currencyText: {fileID: 1821087122}
 --- !u!1 &1939870443
 GameObject:
   m_ObjectHideFlags: 0

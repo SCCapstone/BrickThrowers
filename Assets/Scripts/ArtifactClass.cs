@@ -16,9 +16,10 @@ public class ArtifactClass : ItemClass
 
     public enum ArtifactType
     {
+        unique,
         rare,
         common,
-        garbage,
+        basic,
     }
 
     // Action subscription

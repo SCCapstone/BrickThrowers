@@ -90,7 +90,7 @@ public class ItemInteractManager : MonoBehaviour
         if (pickUpItemAction.WasPressedThisFrame() && GameObject.FindWithTag("Item"))
         {
             // Add the item to the inventory
-            bool success = inventory.Add(nearestItems[0].GetComponent<GameItem>().gameItem);
+            bool success = inventory.Add(nearestItems[0].GetComponent<GameItem>().gameItemClass);
 
             if (success)
             {

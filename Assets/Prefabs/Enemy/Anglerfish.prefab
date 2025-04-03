@@ -97,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 6805865486030843734}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 14fec92dd075202478af8bf100cd79d7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0e152bdab8a269d438cd109eeb216708, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -120,12 +120,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44a76b7c42604e97485da8419f829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swimSpeed: 10
+  swimSpeed: 2
   directionChangeInterval: 5
   anglerLight: {fileID: 0}
   lightIntensity: 3
   flickerFrequency: 0.1
-  detectionRange: 30
+  detectionRange: 5
   oxygenDamage: 0.1
 --- !u!50 &6338305029418221268
 Rigidbody2D:

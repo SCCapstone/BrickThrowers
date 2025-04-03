@@ -1,15 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SeaWeed : MonoBehaviour
 {
-    public Collider2D specificCollider;
+    public static event Action<float> onPlayerSlowedDown;
+    public static event Action onPlayerSpeedRestored;
 
-    void OnCollisionEnter2D(Collision2D other)
+    private const float REDUCED_SPEED = 20f;
+
+    // Triggers if player enteres the sea weed
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.CompareTag("Player")) {
-            // Functionality to slow down the player's speed
+        if (collision.CompareTag("Player"))
+        {
+            Debug.Log("Player slowed down");
+            onPlayerSlowedDown?.Invoke(REDUCED_SPEED);
+        }
+    }
+
+    // Triggers if player exits the sea weed
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            Debug.Log("Player speed restored");
+            onPlayerSpeedRestored?.Invoke();
         }
     }
 }

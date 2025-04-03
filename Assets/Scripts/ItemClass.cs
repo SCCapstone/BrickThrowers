@@ -21,6 +21,7 @@ public abstract class ItemClass : ScriptableObject
     public string itemName;
     public Sprite itemIcon;
     public GameObject prefab; // The GameObject prefab concerning with the item
+    public ItemType itemType;
 
     /// <summary>
     /// Returns the item.

@@ -98,6 +98,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InteractSubmarine"",
+                    ""type"": ""Button"",
+                    ""id"": ""45409c08-5d76-458f-91fe-78761f9528d7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -281,7 +290,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""6c378012-a22e-4f12-a6fd-d960319095e9"",
                     ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=1),Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Sprint"",
@@ -351,6 +360,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bbe7a1f-45c1-43f3-8caf-7020520e4248"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractSubmarine"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -946,6 +966,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_PickUp = m_Player.FindAction("PickUp", throwIfNotFound: true);
         m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
         m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
+        m_Player_InteractSubmarine = m_Player.FindAction("InteractSubmarine", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1027,6 +1048,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PickUp;
     private readonly InputAction m_Player_Drop;
     private readonly InputAction m_Player_Use;
+    private readonly InputAction m_Player_InteractSubmarine;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1039,6 +1061,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @PickUp => m_Wrapper.m_Player_PickUp;
         public InputAction @Drop => m_Wrapper.m_Player_Drop;
         public InputAction @Use => m_Wrapper.m_Player_Use;
+        public InputAction @InteractSubmarine => m_Wrapper.m_Player_InteractSubmarine;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1072,6 +1095,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Use.started += instance.OnUse;
             @Use.performed += instance.OnUse;
             @Use.canceled += instance.OnUse;
+            @InteractSubmarine.started += instance.OnInteractSubmarine;
+            @InteractSubmarine.performed += instance.OnInteractSubmarine;
+            @InteractSubmarine.canceled += instance.OnInteractSubmarine;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1100,6 +1126,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Use.started -= instance.OnUse;
             @Use.performed -= instance.OnUse;
             @Use.canceled -= instance.OnUse;
+            @InteractSubmarine.started -= instance.OnInteractSubmarine;
+            @InteractSubmarine.performed -= instance.OnInteractSubmarine;
+            @InteractSubmarine.canceled -= instance.OnInteractSubmarine;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1290,6 +1319,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPickUp(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
         void OnUse(InputAction.CallbackContext context);
+        void OnInteractSubmarine(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

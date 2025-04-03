@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4354763325453435087}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 420.03967, y: 409.05563, z: -1}
   m_LocalScale: {x: 1.5078, y: 1.5078, z: 1.5078}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -140,7 +140,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4354763325453435087}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -171,4 +171,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8157fd7f184291b4ca2c3b54321d4560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameItem: {fileID: 11400000, guid: 9368d606459685c48901c92f1b328b0b, type: 2}
+  gameItemClass: {fileID: 11400000, guid: 9368d606459685c48901c92f1b328b0b, type: 2}

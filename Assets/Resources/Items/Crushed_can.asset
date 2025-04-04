@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 718e24ad115fb7843bd22cb03d2fc440, type: 3}
   m_Name: Crushed_can
   m_EditorClassIdentifier: 
-  itemID: 19
+  itemID: 10
   itemName: Crushed can
   itemIcon: {fileID: 21300000, guid: 5a4e718925b59df4bbddff06c4a8cd1f, type: 3}
   prefab: {fileID: 0}
+  itemType: 0
   artifactType: 2
-  value: 0
+  value: 5

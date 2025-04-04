@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-  private static LevelManager Instance;
+  public static LevelManager Instance;
 
   private int score = 0;
   private int maxScore = 0;
@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour
 
   public void CalculateLevelScore()
   {
-    artifacts = GameObject.FindObjectsOfType<Collectible>();
+    artifacts = GameObject.FindObjectsOfType<ArtifactClass>();
 
     foreach (ArtifactClass item in artifacts)
     {

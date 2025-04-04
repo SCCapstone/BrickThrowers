@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 6446664897478153375}
   - component: {fileID: 9081414893362151056}
   - component: {fileID: 4799069223956836129}
-  m_Layer: 0
+  - component: {fileID: 7583465149536014425}
+  m_Layer: 8
   m_Name: Submarine
   m_TagString: Submarine
   m_Icon: {fileID: 0}
@@ -148,7 +149,19 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 3
+--- !u!114 &7583465149536014425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318226631378734156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcac1d818245ff4fbe49e9d4a8d2428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3469409407115928002
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 617553488810952200}
   - component: {fileID: 6312481417194636972}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}

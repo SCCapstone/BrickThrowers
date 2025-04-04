@@ -815,11 +815,11 @@ MonoBehaviour:
   lowStaminaThreshold: 5
   SummaryScreen: {fileID: 753782345251476611, guid: cdbf79d6dccf4134bb77ac82154c1d04, type: 3}
   Clock: {fileID: 0}
-  timer: {fileID: 0}
+  timer: {fileID: 8401143633625999845, guid: a7279a9bbb5726f4091e5004c4c669be, type: 3}
   playerTime: 0
   gameTime: 0
-  rb: {fileID: 0}
-  playerSprite: {fileID: 0}
+  rb: {fileID: 7729310634631522524}
+  playerSprite: {fileID: 1161383369301233706}
   currentXp: 0
   maxXp: 0
   currency: 0
@@ -829,8 +829,8 @@ MonoBehaviour:
   sprintKey: 304
   submarineSpeed: 70
   submarine: {fileID: 0}
-  submarineRb: {fileID: 0}
-  visibilityRadius: {fileID: 0}
+  submarineRb: {fileID: 4799069223956836129, guid: 14e23a155d87af744ae32dd20429bfeb, type: 3}
+  visibilityRadius: {fileID: 318226631378734156, guid: 14e23a155d87af744ae32dd20429bfeb, type: 3}
   visibilityScaleFactor: 1.8
 --- !u!50 &7729310634631522524
 Rigidbody2D:

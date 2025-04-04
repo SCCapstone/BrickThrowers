@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 718e24ad115fb7843bd22cb03d2fc440, type: 3}
   m_Name: CommonChalice
   m_EditorClassIdentifier: 
-  itemID: 0
-  itemName: 
-  itemIcon: {fileID: 0}
-  prefab: {fileID: 0}
+  itemID: 3
+  itemName: Chalice
+  itemIcon: {fileID: 21300000, guid: af63c5848da641f4e9944edac900320b, type: 3}
+  prefab: {fileID: 4354763325453435087, guid: 18d7c76f527deee4eb4dea8862583c1b, type: 3}
+  itemType: 0
   artifactType: 0
-  value: 0
+  value: 100

@@ -361,7 +361,7 @@ public class InventoryManager : MonoBehaviour
             if (slot != null && slot.Item.GetType() == typeof(ArtifactClass))
             {
                 LevelManager.Instance.AddScore(slot.Item.GetValue());
-                Remove(slot);
+                Remove(slot.Item);
                 Debug.Log("Removing Artifact");
             }
         }

@@ -21,6 +21,16 @@ public class ArtifactClass : ItemClass
         garbage,
     }
 
+    // Action subscription
+    //private void OnEnable()
+    //{
+    //    ArtifactCollecter.onPlayerCollectArtifact += ChangeDropStatus;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    ArtifactCollecter.onPlayerCollectArtifact -= ChangeDropStatus;
+    //}
     public override ItemClass GetItem()
     {
         return this;
@@ -30,11 +40,5 @@ public class ArtifactClass : ItemClass
     {
         // Artifacts cannot be used
         return false;
-    }
-
-    /// <returns>The value of the artifact.</returns>
-    public override int GetValue()
-    {
-        return value;
     }
 }

@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 4270500735961918399}
   - component: {fileID: 4052410838510290687}
   m_Layer: 0
-  m_Name: Text (Legacy)
+  m_Name: Timer Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

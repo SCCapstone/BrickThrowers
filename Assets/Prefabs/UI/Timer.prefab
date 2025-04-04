@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 4270500735961918399}
   - component: {fileID: 4052410838510290687}
   m_Layer: 0
-  m_Name: Text (Legacy)
+  m_Name: Timer Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,13 +265,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6066718736377401734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf0a006422cf5a44811ba6ed5ba61f3, type: 3}
+  m_Script: {fileID: 11500000, guid: f3a66d61e4d226b4db6bf83423321f3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TimeLeft: 0
   TimerOn: 0
-  TimerText: {fileID: 0}
-  SummaryScreen: {fileID: 0}
+  TimerText: {fileID: 4052410838510290687}
+  SummaryScreen: {fileID: 753782345251476611, guid: cdbf79d6dccf4134bb77ac82154c1d04, type: 3}
 --- !u!1 &8535594175717614011
 GameObject:
   m_ObjectHideFlags: 0

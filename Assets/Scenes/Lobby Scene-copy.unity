@@ -907,7 +907,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 667336155}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2407280250685167152}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &667336155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3941,35 +3953,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1485870832630364032, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1485870832630364032, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1485870832630364032, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 62.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1485870832630364032, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2977076775704251162, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2977076775704251162, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2977076775704251162, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 187.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2977076775704251162, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3923494860365308742, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
       propertyPath: m_Pivot.x
@@ -4064,6 +4076,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
+--- !u!1 &2407280250685167152 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7779011675217992324, guid: 2db1985613f06f54486da371eeace6cb, type: 3}
+  m_PrefabInstance: {fileID: 2407280250685167151}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6586643790013426534
 PrefabInstance:
   m_ObjectHideFlags: 0

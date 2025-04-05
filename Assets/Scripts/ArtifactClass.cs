@@ -16,12 +16,21 @@ public class ArtifactClass : ItemClass
 
     public enum ArtifactType
     {
-        unique,
         rare,
         common,
-        basic,
+        garbage,
     }
 
+    // Action subscription
+    //private void OnEnable()
+    //{
+    //    ArtifactCollecter.onPlayerCollectArtifact += ChangeDropStatus;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    ArtifactCollecter.onPlayerCollectArtifact -= ChangeDropStatus;
+    //}
     public override ItemClass GetItem()
     {
         return this;

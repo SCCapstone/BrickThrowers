@@ -22,7 +22,6 @@ public abstract class ItemClass : ScriptableObject
     public Sprite itemIcon;
     public GameObject prefab; // The GameObject prefab concerning with the item
     public ItemType itemType;
-    [SerializeField] private int cost; // By default, artifacts are not for sale and cost 0.
 
     /// <summary>
     /// Returns the item.

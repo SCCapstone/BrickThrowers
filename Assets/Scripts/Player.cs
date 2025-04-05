@@ -128,7 +128,6 @@ public class Player : Diver
         move.Enable();
         subInteract.Enable();
 
-        PauseMenu.onGodMode += GodMode;
         SeaWeed.onPlayerSlowedDown += SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored += SeaweedSpeedRestored;
     }
@@ -139,7 +138,6 @@ public class Player : Diver
         sprint.Disable();
         subInteract.Disable();
 
-        PauseMenu.onGodMode -= GodMode;
         SeaWeed.onPlayerSlowedDown -= SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored -= SeaweedSpeedRestored;
     }

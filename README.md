@@ -43,14 +43,16 @@ The behavioral tests are in `/test/casper/`.
 - Unity Editor (at least 2022.3.47f1)
 - Unity Test Framework
 
-Tests can be found in the ```Assets/tests``` folder. The tests are written in C# and are run using the Unity Test Framework. The tests are run in the Unity Editor. Access this by Window -> General -> Test Runner.
-They are seperated into two types: PlayMode tests and EditMode tests. PlayMode tests are used to test the game as a whole, while EditMode tests are used to test individual components of the game.
-
-For play mode tests, some will require user input to continue with their tasks.  
+For the Unity Test Framework, this setup is done by the following:
+- Opening the Unity Editor, find the "Window" tab in the top left corner.
+- Open the "Package Manager" from the drop down menu.
+- Find and install the "Test Framework" package.
 
 ## Running Tests
 
-Explain how to run the automated tests.
+Above the Scene View, there will be a tab labeled "Test Runner". Click on it to open the Test Runner window. If it does not appear, then you can open it via going to Window > General > Test Runner.
+
+In the Test Runner window, you will see two tabs: "Edit Mode" and "Play Mode". Click on the tab you want to run tests for. In the Edit Mode tab, you will see a list of all the tests in the project. You can run all tests by clicking the "Run All" button, or you can run individual tests by clicking the "Run" button next to each test. The results of the tests will be displayed in the Test Runner window.
 
 # Authors
 
@@ -61,3 +63,5 @@ tylerstargel (Tyler Stargel) - thetylerstargel@gmail.com
 Crunko (Joshua Kolbusz) - joshuakolbusz@gmail.com
 
 kjthaoo (Kelly Thao) - kthao43726@gmail.com
+
+tristenfornes (Tristen Fornes) - tfornes@email.sc.edu

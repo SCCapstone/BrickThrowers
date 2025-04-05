@@ -15,5 +15,7 @@ MonoBehaviour:
   itemID: 0
   itemName: Antidote
   itemIcon: {fileID: 21300000, guid: ee5a80b962299a04da93b410c8e5e702, type: 3}
-  prefab: {fileID: 0}
-  itemType: 0
+  prefab: {fileID: 5376685551288485977, guid: 84e868e4ed358304396ac48be64d9641, type: 3}
+  itemType: 2
+  cost: 100
+  consumableType: 0

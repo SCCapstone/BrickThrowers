@@ -265,13 +265,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6066718736377401734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c0b79cc759c9464a9a6ec0bed39166d, type: 3}
+  m_Script: {fileID: 11500000, guid: fbf9a04dc92033844a98d586910efcaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TimeLeft: 0
   TimerOn: 0
   TimerText: {fileID: 4052410838510290687}
-  SummaryScreen: {fileID: 0}
+  SummaryScreen: {fileID: 1437487451553079516}
 --- !u!1 &8535594175717614011
 GameObject:
   m_ObjectHideFlags: 0

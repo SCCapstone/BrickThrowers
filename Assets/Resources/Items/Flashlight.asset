@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1ab0278e7d9dd6458f2cb8b579933a8, type: 3}
+  m_Script: {fileID: 11500000, guid: ee7c76de2913d6b41988b4e4ecdfb4e6, type: 3}
   m_Name: Flashlight
   m_EditorClassIdentifier: 
-  itemID: 1
+  itemID: 0
   itemName: Flashlight
-  itemIcon: {fileID: 21300000, guid: 88a13f0c183a62e48ad25434108cda3a, type: 3}
-  prefab: {fileID: 1701392776176077062, guid: 29a937a822dc6af4899414088ed2d350, type: 3}
+  itemIcon: {fileID: 21300000, guid: 656bc7cc91e881340b96c4d14f7b26c8, type: 3}
+  prefab: {fileID: 0}
   itemType: 1

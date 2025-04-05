@@ -107,11 +107,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 887609495574822501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e846fd1a17534e4690b28be286d6be9, type: 3}
+  m_Script: {fileID: 11500000, guid: bf11887080d05d24186eb29927d2d5b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  summaryScreen: {fileID: 0}
-  Artifacts: {fileID: 0}
+  summaryScreen: {fileID: 1764963123453583115}
+  Artifacts: {fileID: 5607607607086417306}
 --- !u!1 &1764963123453583115
 GameObject:
   m_ObjectHideFlags: 0

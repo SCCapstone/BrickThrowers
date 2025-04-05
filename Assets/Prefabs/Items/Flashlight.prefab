@@ -168,7 +168,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1701392776176077062}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8157fd7f184291b4ca2c3b54321d4560, type: 3}
+  m_Script: {fileID: 11500000, guid: cc48c87b1421cd841a60c5383bd528ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameItemClass: {fileID: 11400000, guid: 6a97c176c736ed14f89f746c56ef8c26, type: 2}
+  player: {fileID: 0}
+  rotationSpeed: 100
+  flashlight: {fileID: 0}

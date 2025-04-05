@@ -8,7 +8,7 @@ public class LobbyManager : MonoBehaviour
 
     void Start()
     {
-        selectedClass = "None";  // Default value
+        selectedClass = "None";
     }
 
     public void SelectHarpooner()
@@ -23,7 +23,6 @@ public class LobbyManager : MonoBehaviour
         Debug.Log("Porter selected");
     }
 
-    // Method to retrieve the selected class when transitioning to gameplay
     public string GetSelectedClass()
     {
         return selectedClass;
@@ -31,15 +30,12 @@ public class LobbyManager : MonoBehaviour
 
     public void ExitClassSelection()
     {
-        // Save the selected class to PlayerPrefs
         PlayerPrefs.SetString("PlayerClass", selectedClass);
-        PlayerPrefs.Save();  // Make sure to save the data
+        PlayerPrefs.Save();
 
-        // Optionally, debug log to check that class is saved
         Debug.Log("Class saved: " + selectedClass);
 
-        // Close the class selection panel (you may disable the panel or load a different UI)
-        gameObject.SetActive(false); // Example of deactivating the class selection panel
+        gameObject.SetActive(false);
     }
 
 }

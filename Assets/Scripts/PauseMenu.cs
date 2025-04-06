@@ -1,14 +1,16 @@
 // kjthao 2024
+// God mode additions by Reshlynt.
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     // Actions
-    public static event Action onGodMode;
+    public static event Action<bool> onGodModeActivated;
 
     // Game Objects
     [SerializeField]
@@ -17,8 +19,14 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     GameObject optionsMenu;
 
+    [SerializeField]
+    private Image godModeIndicator;
+
     // Sound
     public AudioClip bgMusic;
+
+    // Button click
+    private bool isButtonClicked = false;
 
     public void Pause()
     {
@@ -55,8 +63,22 @@ public class PauseMenu : MonoBehaviour
     {
         try
         {
-            Debug.Log("invoke cheat mode");
-            onGodMode?.Invoke();
+            // Set the indicator color, godModeIndicator, which is an Image, to the color green when it is clicked.
+            // By default, god mode is disabled.
+            // If it is clicked again, god mode has been disabled. Thus, return the Image to the color red.
+            
+            if (!isButtonClicked)
+            {
+                godModeIndicator.color = Color.green;
+                isButtonClicked = true;
+            }
+            else
+            {
+                godModeIndicator.color = Color.red;
+                isButtonClicked = false;
+            }
+            onGodModeActivated?.Invoke(isButtonClicked);
+            
         }
         catch (Exception e)
         {
@@ -64,9 +86,3 @@ public class PauseMenu : MonoBehaviour
         }
     }
 }
-
-/*
-Note: Working on trying to figure out the little warning:
-"The referenced script on this Behaviour (Game Object 'Pause Menu') is missing!"
-Solved! (had to go inside prefab that I created and asign the script there i think.)
-*/

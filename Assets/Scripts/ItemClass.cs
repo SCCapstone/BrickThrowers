@@ -37,12 +37,15 @@ public abstract class ItemClass : ScriptableObject
     /// <returns>True if the item can be used, otherwise false.</returns>
     public abstract bool Use(Player player);
 
-    /// <summary>
-    /// Run this when calling for an artifact's value.
-    /// </summary>
-    /// <returns></returns>
-    public virtual int GetValue()
+    public int ReturnCost()
     {
-        return 0;
+        if (itemType == ItemType.artifact)
+        {
+            return 0;
+        }
+        else
+        {
+            return cost;
+        }
     }
 }

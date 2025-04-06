@@ -128,7 +128,7 @@ public class Player : Diver
         move.Enable();
         subInteract.Enable();
 
-        PauseMenu.onGodMode += GodMode;
+        GodModeIndicator.onGodModeActivated += GodMode;
         SeaWeed.onPlayerSlowedDown += SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored += SeaweedSpeedRestored;
     }
@@ -139,7 +139,7 @@ public class Player : Diver
         sprint.Disable();
         subInteract.Disable();
 
-        PauseMenu.onGodMode -= GodMode;
+        GodModeIndicator.onGodModeActivated -= GodMode;
         SeaWeed.onPlayerSlowedDown -= SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored -= SeaweedSpeedRestored;
     }
@@ -392,13 +392,15 @@ public class Player : Diver
     #region Cheat Mode
     /// <summary>
     /// Turns on a cheat mode for the player. This should be used for debugging purposes only.
-    /// The player should not be able to use this in the final game.
+    /// The player should not be able to use this in the final game - well, except if they really wanted to via Options.
     /// This prevents oxygen depletion, loss of stamina when sprinting,
     /// </summary>
     private void GodMode()
     {
         // First, invert the bool. This covers the button being used to enable/disable god mode.
         godMode = !godMode;
+
+        Debug.Log($"Acquired signal from GodModeIndicator. God mode is now " + (godMode ? "enabled." : "disabled."));
 
         if (godMode)
         {

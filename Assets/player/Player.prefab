@@ -1129,8 +1129,8 @@ MonoBehaviour:
   timer: {fileID: 0}
   playerTime: 0
   gameTime: 0
-  rb: {fileID: 0}
-  playerSprite: {fileID: 0}
+  rb: {fileID: 7729310634631522524}
+  playerSprite: {fileID: 1161383369301233706}
   currentXp: 0
   maxXp: 0
   currency: 0

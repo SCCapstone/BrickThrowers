@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Copyright 2025 Scott Do
+/// Retains the means of saving and loading currency JSON data.
+/// </summary>
 public class CurrencyManager : MonoBehaviour
 {
     private static Currency playerCurrency = new Currency();

@@ -5,18 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class GodModeIndicator : MonoBehaviour
 {
+    // Game objects
     [SerializeField] private GameObject godModeIndicatorPrefab;
-    private static bool isGodModeActive = false;
-    private string lobbySceneName;
-    private string activeSceneName;
 
-    private void Start()
-    {
-        lobbySceneName = SceneManager.GetActiveScene().name;
-    }
-    // Start is called before the first frame update
+    // Activation
+    private static bool isGodModeActive = false;
+
+    // Scene names
+    private static string lobbySceneName;
+    private string activeSceneName;
+    
+    // Actions
+    public static event System.Action onGodModeActivated;
+
     void Awake()
     {
+        lobbySceneName = SceneManager.GetActiveScene().name;
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -49,13 +53,14 @@ public class GodModeIndicator : MonoBehaviour
 
         // Check if the current scene is the lobby scene. For now, leave debug statements.
         // Do not destroy or change or create any activity, only a debug statement notifying that the scene has changed.
-        if (activeSceneName == lobbySceneName)
+        if (activeSceneName != lobbySceneName)
         {
-            Debug.Log($"Scene changed to {activeSceneName}. God mode status: {isGodModeActive}");   
+            Debug.Log($"Scene changed to {activeSceneName}. God mode status: {isGodModeActive}");
+            onGodModeActivated?.Invoke();
         }
         else
         {
-            Debug.Log($"Scene changed to {activeSceneName}. God mode status: {isGodModeActive}");
+            Debug.Log($"Hooray! You are in the {activeSceneName} which should be the {lobbySceneName}. God mode status: {isGodModeActive}");
         }
 
 

@@ -70,14 +70,19 @@ public class InventoryManager : MonoBehaviour
     {
         moveInventory = inputActions.Player.InventoryManagement;
         moveInventory.Enable();
+
         moveInventory.performed += OnMovePerformed;
         moveInventory.canceled += OnMoveCanceled;
+        ItemSceneTransporter.startingItemsArrived += AddStartingItems;
+
     }
 
     private void OnDisable()
     {
         moveInventory.performed -= OnMovePerformed;
         moveInventory.canceled -= OnMoveCanceled;
+        ItemSceneTransporter.startingItemsArrived -= AddStartingItems;
+
         moveInventory.Disable();
     }
 
@@ -353,4 +358,15 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
     #endregion
+    private void AddStartingItems(List<ItemClass> startItems)
+    {
+        // populate the starting array.
+        // But first, initialize the starting array. The length is equivalent to the number of items in the List.
+        // Once the array is initialized, add the items to the array.
+        startingItems = new SlotClass[startItems.Count];
+        for (int i = 0; i < startItems.Count; i++)
+        {
+            startingItems[i] = new SlotClass(startItems[i]);
+        }
+    }
 }

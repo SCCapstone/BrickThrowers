@@ -8,12 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: 45d896778e3e70146a87879438f90702
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Lobby Scene-old.unity
     guid: 53535fd8b5ac22a49b600f1542a012f4
   - enabled: 1
     path: Assets/Scenes/BasicMap.unity
-    guid: c72a57d643168a340b89ca9e49c58e30
+    guid: fed561bb1fda1f942932a50ce7e18f1a
   - enabled: 1
     path: Assets/Scenes/Map2.unity
     guid: c68ddefb709929d48b0e92dffb0c23d3

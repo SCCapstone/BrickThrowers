@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3844164320919051615}
   - component: {fileID: 1905351359562677212}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quit Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 040685a559a31614f9a79e0bc36dbe99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -434,7 +434,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 753782345251476611, guid: cdbf79d6dccf4134bb77ac82154c1d04, type: 3}
+      - m_Target: {fileID: 2989820893998000954, guid: c8bcc381bc85fb242aa6acfb6d97dbd4, type: 3}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -593,7 +593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8773254392873084740
 Transform:
   m_ObjectHideFlags: 0

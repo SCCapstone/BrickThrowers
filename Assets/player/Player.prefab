@@ -814,6 +814,7 @@ MonoBehaviour:
   staminaRecoveryRate: 1
   lowStaminaThreshold: 5
   SummaryScreen: {fileID: 753782345251476611, guid: cdbf79d6dccf4134bb77ac82154c1d04, type: 3}
+  ruSureScreen: {fileID: 8429833388472881700, guid: 00704f0f45f97324b9aa663e14c4b048, type: 3}
   Clock: {fileID: 0}
   timer: {fileID: 8401143633625999845, guid: a7279a9bbb5726f4091e5004c4c669be, type: 3}
   playerTime: 0
@@ -827,6 +828,7 @@ MonoBehaviour:
   artifactsGot: 0
   isPoisoned: 0
   sprintKey: 304
+  completeMission: 99
   submarineSpeed: 70
   submarine: {fileID: 0}
   submarineRb: {fileID: 4799069223956836129, guid: 14e23a155d87af744ae32dd20429bfeb, type: 3}

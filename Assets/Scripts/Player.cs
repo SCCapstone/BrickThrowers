@@ -364,7 +364,8 @@ public class Player : Diver
         }
         if(Input.GetKeyDown(completeMission))
         {
-
+            // Might need to check if need to re-enable cursor
+            ruSureScreen.SetActive(true);
         }
     }
 

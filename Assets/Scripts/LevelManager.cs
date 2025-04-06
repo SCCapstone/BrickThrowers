@@ -6,11 +6,33 @@ public class LevelManager : MonoBehaviour
 {
   public static LevelManager Instance;
 
-  private int score = 0;
+  private int score = 0 ;
+  public int Score
+    {
+        get { return score; }
+        set { score = value; }
+    }
+  
   private int maxScore = 0;
+  public int MaxScore
+    {
+        get { return maxScore; }
+        set { maxScore = value; }
+    }
+  
   private int collected = 0;
+  public int Collected
+    {
+        get { return collected; }
+        set { collected = value; }
+    }
 
-  ArtifactClass[] artifacts;
+  private ArtifactClass[] artifacts;
+  public ArtifactClass[] Artifacts
+    {
+        get { return artifacts; }
+        set { artifacts = value; }
+    }
 
    private void Awake()
     {
@@ -50,5 +72,15 @@ public class LevelManager : MonoBehaviour
   public int CalculateExp()
   {
     return score * 10;  // Change when game testing, needs balancing
+  }
+
+  public int CalculateCurr()
+  {
+    return score / 10; // Change when game testing, needs balancing
+  }
+
+  public void UpdatePlayer()
+  {
+    // Update the player w/ new info
   }
 }

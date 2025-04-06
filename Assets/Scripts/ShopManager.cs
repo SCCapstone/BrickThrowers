@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +15,12 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private ItemDatabaseObject purchaseDatabase;
 
     // Currency manager
-    private CurrencyManager currency;
+    [SerializeField] private CurrencyManager currency;
 
-    // Start is called before the first frame update
-    void Start()
+    // Actions
+    public static event Action<ItemClass> onItemPurchased;
+    
+    void Awake()
     {
         shopOverlay.SetActive(false);
         for (int i = 0; i < purchaseDatabase.itemsDatabase.Length; i++)
@@ -26,13 +29,11 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    /*
-     * Before the game loads, populate the store with the available purchasable items.
-     * 1. Create a prefab for the item.
-     * 2. Set that buy option prefab's item class to the item class in the database.
-     * 3. Add the buy option prefab to the content display.
-     * 4. Continue doing the above until all items are added to the store. Effectively going through the database.
-     */
+    private void OnEnable()
+    {
+        ShopItem.onItemPurchased += UpdatePurchase;
+    }
+    
 
     private void PopulateStore(int i)
     {
@@ -49,5 +50,37 @@ public class ShopManager : MonoBehaviour
         buyOption.GetComponent<ShopItem>().SetSprite();
     }
 
+    private void UpdatePurchase(int cost, ItemClass item)
+    {
+        /*
+         * What must be done:
+         * 1. Check if the player has enough currency. If yes, proceed. No, do nothing.
+         * 2. Update the currency.
+         * 3. Make a record of the purchase in a GameObject that will not be destroyed on load.
+         * 
+         * Q: Should I let then purchase the same item repeatedly? A: I really want to, because it would be funny. It is their money.
+         */
+
+        // Just in case, find the Game Object that has the currency manager and assign it.
+        if (currency == null)
+        {
+            currency = FindObjectOfType<CurrencyManager>();
+        }
+
+        Currency playerCurrency = currency.ReturnCurrency();
+
+        // Check if the player does not have enough currency. If so, do nothing.
+        if (playerCurrency.CurrencyAmount < cost)
+        {
+            Debug.Log("Not enough currency.");
+            return;
+        }
+
+        // Update the currency.
+        currency.UpdateCurrency(-cost);
+
+        // Make a record of the purchase in a GameObject that will not be destroyed on load.
+        onItemPurchased?.Invoke(item);
+    }
 
 }

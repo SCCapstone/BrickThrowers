@@ -867,6 +867,7 @@ MonoBehaviour:
   buyOptionPrefab: {fileID: 3934515747510054686, guid: 282cd348160fc68429a7920a4c5e11d9, type: 3}
   contentDisplay: {fileID: 4181578971748943153}
   purchaseDatabase: {fileID: 11400000, guid: 5219d722a8bdc1041ac37c2ff9e90514, type: 2}
+  currency: {fileID: 5212553646260548574}
 --- !u!1 &8848168986277820784
 GameObject:
   m_ObjectHideFlags: 0

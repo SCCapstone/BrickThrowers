@@ -1681,9 +1681,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ec751d1b1b14e4c951434f70ab3f15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMixer: {fileID: 0}
-  masterVolume: {fileID: 0}
-  musicSlider: {fileID: 0}
+  myMixer: {fileID: 24100000, guid: d73fc82eecc519b40b352035028061ca, type: 2}
+  masterVolume: {fileID: 2764914239477959316}
+  musicSlider: {fileID: 1092899937795004856}
 --- !u!114 &277392738994465396
 MonoBehaviour:
   m_ObjectHideFlags: 0

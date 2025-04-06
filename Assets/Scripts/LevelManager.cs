@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
 
   private int score = 0;
   private int maxScore = 0;
+  private int collected = 0;
 
   ArtifactClass[] artifacts;
 
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour
   void Start()
   {
     maxScore = 0;
+    collected = 0;
     CalculateLevelScore();
   }
 
@@ -31,6 +33,7 @@ public class LevelManager : MonoBehaviour
   public void AddScore(int val)
   {
     score += val;
+    collected++;
   }
 
   public void CalculateLevelScore()
@@ -42,5 +45,10 @@ public class LevelManager : MonoBehaviour
       maxScore += item.GetValue();
       // Debug.Log("Found collectible");
     }
+  }
+
+  public int CalculateExp()
+  {
+    return score * 10;  // Change when game testing, needs balancing
   }
 }

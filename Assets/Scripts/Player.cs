@@ -65,6 +65,7 @@ public class Player : Diver
     public float lowStaminaThreshold = 5f;
 
     public GameObject SummaryScreen;
+    public GameObject ruSureScreen;
     public GameObject Clock;
     public TimerScript timer;
     public float playerTime;
@@ -96,6 +97,7 @@ public class Player : Diver
 
     // Keybinds
     public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode completeMission = KeyCode.C;
 
     // Submarine Controls
     public float submarineSpeed = 70f;
@@ -359,6 +361,10 @@ public class Player : Diver
             isDead = true;
 
             SummaryScreen.SetActive(true);
+        }
+        if(Input.GetKeyDown(completeMission))
+        {
+
         }
     }
 

@@ -190,10 +190,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 485024251839321304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51dd17e7f2de62e49a8bb135c893d6b5, type: 3}
+  m_Script: {fileID: 11500000, guid: e23c197a4e449404ba2d1ca517e6bc4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolSpeed: 2
-  detectionRange: 5
+  speed: 4
+  attackRange: 2
   artifactStealRange: 1.5
-  health: 40
+  health: 50
+  damage: 10

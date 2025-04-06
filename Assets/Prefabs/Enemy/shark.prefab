@@ -190,11 +190,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1772480529884232397}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08f9bffc5e60e6b40a7ff862c60a607d, type: 3}
+  m_Script: {fileID: 11500000, guid: 04907e443a6d5034d97898b139418987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolSpeed: 10
-  chargeSpeed: 20
+  patrolSpeed: 3
+  chargeSpeed: 7
   chargeCooldown: 3
   detectionRange: 10
   chargeDuration: 2

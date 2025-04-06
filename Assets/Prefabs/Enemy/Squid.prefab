@@ -180,7 +180,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4289716940746945160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02383129a01bb19419261522658a0d40, type: 3}
+  m_Script: {fileID: 11500000, guid: 83447d034e63fd040982662e7227510c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ambushSpeed: 7

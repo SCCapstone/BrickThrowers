@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 6990112835692879343}
   - component: {fileID: 6338305029418221268}
   - component: {fileID: 1473061180669978501}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Anglerfish
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

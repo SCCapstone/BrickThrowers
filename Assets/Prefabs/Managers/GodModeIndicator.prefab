@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8527370081637891223}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a22a94f2d79baa94688ab08803781485, type: 3}
+  m_Script: {fileID: 11500000, guid: ea486d46249e78a40a14b4c87da7559b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   godModeIndicatorPrefab: {fileID: 8527370081637891223}

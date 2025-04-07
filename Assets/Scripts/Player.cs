@@ -65,6 +65,7 @@ public class Player : Diver
     public float lowStaminaThreshold = 5f;
 
     public GameObject SummaryScreen;
+    public GameObject ruSureScreen;
     public GameObject Clock;
     public TimerScript timer;
     public float playerTime;
@@ -96,6 +97,7 @@ public class Player : Diver
 
     // Keybinds
     public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode completeMission = KeyCode.C;
 
     // Submarine Controls
     public float submarineSpeed = 70f;
@@ -109,6 +111,9 @@ public class Player : Diver
     private bool nearSubmarine = false;
 
     //private KeyCode subInteract = KeyCode.L;
+
+    // Inventory Management
+    public static InventoryManager inventory;
 
     #region Setup Functions
     private void Awake()
@@ -147,6 +152,7 @@ public class Player : Diver
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        inventory = GetComponent<InventoryManager>();
         rb.gravityScale = waterGravityScale;
         rb.drag = waterDrag;
         currentStamina = maxStamina;
@@ -356,6 +362,11 @@ public class Player : Diver
 
             SummaryScreen.SetActive(true);
         }
+        if(Input.GetKeyDown(completeMission))
+        {
+            // Might need to check if need to re-enable cursor
+            ruSureScreen.SetActive(true);
+        }
     }
 
     public void RemoveArtifact() { }
@@ -471,6 +482,7 @@ public class Player : Diver
             // Unfreeze rigid body constrains
             submarineRb.constraints = RigidbodyConstraints2D.None;
             Debug.Log("Entering sub");
+            inventory.RemoveArtifacts();
         }
         else
         {

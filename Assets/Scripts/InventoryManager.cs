@@ -369,4 +369,16 @@ public class InventoryManager : MonoBehaviour
             startingItems[i] = new SlotClass(startItems[i]);
         }
     }
+    public void RemoveArtifacts()
+    {
+        foreach (SlotClass slot in items)
+        {
+            if (slot != null && slot.Item.GetType() == typeof(ArtifactClass))
+            {
+                LevelManager.Instance.AddScore(slot.Item.GetValue());
+                Remove(slot.Item);
+                Debug.Log("Removing Artifact");
+            }
+        }
+    }
 }

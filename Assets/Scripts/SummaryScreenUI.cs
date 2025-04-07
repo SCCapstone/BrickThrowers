@@ -3,19 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class SummaryScreenUI : MonoBehaviour
 {
 
     public GameObject summaryScreen;
+    
     [Header("Summary")]
-    [SerializeField] Text Artifacts;
+    [SerializeField] TextMeshProUGUI artifact;
+    [SerializeField] TextMeshProUGUI score;
+    [SerializeField] TextMeshProUGUI missed;
+    [SerializeField] TextMeshProUGUI exp;
+    [SerializeField] TextMeshProUGUI coins;
+
+    private LevelManager lm = LevelManager.Instance;
 
     Player player;
+    
     public void SetSummary(Player player){
         
-        Artifacts.text = ""+player.artifactsGot;
+        artifact.text = ""+player.artifactsGot;
 
+    }
+
+    public void SetSummary()
+    {
+        artifact.text = lm.Collected.ToString();
+        score.text = lm.Score.ToString();
+        missed.text = (lm.Artifacts.Length - lm.Collected).ToString();
+        exp.text = lm.CalculateExp().ToString();
+        coins.text = "$" + lm.CalculateCurr().ToString();
     }
 
     public void gameOver(Player player)
@@ -23,7 +42,7 @@ public class SummaryScreenUI : MonoBehaviour
         if (player.oxygenLevel <= 0)
         {
             summaryScreen.SetActive(true);
-            SetSummary(player);
+            SetSummary();
         }
     }
 

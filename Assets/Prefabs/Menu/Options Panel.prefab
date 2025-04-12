@@ -3227,9 +3227,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8168399059361980455}
-        m_TargetAssemblyTypeName: SettingsMenu, GameAssembly
-        m_MethodName: SetVolume
-        m_Mode: 4
+        m_TargetAssemblyTypeName: VolumeSettings, GameAssembly
+        m_MethodName: SetMasterVolume
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3900,9 +3900,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8168399059361980455}
-        m_TargetAssemblyTypeName: SettingsMenu, GameAssembly
-        m_MethodName: SetVolume
-        m_Mode: 4
+        m_TargetAssemblyTypeName: VolumeSettings, GameAssembly
+        m_MethodName: SetMusicVolume
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

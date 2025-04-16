@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Anglerfish : MonoBehaviour
 {
+    // Anglerfish properties
     public float swimSpeed = 2f;                 // Speed of anglerfish movement
     public float directionChangeInterval = 5f;  // Time between direction changes
     public Light anglerLight;                   // The anglerfish's light
@@ -9,6 +10,9 @@ public class Anglerfish : MonoBehaviour
     public float flickerFrequency = 0.1f;       // Frequency of light flicker
     public float detectionRange = 5f;           // Range at which the anglerfish interacts with the player
     public float oxygenDamage = 0.2f;               // Amount of oxygen damage to apply to the player
+    public int health = 30;
+
+
 
     private Rigidbody2D rb;
     private Vector2 swimDirection;
@@ -96,6 +100,16 @@ public class Anglerfish : MonoBehaviour
             {
                 Debug.LogError("The target object tagged 'Player' does not have a Diver component!");
             }
+        }
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        health -= damageAmount;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            Debug.Log("Octopus defeated!");
         }
     }
 }

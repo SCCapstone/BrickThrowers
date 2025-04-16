@@ -41,15 +41,24 @@ public class Lionfish : MonoBehaviour
         rb.velocity = patrolDirection * patrolSpeed;
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player"))
+        //if (collision.CompareTag("Player"))
+        //{
+        //    Player player = collision.GetComponent<Player>();
+        //    if (player != null)
+        //    {
+        //        player.ApplyPoison();
+        //        Debug.Log("Lionfish poisoned the player!");
+        //    }
+        //}
+        if (collision.gameObject.CompareTag("Player"))
         {
-            Player player = collision.GetComponent<Player>();
-            if (player != null)
+            Diver diver = collision.gameObject.GetComponent<Diver>();
+            if (diver != null)
             {
-                player.ApplyPoison();
-                Debug.Log("Lionfish poisoned the player!");
+                diver.ApplyPoison();
+                Debug.Log("Lionfish attacked the diver!");
             }
         }
     }

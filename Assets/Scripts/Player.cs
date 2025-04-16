@@ -281,9 +281,11 @@ public class Player : Diver
     [ContextMenu("Apply Poison")]
     public override void ApplyPoison()
     {
+        if(isPoisoned) return; // Prevents multiple poison applications
         isPoisoned = true;
         oxygenDepletionRate *= 5;
         staminaRecoveryRate = 0;
+        Debug.Log("Player poisoned.");
     }
 
     /// <summary>

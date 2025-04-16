@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
+using System.Threading.Tasks;
+using Codice.Client.BaseCommands;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -297,9 +300,6 @@ public class Player : Diver
     // Added becasue was in Squid.cs, and casuing compile errors
     public void Blind(float duration) { }
 
-    // Added because was in Jellyfish.cs, and causing compile errors
-    public void Stun(float duration) { }
-
     /// <summary>
     /// Slows down the player's speed when they collide with seaweed.
     /// </summary>
@@ -388,7 +388,24 @@ public class Player : Diver
         maxXp += 100;
         currentXp = 0;
     }
+    #region Stun Logic
+    public override async void Stun(float duration)
+    {
+        isStunned = true;
+        stunTimer = duration;
 
+        // Stun player
+        playerControls.Disable();
+
+        await Task.Delay(TimeSpan.FromSeconds(duration));
+
+        isStunned = false;
+        playerControls.Enable();
+        Debug.Log("Diver is no longer stunned.");
+
+    }
+
+    #endregion
     #region Cheat Mode
     /// <summary>
     /// Turns on a cheat mode for the player. This should be used for debugging purposes only.

@@ -1071,6 +1071,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oxygenLevel: 100
+  isStunned: 0
+  stunTimer: 0
   speed: 40
   verticalSpeed: 40
   swimsfx: {fileID: 0}
@@ -1398,6 +1400,10 @@ PrefabInstance:
     - target: {fileID: 4051580706256805587, guid: 94ccd277f9de6ce4bb156ffdfc50192c, type: 3}
       propertyPath: m_Name
       value: Slot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5848812627329389088, guid: 94ccd277f9de6ce4bb156ffdfc50192c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6242280934477008796, guid: 94ccd277f9de6ce4bb156ffdfc50192c, type: 3}
       propertyPath: m_Pivot.x

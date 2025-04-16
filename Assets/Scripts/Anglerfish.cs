@@ -8,7 +8,7 @@ public class Anglerfish : MonoBehaviour
     public float lightIntensity = 3f;           // Maximum light intensity
     public float flickerFrequency = 0.1f;       // Frequency of light flicker
     public float detectionRange = 5f;           // Range at which the anglerfish interacts with the player
-    public float oxygenDamage = 0.1f;               // Amount of oxygen damage to apply to the player
+    public float oxygenDamage = 0.2f;               // Amount of oxygen damage to apply to the player
 
     private Rigidbody2D rb;
     private Vector2 swimDirection;
@@ -58,12 +58,6 @@ public class Anglerfish : MonoBehaviour
 
         // Move the anglerfish
         rb.velocity = swimDirection * swimSpeed;
-
-        // Check for player interaction
-        if (targetPlayer != null && Vector2.Distance(transform.position, targetPlayer.position) <= detectionRange)
-        {
-            InteractWithPlayer();
-        }
     }
 
     void FlickerLight()
@@ -80,17 +74,28 @@ public class Anglerfish : MonoBehaviour
         return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
     }
 
-    void InteractWithPlayer()
+    // Damage logic.
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        Player player = targetPlayer.GetComponent<Player>();
-        if (player != null)
+        if (collision == null) return;
+
+        /*
+         * Determine if the game object that has collided with the anglerfish is the player.
+         * The Player game object has the Player tag.
+         * If the collisiding game object is the player, call the function to damage the player in Diver.cs
+         */
+        if (collision.gameObject.CompareTag("Player"))
         {
-            player.TakeOxygenDamage(oxygenDamage);
-            Debug.Log("Anglerfish damaged the player's oxygen!");
-        }
-        else
-        {
-            Debug.LogError("The target object tagged 'Player' does not have a Player component!");
+            Diver diver = collision.gameObject.GetComponent<Diver>();
+            if (diver != null)
+            {
+                diver.TakeOxygenDamage(oxygenDamage);
+                Debug.Log("Anglerfish damaged the player's oxygen!");
+            }
+            else
+            {
+                Debug.LogError("The target object tagged 'Player' does not have a Diver component!");
+            }
         }
     }
 }

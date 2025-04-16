@@ -74,4 +74,6 @@ public abstract class Diver : MonoBehaviour
     // All pirates should always have this set to false.
     // Player is the only one that can toggle this.
     public abstract bool GodModeStatus();
+
+    public abstract void ApplyPoison();
 }

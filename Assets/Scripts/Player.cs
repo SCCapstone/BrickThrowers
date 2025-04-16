@@ -276,7 +276,7 @@ public class Player : Diver
     /// stamina recovery.
     /// </summary>
     [ContextMenu("Apply Poison")]
-    public void ApplyPoison()
+    public override void ApplyPoison()
     {
         isPoisoned = true;
         oxygenDepletionRate *= 5;
@@ -344,7 +344,7 @@ public class Player : Diver
     public float getTimer()
     {
         playerTime = timer.TimeLeft;
-        Debug.Log(playerTime);
+        //Debug.Log(playerTime);
         return playerTime;
     }
 

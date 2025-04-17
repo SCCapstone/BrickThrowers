@@ -362,16 +362,39 @@ public class Player : Diver
 
     public void RemoveArtifact() { }
 
+    #region Octopus Latching Logic
     // Added becasue was in Octopus.cs, and causing compile errors.
-    public void SuppressLight(bool val) { }
+    public void SuppressLight(bool val) 
+    {
+        GameObject playerVisibility = this.gameObject.transform.GetChild(1).gameObject;
+        if (val)
+        {
+            
+            playerVisibility.SetActive(false);
+        }
+        else
+        {
+            playerVisibility.SetActive(true);
+        }
+    }
 
-    public void SuppressMovement(bool val) { }
+    public void SuppressMovement(bool val) 
+    {
+        if (val)
+        {
+            playerControls.Disable();
+        }
+        else
+        {
+            playerControls.Enable();
+        }
+    }
 
     public int GetNearbyDivers()
     {
         return 0;
     }
-
+    #endregion
     //Handling XP and Level up
     private void HandleExperienceChange(int newExperience)
     {

@@ -4,9 +4,9 @@ using UnityEngine;
 public class Octopus : MonoBehaviour
 {
     public float detectionRange = 3f; // Range to detect the player
-    public float latchDuration = 120f; // Default time to free from latch
+    public float latchDuration = 5f; // Default time to free from latch
     public int health = 60; // Health of the octopus
-    public float moveSpeed = 2f; // Movement speed when roaming
+    public float moveSpeed = 15f; // Movement speed when roaming
 
     private Transform targetPlayer; // Player being targeted
     private Rigidbody2D rb;
@@ -14,17 +14,25 @@ public class Octopus : MonoBehaviour
     private float currentLatchTime; // Remaining time for latch release
     private int decayMultiplier = 1; // Multiplier for latch decay
 
+    private bool isRoaming = false;
+    [SerializeField] private float roamDuration = 2f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Roam();
     }
 
     void Update()
     {
-        if (!isLatched)
+        //if (!isLatched)
+        //{
+        //    // Random roaming behavior
+            
+        //}
+        if (!isRoaming)
         {
-            // Random roaming behavior
-            Roam();
+            StartCoroutine(Roam());
         }
     }
 
@@ -85,11 +93,16 @@ public class Octopus : MonoBehaviour
     //    Debug.Log("Player freed from the octopus!");
     //}
 
-    void Roam()
+    #endregion
+    #region Roam Logic
+    IEnumerator Roam()
     {
-        // Add simple random roaming movement
+        isRoaming = true;
         Vector2 randomDirection = Random.insideUnitCircle.normalized;
         rb.velocity = randomDirection * moveSpeed;
+        yield return new WaitForSeconds(roamDuration);
+        isRoaming = false;
+
     }
 
     public void TakeDamage(int damageAmount)
@@ -128,6 +141,7 @@ public class Octopus : MonoBehaviour
         this.transform.SetParent(playerTransform);
         rb.constraints = RigidbodyConstraints2D.FreezePositionX;
         rb.drag = 1f;
+        rb.gravityScale = 1f;
     }
 
     /*
@@ -162,6 +176,7 @@ public class Octopus : MonoBehaviour
         Debug.Log("Player freed from the octopus!");
         rb.constraints = RigidbodyConstraints2D.None;
         rb.drag = 0f; // Reset drag to normal
+        rb.gravityScale = 0f;
     }
     #endregion
 }

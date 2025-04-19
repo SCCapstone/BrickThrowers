@@ -35,65 +35,6 @@ public class Octopus : MonoBehaviour
             StartCoroutine(Roam());
         }
     }
-
-    #region Old Latch Logic
-    //void DetectPlayer()
-    //{
-    //    GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-    //    if (playerObject != null)
-    //    {
-    //        float distance = Vector2.Distance(transform.position, playerObject.transform.position);
-    //        if (distance <= detectionRange)
-    //        {
-    //            targetPlayer = playerObject.transform;
-    //            Latch(targetPlayer.GetComponent<Player>());
-    //        }
-    //    }
-    //}
-
-    //void Latch(Player player)
-    //{
-    //    if (player == null) return;
-
-    //    isLatched = true;
-    //    currentLatchTime = latchDuration;
-    //    player.SuppressMovement(true);
-    //    player.SuppressLight(true);
-    //    Debug.Log("Octopus latched onto the player!");
-    //}
-
-    //void LatchOntoPlayer()
-    //{
-    //    if (targetPlayer == null) return;
-
-    //    Player player = targetPlayer.GetComponent<Player>();
-    //    if (player == null) return;
-
-    //    currentLatchTime -= Time.deltaTime;
-
-    //    // Simulate assistance from other divers
-    //    int assistingDivers = player.GetNearbyDivers();
-    //    if (assistingDivers > 0)
-    //    {
-    //        currentLatchTime -= assistingDivers * Time.deltaTime;
-    //    }
-
-    //    if (currentLatchTime <= 0f)
-    //    {
-    //        Release(player);
-    //    }
-    //}
-
-    //void Release(Player player)
-    //{
-    //    isLatched = false;
-    //    targetPlayer = null;
-    //    player.SuppressMovement(false);
-    //    player.SuppressLight(false);
-    //    Debug.Log("Player freed from the octopus!");
-    //}
-
-    #endregion
     #region Roam Logic
     IEnumerator Roam()
     {

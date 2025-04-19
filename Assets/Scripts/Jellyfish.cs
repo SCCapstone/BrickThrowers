@@ -4,7 +4,8 @@ public class Jellyfish : MonoBehaviour
 {
     public float floatSpeed = 1.5f;               // Speed of jellyfish floating
     public float directionChangeInterval = 2f;   // Interval for changing direction
-    public float stunDuration = 2f;              // Duration of player's stun upon contact
+    public float stunDuration = 60f;              // Duration of player's stun upon contact
+    public int health = 20;
 
     private Rigidbody2D rb;
     private Vector2 moveDirection;
@@ -46,20 +47,32 @@ public class Jellyfish : MonoBehaviour
         moveDirection = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision == null) return;
+
+        if (collision.gameObject.CompareTag("Player"))
         {
-            Player player = collision.GetComponent<Player>();
-            if (player != null)
+            Diver diver = collision.gameObject.GetComponent<Diver>();
+            if (diver != null)
             {
-                player.Stun(stunDuration);
-                Debug.Log("Player stunned by Jellyfish!");
+                diver.Stun(stunDuration);
+                Debug.Log("Diver stunned by Jellyfish!");
             }
             else
             {
-                Debug.LogError("The collided object tagged 'Player' does not have a Player component!");
+                Debug.LogError("The collided object tagged 'Player' does not have a Diver component!");
             }
+        }
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        health -= damageAmount;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            Debug.Log("Octopus defeated!");
         }
     }
 }

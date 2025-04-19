@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4065085211902461105}
   - component: {fileID: 6990112835692879343}
   - component: {fileID: 6338305029418221268}
-  - component: {fileID: 1473061180669978501}
+  - component: {fileID: 5403488538542650921}
   m_Layer: 9
   m_Name: Anglerfish
   m_TagString: Enemy
@@ -127,7 +127,7 @@ MonoBehaviour:
   lightIntensity: 3
   flickerFrequency: 0.1
   detectionRange: 5
-  oxygenDamage: 0.1
+  oxygenDamage: 0.5
 --- !u!50 &6338305029418221268
 Rigidbody2D:
   serializedVersion: 4
@@ -155,8 +155,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &1473061180669978501
-CircleCollider2D:
+--- !u!60 &5403488538542650921
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -188,5 +188,44 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.29
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.58, y: 0.43}
+    newSize: {x: 0.58, y: 0.43}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.29, y: 0.085}
+      - {x: 0.26999998, y: 0.175}
+      - {x: 0.04, y: 0.195}
+      - {x: -0.03, y: 0.21499999}
+      - {x: -0.21, y: 0.21499999}
+      - {x: -0.28, y: 0.16499999}
+      - {x: -0.29, y: 0.145}
+      - {x: -0.29, y: -0.114999995}
+      - {x: -0.26, y: -0.205}
+      - {x: -0.19, y: -0.21499999}
+      - {x: 0.11, y: -0.21499999}
+      - {x: 0.14999999, y: -0.205}
+      - {x: 0.28, y: -0.13499999}
+      - {x: 0.29, y: -0.114999995}
+    - - {x: -0.21, y: 0.015}
+      - {x: -0.21, y: 0.044999998}
+      - {x: -0.22999999, y: 0.065}
+      - {x: -0.22, y: 0.085}
+      - {x: -0.21, y: 0.125}
+      - {x: -0.16, y: 0.16499999}
+      - {x: -0.099999994, y: 0.16499999}
+      - {x: -0.07, y: 0.125}
+      - {x: -0.089999996, y: 0.125}
+      - {x: -0.17, y: 0.114999995}
+      - {x: -0.21, y: 0.074999996}
+      - {x: -0.21, y: 0.055}
+      - {x: -0.22, y: 0.044999998}
+      - {x: -0.22, y: -0.005}
+      - {x: -0.22999999, y: -0.005}
+  m_UseDelaunayMesh: 0

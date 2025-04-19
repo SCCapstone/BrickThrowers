@@ -5,17 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class Diver : MonoBehaviour
 {
+
     public float oxygenLevel = 100;
-    private bool isStunned = false;             // Whether the diver is currently stunned
+    public bool isStunned = false;             // Whether the diver is currently stunned
     private bool isBlinded = false;             // Whether the diver is currently blinded
-    private float stunTimer = 0f;
+    public float stunTimer = 0f;
     private float blindTimer = 0f;
 
     public static event Action onDeath; // Signal that the diver has died
 
+
+    #region Setup Functions
+
+    #endregion
     public void Update()
     {
         if (isStunned)
@@ -38,14 +44,12 @@ public abstract class Diver : MonoBehaviour
             }
         }
     }
-
-    public void Stun(float duration)
+    public virtual void Stun(float duration)
     {
         isStunned = true;
         stunTimer = duration;
         Debug.Log("Diver is stunned!");
     }
-
     public void Blind(float duration)
     {
         isBlinded = true;
@@ -74,4 +78,6 @@ public abstract class Diver : MonoBehaviour
     // All pirates should always have this set to false.
     // Player is the only one that can toggle this.
     public abstract bool GodModeStatus();
+
+    public abstract void ApplyPoison();
 }

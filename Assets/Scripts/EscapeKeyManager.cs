@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EscapeKeyCancel : MonoBehaviour
+public class EscapeKeyManager : MonoBehaviour
 {
     private PlayerInputActions controls;
     private InputAction escape;
+    [SerializeField] private GameObject[] panels;
+
+    // Pause menu specific
+    [SerializeField] private GameObject pauseMenuPanel;
+    private bool isPaused = false;
+
 
     #region Setup Functions
     private void Awake()
@@ -29,7 +35,22 @@ public class EscapeKeyCancel : MonoBehaviour
 
     private void OnCancel(InputAction.CallbackContext contex)
     {
-        this.gameObject.SetActive(false);
+        // The case where there is no panel open.
+        if (pauseMenuPanel != null && !pauseMenuPanel.activeSelf)
+        {
+            pauseMenuPanel.SetActive(true);
+            return;
+        }
+
+
+        for (int i = panels.Length - 1; i >= 0; i--)
+        {
+            if(panels[i] != null && panels[i].activeSelf)
+            {
+                panels[i].SetActive(false);
+                return;
+            }
+        }
     }
     #endregion
 }

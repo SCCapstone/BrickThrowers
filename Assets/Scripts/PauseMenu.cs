@@ -39,9 +39,14 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    public void Lobby()
+    public void MainMenu()
     {
         SceneManager.LoadSceneAsync(0);
+        SoundManager.Instance.PlayBackgroundMusic(bgMusic);
+    }
+    public void Lobby()
+    {
+        SceneManager.LoadSceneAsync(1);
         SoundManager.Instance.PlayBackgroundMusic(bgMusic);
     }
 

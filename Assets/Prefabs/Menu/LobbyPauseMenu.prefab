@@ -721,7 +721,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 6302851083224230979}
   optionsMenu: {fileID: 3757815975896671724}
   godModeIndicator: {fileID: 0}
-  bgMusic: {fileID: 0}
+  bgMusic: {fileID: 8300000, guid: d717c5f600299c041be08c508231b3b4, type: 3}
 --- !u!1 &6037374853782922129
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,6 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panels: []
+  pauseMenuPanel: {fileID: 0}
 --- !u!1 &7779661338169842419
 GameObject:
   m_ObjectHideFlags: 0

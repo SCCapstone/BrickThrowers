@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -28,6 +29,10 @@ public class PauseMenu : MonoBehaviour
     // Button click
     private bool isButtonClicked = false;
 
+    #region Setup Functions
+
+    #endregion
+    #region Pause Menu Functions
     public void Pause()
     {
         pauseMenu.SetActive(true);
@@ -55,7 +60,7 @@ public class PauseMenu : MonoBehaviour
     {
         optionsMenu.SetActive(false);
     }
-
+    #endregion
     /// <summary>
     /// Invokes the GodMode event.
     /// </summary>

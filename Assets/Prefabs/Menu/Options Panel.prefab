@@ -1637,7 +1637,6 @@ GameObject:
   - component: {fileID: 6188942085721446712}
   - component: {fileID: 8168399059361980455}
   - component: {fileID: 277392738994465396}
-  - component: {fileID: 5328829360439536711}
   m_Layer: 5
   m_Name: Options Panel
   m_TagString: Untagged
@@ -1700,18 +1699,6 @@ MonoBehaviour:
   _data:
     _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
---- !u!114 &5328829360439536711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4414720569050176712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3780bd6a524f1a4696cc9c055eed0d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4622252693151672403
 GameObject:
   m_ObjectHideFlags: 0

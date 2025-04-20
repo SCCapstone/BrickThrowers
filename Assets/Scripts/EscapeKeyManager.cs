@@ -16,7 +16,7 @@ public class EscapeKeyCancel : MonoBehaviour
 
     private void OnEnable()
     {
-        escape = controls.UI.Cancel;
+        escape = controls.UI.Escape;
         escape.Enable();
         escape.performed += OnCancel;
     }

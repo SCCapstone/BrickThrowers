@@ -1008,7 +1008,7 @@ MonoBehaviour:
   stunTimer: 0
   speed: 40
   verticalSpeed: 40
-  swimsfx: {fileID: 0}
+  swimsfx: {fileID: 6489362396185637889}
   waterDrag: 3
   waterGravityScale: 50
   maxOxygen: 100

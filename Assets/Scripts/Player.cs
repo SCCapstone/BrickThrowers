@@ -61,11 +61,13 @@ public class Player : Diver
     public float maxOxygen = 100f;
     public float oxygenDepletionRate = 1f;
     public float lowStaminaMultiplier = 5f;
+    private const float DEFAULT_OXYGEN_DEPLETION_RATE = 1f;
 
     public float maxStamina = 20f;
     public float staminaDepletionRate = 2f;
     public float staminaRecoveryRate = 1f;
     public float lowStaminaThreshold = 5f;
+    private const float DEFAULT_STAMINA_DEPLETION_RATE = 2f;
 
     public GameObject SummaryScreen;
     public GameObject Clock;
@@ -441,10 +443,9 @@ public class Player : Diver
     /// The player should not be able to use this in the final game - well, except if they really wanted to via Options.
     /// This prevents oxygen depletion, loss of stamina when sprinting,
     /// </summary>
-    private void GodMode()
+    private void GodMode(bool godModeActivation)
     {
-        // First, invert the bool. This covers the button being used to enable/disable god mode.
-        godMode = !godMode;
+        godMode = godModeActivation;
 
         Debug.Log($"Acquired signal from GodModeIndicator. God mode is now " + (godMode ? "enabled." : "disabled."));
 
@@ -457,8 +458,8 @@ public class Player : Diver
         else
         {
             // No god mode? Return to normal.
-            oxygenDepletionRate = 1;
-            staminaDepletionRate = 2;
+            oxygenDepletionRate = DEFAULT_OXYGEN_DEPLETION_RATE;
+            staminaDepletionRate = DEFAULT_STAMINA_DEPLETION_RATE;
         }
     }
 

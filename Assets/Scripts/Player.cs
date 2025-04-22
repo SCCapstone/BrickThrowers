@@ -134,6 +134,7 @@ public class Player : Diver
         GodModeIndicator.onGodModeActivated += GodMode;
         SeaWeed.onPlayerSlowedDown += SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored += SeaweedSpeedRestored;
+        Diver.onDamage += ChangeColor;
     }
 
     private void OnDisable()
@@ -145,6 +146,7 @@ public class Player : Diver
         GodModeIndicator.onGodModeActivated -= GodMode;
         SeaWeed.onPlayerSlowedDown -= SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored -= SeaweedSpeedRestored;
+        Diver.onDamage -= ChangeColor;
     }
 
     void Start()
@@ -528,5 +530,17 @@ public class Player : Diver
         }
     }
 
+    #endregion
+    #region Damage Color Change
+    // FF7A7A - Red-ish color for damage color change
+    private void ResetColor()
+    {
+        playerSprite.color = Color.white;
+    }
+    private void ChangeColor()
+    {
+        playerSprite.color = Color.red;
+        Invoke("ResetColor", 0.3f);
+    }
     #endregion
 }

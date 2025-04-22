@@ -134,6 +134,7 @@ public class Player : Diver
         GodModeIndicator.onGodModeActivated += GodMode;
         SeaWeed.onPlayerSlowedDown += SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored += SeaweedSpeedRestored;
+        Diver.onDamage += ChangeColor;
     }
 
     private void OnDisable()
@@ -145,6 +146,7 @@ public class Player : Diver
         GodModeIndicator.onGodModeActivated -= GodMode;
         SeaWeed.onPlayerSlowedDown -= SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored -= SeaweedSpeedRestored;
+        Diver.onDamage -= ChangeColor;
     }
 
     void Start()
@@ -510,8 +512,7 @@ public class Player : Diver
             // transform.position = submarine.transform.position;
             transform.SetParent(submarine.transform);
             transform.localPosition = Vector2.zero;
-            // Unfreeze rigid body constrains
-            submarineRb.constraints = RigidbodyConstraints2D.None;
+            submarineRb.constraints = RigidbodyConstraints2D.FreezeRotation;
             Debug.Log("Entering sub");
         }
         else
@@ -524,11 +525,22 @@ public class Player : Diver
             transform.SetParent(null);
             transform.position = submarine.transform.position + new Vector3(0, -1, -1);
             Debug.Log("Leaving sub");
-            // Add constraints to the submarine, freezing the entire submersible.
             submarineRb.constraints = RigidbodyConstraints2D.FreezeAll;
             submarineRb.velocity = Vector2.zero;
         }
     }
 
+    #endregion
+    #region Damage Color Change
+    // FF7A7A - Red-ish color for damage color change
+    private void ResetColor()
+    {
+        playerSprite.color = Color.white;
+    }
+    private void ChangeColor()
+    {
+        playerSprite.color = Color.red;
+        Invoke("ResetColor", 0.3f);
+    }
     #endregion
 }

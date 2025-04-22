@@ -17,6 +17,7 @@ public abstract class Diver : MonoBehaviour
     private float blindTimer = 0f;
 
     public static event Action onDeath; // Signal that the diver has died
+    public static event Action onDamage;
 
 
     #region Setup Functions
@@ -64,7 +65,7 @@ public abstract class Diver : MonoBehaviour
         if (GodModeStatus()) return; // Diver takes no damage if in god mode
 
         oxygenLevel -= damage;
-        Debug.Log("Diver's oxygen level: " + oxygenLevel);
+        onDamage?.Invoke();
 
         if (oxygenLevel <= 0)
         {

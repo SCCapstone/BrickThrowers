@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
+using System.Threading.Tasks;
+using Codice.Client.BaseCommands;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -136,6 +139,7 @@ public class Player : Diver
         GodModeIndicator.onGodModeActivated += GodMode;
         SeaWeed.onPlayerSlowedDown += SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored += SeaweedSpeedRestored;
+        Diver.onDamage += ChangeColor;
     }
 
     private void OnDisable()
@@ -147,6 +151,7 @@ public class Player : Diver
         GodModeIndicator.onGodModeActivated -= GodMode;
         SeaWeed.onPlayerSlowedDown -= SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored -= SeaweedSpeedRestored;
+        Diver.onDamage -= ChangeColor;
     }
 
     void Start()
@@ -282,11 +287,13 @@ public class Player : Diver
     /// stamina recovery.
     /// </summary>
     [ContextMenu("Apply Poison")]
-    public void ApplyPoison()
+    public override void ApplyPoison()
     {
+        if(isPoisoned) return; // Prevents multiple poison applications
         isPoisoned = true;
         oxygenDepletionRate *= 5;
         staminaRecoveryRate = 0;
+        Debug.Log("Player poisoned.");
     }
 
     /// <summary>
@@ -302,9 +309,6 @@ public class Player : Diver
 
     // Added becasue was in Squid.cs, and casuing compile errors
     public void Blind(float duration) { }
-
-    // Added because was in Jellyfish.cs, and causing compile errors
-    public void Stun(float duration) { }
 
     /// <summary>
     /// Slows down the player's speed when they collide with seaweed.
@@ -350,7 +354,7 @@ public class Player : Diver
     public float getTimer()
     {
         playerTime = timer.TimeLeft;
-        Debug.Log(playerTime);
+        //Debug.Log(playerTime);
         return playerTime;
     }
 
@@ -371,16 +375,39 @@ public class Player : Diver
 
     public void RemoveArtifact() { }
 
+    #region Octopus Latching Logic
     // Added becasue was in Octopus.cs, and causing compile errors.
-    public void SuppressLight(bool val) { }
+    public void SuppressLight(bool val) 
+    {
+        GameObject playerVisibility = this.gameObject.transform.GetChild(1).gameObject;
+        if (val)
+        {
+            
+            playerVisibility.SetActive(false);
+        }
+        else
+        {
+            playerVisibility.SetActive(true);
+        }
+    }
 
-    public void SuppressMovement(bool val) { }
+    public void SuppressMovement(bool val) 
+    {
+        if (val)
+        {
+            playerControls.Disable();
+        }
+        else
+        {
+            playerControls.Enable();
+        }
+    }
 
     public int GetNearbyDivers()
     {
         return 0;
     }
-
+    #endregion
     //Handling XP and Level up
     private void HandleExperienceChange(int newExperience)
     {
@@ -399,7 +426,24 @@ public class Player : Diver
         maxXp += 100;
         currentXp = 0;
     }
+    #region Stun Logic
+    public override async void Stun(float duration)
+    {
+        isStunned = true;
+        stunTimer = duration;
 
+        // Stun player
+        playerControls.Disable();
+
+        await Task.Delay(TimeSpan.FromSeconds(duration));
+
+        isStunned = false;
+        playerControls.Enable();
+        Debug.Log("Diver is no longer stunned.");
+
+    }
+
+    #endregion
     #region Cheat Mode
     /// <summary>
     /// Turns on a cheat mode for the player. This should be used for debugging purposes only.
@@ -479,8 +523,7 @@ public class Player : Diver
             // transform.position = submarine.transform.position;
             transform.SetParent(submarine.transform);
             transform.localPosition = Vector2.zero;
-            // Unfreeze rigid body constrains
-            submarineRb.constraints = RigidbodyConstraints2D.None;
+            submarineRb.constraints = RigidbodyConstraints2D.FreezeRotation;
             Debug.Log("Entering sub");
             inventory.RemoveArtifacts();
         }
@@ -494,11 +537,22 @@ public class Player : Diver
             transform.SetParent(null);
             transform.position = submarine.transform.position + new Vector3(0, -1, -1);
             Debug.Log("Leaving sub");
-            // Add constraints to the submarine, freezing the entire submersible.
             submarineRb.constraints = RigidbodyConstraints2D.FreezeAll;
             submarineRb.velocity = Vector2.zero;
         }
     }
 
+    #endregion
+    #region Damage Color Change
+    // FF7A7A - Red-ish color for damage color change
+    private void ResetColor()
+    {
+        playerSprite.color = Color.white;
+    }
+    private void ChangeColor()
+    {
+        playerSprite.color = Color.red;
+        Invoke("ResetColor", 0.3f);
+    }
     #endregion
 }

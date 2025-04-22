@@ -135,6 +135,7 @@ public class Player : Diver
         SeaWeed.onPlayerSlowedDown += SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored += SeaweedSpeedRestored;
         Diver.onDamage += ChangeColor;
+        Diver.onDeath += GameOver;
     }
 
     private void OnDisable()
@@ -147,6 +148,7 @@ public class Player : Diver
         SeaWeed.onPlayerSlowedDown -= SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored -= SeaweedSpeedRestored;
         Diver.onDamage -= ChangeColor;
+        Diver.onDeath -= GameOver;
     }
 
     void Start()
@@ -177,7 +179,7 @@ public class Player : Diver
             ToggleSubmarine();
         }
         OxygenAndStamina();
-        gameOver();
+        GameOver();
         moveDirection = move.ReadValue<Vector2>();
     }
 
@@ -352,7 +354,7 @@ public class Player : Diver
         return playerTime;
     }
 
-    public void gameOver()
+    public void GameOver()
     {
         if (GetOxygenLevel() <= 0 && !isDead || getTimer() == 0)
         {

@@ -26,7 +26,7 @@ public class ClassSelector : MonoBehaviour
 
     void Start()
     {
-        playerAnimator = player.GetComponent<Animator>();
+        playerAnimator = player.transform.GetChild(3).GetComponent<Animator>();
 
         // Initialize the AudioSource
         audioSource = GetComponent<AudioSource>();
@@ -42,8 +42,8 @@ public class ClassSelector : MonoBehaviour
 
     private void DisableAllClassScripts()
     {
-        var diver = player.GetComponent<Diver>();
-        if (diver != null) diver.enabled = false;
+        //var diver = player.GetComponent<Diver>();
+        //if (diver != null) diver.enabled = false;
 
         var harpooner = player.GetComponent<Harpooner>();
         if (harpooner != null) harpooner.enabled = false;

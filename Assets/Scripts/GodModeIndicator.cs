@@ -55,7 +55,10 @@ public class GodModeIndicator : MonoBehaviour
     {
         // Get the name of the current active scene.
         activeSceneName = SceneManager.GetActiveScene().name;
-        onGodModeActivated?.Invoke();
+        if (isGodModeActive)
+        {
+            onGodModeActivated?.Invoke();
+        }
         Debug.Log($"scene loaded you are at {activeSceneName}");
     }
 }

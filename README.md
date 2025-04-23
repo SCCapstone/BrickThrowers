@@ -1,5 +1,5 @@
 # Daredivers
-![daredivers-title](https://github.com/user-attachments/assets/3141a0aa-bfb2-4abb-b06e-41d8c8ae59c2)
+![daredivers-title](images/ScreenShotTitle.png)
 
 ## What is it?
 Daredivers is a co-operative game where players must work together to explore the depths of the sea to wringle out its riches. In the meanwhile, they are threatened by the dangers of the deep sea. The game is played in a 2D environment. Sucessfully completing expedition provides rewards for the players which can be used to further upgrade their equipment and abilities.

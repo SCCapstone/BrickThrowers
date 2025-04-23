@@ -4,6 +4,19 @@
 ## What is it?
 Daredivers is a co-operative game where players must work together to explore the depths of the sea to wringle out its riches. In the meanwhile, they are threatened by the dangers of the deep sea. The game is played in a 2D environment. Sucessfully completing expedition provides rewards for the players which can be used to further upgrade their equipment and abilities.
 
+![ScreenShot](https://github.com/user-attachments/assets/85b799e5-52d4-45d6-bb2c-b0222652c4a8)
+
+Avoid Dangerous Enemies!
+
+![ScreenShot1](https://github.com/user-attachments/assets/1ea4bd08-5048-46b2-882a-a7fd93530e4b)
+
+Move around in a submarine!
+
+
+![Screenshot2](https://github.com/user-attachments/assets/ae18dacb-dfcd-4181-839b-dd4b22ce7739)
+
+Collect Items like Chalices, and Flashlight!
+
 ## Download Instructions
 The latest release for the game is located on the right side of the repository under "Releases". Download the lastest release which will come in a ZIP file. Unzip and place it somewhere on your computer. Run the game by executing the "Daredivers.exe" file.
 

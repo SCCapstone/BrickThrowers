@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,10 @@ public class PlayerUI : MonoBehaviour
 
     public float smoothSpeed = 5f;
 
+    [SerializeField] private GameObject warningMark;
+    private CanvasGroup cg;
+    [SerializeField] private float flashSpeed = 2f;
+
     void Start()
     {
         player = FindObjectOfType<Player>();
@@ -23,12 +28,15 @@ public class PlayerUI : MonoBehaviour
 
         oxygenBar.fillRect.GetComponent<Image>().color = normalColor;
         staminaBar.fillRect.GetComponent<Image>().color = normalColor;
+        cg = warningMark.GetComponent<CanvasGroup>();
+
     }
 
     void Update()
     {
         OxygenBarUpdate();
         StaminaBarUpdate();
+
     }
 
     private void OxygenBarUpdate()
@@ -79,5 +87,10 @@ public class PlayerUI : MonoBehaviour
                 smoothSpeed * Time.deltaTime
             );
         }
+        if (currentStamina <= lowThreshold)
+            cg.alpha = Mathf.PingPong(Time.time * flashSpeed, 1f);
+        else
+            cg.alpha = 0f;
+
     }
 }

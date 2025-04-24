@@ -1,8 +1,11 @@
-# Daredivers
 [![Screen-Shot-Title.png](https://i.postimg.cc/Pf397qq6/Screen-Shot-Title.png)](https://postimg.cc/z3hxb8KW)
 
-## What is it?
-Daredivers is a co-operative game where players must work together to explore the depths of the sea to wring out its riches. In the meanwhile, they are threatened by the dangers of the deep sea. The game is played in a 2D environment. Successfully completing an expedition provides rewards for the players which can be used to further upgrade their equipment and abilities.
+# What is it?
+Danger lurks deep in the dark depths of the oceans.
+
+Only the **daring** will have what it takes claim its bounty!
+
+Daredivers is a 2D Windows game around delving deep into the ocean depths to lay claim to treasure. All the while, they must avoid becoming the unforunate victims of the ocean as its denizens are not so keen to have intruders enter their home as the divers must avoid the sea creatures that may put their daring venture to a quick end. 
 
 Avoid dangerous enemies!
 [![Screen-Shot-Shark.png](https://i.postimg.cc/X7rcYjkD/Screen-Shot-Shark.png)](https://postimg.cc/ykzSfz5F)
@@ -10,12 +13,14 @@ Avoid dangerous enemies!
 Collect items like chalices and flashlights!
 [![Screenshot-Item.png](https://i.postimg.cc/wTr2XyBp/Screenshot-Item.png)](https://postimg.cc/PPm1hqZ3)
 
-
 Move around in a submarine!
 [![image.png](https://i.postimg.cc/NMgjfkZ7/image.png)](https://postimg.cc/McFS9V6v)
 
+### Be bold! 
+## Be _daring_!
+
 ## Download Instructions
-The latest release for the game is located on the right side of the repository under “Releases.” Download the latest release, which will come in a ZIP file. Unzip it and place it somewhere on your computer. Run the game by executing the `Daredivers.exe` file.
+The latest release for the game is located on the right side of the repository under “Releases.” Download the latest release, which will come in a ZIP file. Unzip it and place it somewhere on your computer. Alternately, you may leave it in the Downloads folder. Run the game by executing the `Daredivers.exe` file.
 
 **Important:** This game is built for Windows only. It has *not* been built for other platforms.
 

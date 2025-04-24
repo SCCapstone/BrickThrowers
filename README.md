@@ -1,5 +1,5 @@
 # Daredivers
-![images/ScreenShotTitle.png](https://github.com/SCCapstone/BrickThrowers/blob/992e95c2cc3aa70bf7a67306b7007b6960dc30fb/images/ScreenShotTitle.png)
+![images/ScreenShotTitle.png](images/ScreenShotTitle.png)
 
 ## What is it?
 Daredivers is a co-operative game where players must work together to explore the depths of the sea to wring out its riches. In the meanwhile, they are threatened by the dangers of the deep sea. The game is played in a 2D environment. Successfully completing an expedition provides rewards for the players which can be used to further upgrade their equipment and abilities.

@@ -83,7 +83,10 @@ In the Test Runner window, you will see two tabs: **Edit Mode** and **Play Mode*
   email: joshuakolbusz@gmail.com
 
 - **kjthaoo (Kelly Thao)**  
-  email: kthao43726@gmail.com
+  email: kthao43726@gmail.com  
+  Portfolio: https://kjthaoo.github.io/portfolio/  
+  GitHub: https://github.com/kjthaoo/kjthaoo.github.io  
+  LinkedIn: www.linkedin.com/in/kellyjthao
 
 - **tristenfornes (Tristen Fornes)**  
   email: tfornes@email.sc.edu

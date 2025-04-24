@@ -7,11 +7,12 @@ Daredivers is a co-operative game where players must work together to explore th
 Avoid dangerous enemies!
 [![Screen-Shot-Shark.png](https://i.postimg.cc/X7rcYjkD/Screen-Shot-Shark.png)](https://postimg.cc/ykzSfz5F)
 
-Move around in a submarine!
-[![Screen-Shot-Submarine.png](https://i.postimg.cc/JnKcGtFS/Screen-Shot-Submarine.png)](https://postimg.cc/Hcc7NWdt)
-
 Collect items like chalices and flashlights!
 [![Screenshot-Item.png](https://i.postimg.cc/wTr2XyBp/Screenshot-Item.png)](https://postimg.cc/PPm1hqZ3)
+
+
+Move around in a submarine!
+[![image.png](https://i.postimg.cc/NMgjfkZ7/image.png)](https://postimg.cc/McFS9V6v)
 
 ## Download Instructions
 The latest release for the game is located on the right side of the repository under “Releases.” Download the latest release, which will come in a ZIP file. Unzip it and place it somewhere on your computer. Run the game by executing the `Daredivers.exe` file.

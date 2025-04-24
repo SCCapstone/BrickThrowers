@@ -1,5 +1,8 @@
 title: BrickThrowers
-description: Capstone project site
+description: A co-op game where players explore the deep sea.
 theme: jekyll-theme-primer
+baseurl: "/BrickThrowers"   
+url: "https://SCCapstone.github.io"   
+
 readme_index:
   enabled: true

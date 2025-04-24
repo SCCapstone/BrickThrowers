@@ -18,7 +18,7 @@ public class GodModeIndicator : MonoBehaviour
     [SerializeField] private string activeSceneName;
 
     // Actions
-    public static event System.Action onGodModeActivated;
+    public static event System.Action<bool> onGodModeActivated;
 
     void Awake()
     {
@@ -55,7 +55,7 @@ public class GodModeIndicator : MonoBehaviour
     {
         // Get the name of the current active scene.
         activeSceneName = SceneManager.GetActiveScene().name;
-        onGodModeActivated?.Invoke();
+        onGodModeActivated?.Invoke(isGodModeActive);
         Debug.Log($"scene loaded you are at {activeSceneName}");
     }
 }

@@ -921,7 +921,7 @@ Animator:
   m_GameObject: {fileID: 8469198798791554927}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0ac7fd81c2400c149a8e2e34b29a1474, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5935addd277225c4d8e4dfef6b421b18, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   stunTimer: 0
   speed: 40
   verticalSpeed: 40
-  swimsfx: {fileID: 0}
+  swimsfx: {fileID: 6489362396185637889}
   waterDrag: 3
   waterGravityScale: 50
   maxOxygen: 100
@@ -1197,7 +1197,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9159250986113533160}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fdb49b35b20bbe245acc8562b018af76, type: 3}
   m_Name: 
@@ -1215,7 +1215,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9159250986113533160}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3053bd0ca34d02745810dca3c91a5069, type: 3}
   m_Name: 

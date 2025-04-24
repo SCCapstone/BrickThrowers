@@ -4,17 +4,14 @@
 ## What is it?
 Daredivers is a co-operative game where players must work together to explore the depths of the sea to wring out its riches. In the meanwhile, they are threatened by the dangers of the deep sea. The game is played in a 2D environment. Successfully completing an expedition provides rewards for the players which can be used to further upgrade their equipment and abilities.
 
-![images/ScreenShotShark.png](https://github.com/SCCapstone/BrickThrowers/blob/main/images/ScreenShotShark.png)
-
 Avoid dangerous enemies!
-
-![images/ScreenShotSubmarine.png](https://github.com/SCCapstone/BrickThrowers/blob/main/images/ScreenShotSubmarine.png)
+[![Screen-Shot-Shark.png](https://i.postimg.cc/X7rcYjkD/Screen-Shot-Shark.png)](https://postimg.cc/ykzSfz5F)
 
 Move around in a submarine!
-
-![images/ScreenshotItem.png](https://github.com/SCCapstone/BrickThrowers/blob/main/images/ScreenshotItem.png)
+[![Screen-Shot-Submarine.png](https://i.postimg.cc/JnKcGtFS/Screen-Shot-Submarine.png)](https://postimg.cc/Hcc7NWdt)
 
 Collect items like chalices and flashlights!
+[![Screenshot-Item.png](https://i.postimg.cc/wTr2XyBp/Screenshot-Item.png)](https://postimg.cc/PPm1hqZ3)
 
 ## Download Instructions
 The latest release for the game is located on the right side of the repository under “Releases.” Download the latest release, which will come in a ZIP file. Unzip it and place it somewhere on your computer. Run the game by executing the `Daredivers.exe` file.

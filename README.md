@@ -84,7 +84,7 @@ In the Test Runner window, you will see two tabs: **Edit Mode** and **Play Mode*
 
 - **kjthaoo (Kelly Thao)**  
   email: kthao43726@gmail.com  
-  GitHub: https://github.com/kjthaoo/kjthaoo.github.io  
+  GitHub: [https://github.com/kjthaoo/kjthaoo.github.io  ](https://github.com/kjthaoo)  
   LinkedIn: www.linkedin.com/in/kellyjthao
 
 - **tristenfornes (Tristen Fornes)**  

@@ -21,6 +21,10 @@ The latest release for the game is located on the right side of the repository u
 
 **Important:** This game is built for Windows only. It has *not* been built for other platforms.
 
+Check out the full playlist for instructions:
+
+[![Watch the Playlist](https://img.youtube.com/vi/hf1NmnC_amA/0.jpg)](https://www.youtube.com/watch?v=hf1NmnC_amA&list=PLxFAc6s4urawN-BzLjYI44k7IS8J4yraU&ab_channel=KJA)
+
 ## Final Demo video
 
 <iframe

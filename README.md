@@ -69,8 +69,8 @@ In the Test Runner window, you will see two tabs: **Edit Mode** and **Play Mode*
 ## Authors
 - **Reshlynt (Scott Do)**  
   email: dobao98123@gmail.com  
-  git: https://github.com/Reshlynt/Creshent.github.io  
-  linkedin: https://www.linkedin.com/in/scott-do-076a5a26a/
+  [git](https://github.com/Reshlynt/Creshent.github.io)   
+  [linkedin](https://www.linkedin.com/in/scott-do-076a5a26a/) 
 
 - **tylerstargel (Tyler Stargel)**  
   email: thetylerstargel@gmail.com

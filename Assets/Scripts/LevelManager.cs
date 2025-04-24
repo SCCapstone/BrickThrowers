@@ -64,7 +64,9 @@ public class LevelManager : MonoBehaviour
 
     foreach (ArtifactClass item in artifacts)
     {
-      maxScore += item.GetValue();
+
+      // FIX HERE
+      // maxScore += item.GetValue();
       // Debug.Log("Found collectible");
     }
   }

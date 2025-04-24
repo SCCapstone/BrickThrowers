@@ -30,14 +30,7 @@ Check out the full playlist for instructions:
 
 ## Final Demo video
 
-<iframe
-  width="560" height="315"
-  src="https://www.youtube.com/watch?v=NpEaa2P7qZI"
-  title="Daredivers Final Demo"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen>
-</iframe>
+{% include youtube.html id="NpEaa2P7qZI" %}
 
 ## Cloning the repository
 Importing the project into your computer is done by cloning the repository from GitHub, or alternatively downloading the project as a ZIP file through the green button labeled “Code.” The project is built using Unity, so you will have to have Unity and its related tools installed prior to running the project. An IDE is also recommended for editing scripts, such as Visual Studio Community.

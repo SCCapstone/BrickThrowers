@@ -607,7 +607,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6808354243193437712}
   - component: {fileID: 6795781879959374}
-  - component: {fileID: 8880721392186567044}
   m_Layer: 5
   m_Name: Options Panel
   m_TagString: Untagged
@@ -650,27 +649,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1461361541527040621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ec751d1b1b14e4c951434f70ab3f15, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e41f1748f68cd642b1c26a21feb94fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myMixer: {fileID: 24100000, guid: d73fc82eecc519b40b352035028061ca, type: 2}
   masterVolume: {fileID: 6807970592557082319}
   musicSlider: {fileID: 4594396492817763650}
---- !u!114 &8880721392186567044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461361541527040621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
 --- !u!1 &1805674328112040549
 GameObject:
   m_ObjectHideFlags: 0
@@ -2157,7 +2141,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6188942085721446712}
-  - component: {fileID: 7400560329518199487}
+  - component: {fileID: 1525227076142142585}
   m_Layer: 5
   m_Name: Options Panel-GodMode
   m_TagString: Untagged
@@ -2185,7 +2169,7 @@ RectTransform:
   m_AnchoredPosition: {x: -0.51944, y: 0}
   m_SizeDelta: {x: 865.4, y: 633.3578}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7400560329518199487
+--- !u!114 &1525227076142142585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2194,7 +2178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4414720569050176712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dff337d7d41b6b94f8d8d0ce2bccc646, type: 3}
+  m_Script: {fileID: 11500000, guid: d414afaeedcbb8444b56105840455db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
@@ -3112,7 +3096,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7400560329518199487}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenu, GameAssembly
         m_MethodName: GodMode
         m_Mode: 1

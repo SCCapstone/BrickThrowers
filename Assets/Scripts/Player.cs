@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
-using Codice.Client.BaseCommands;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -61,11 +60,13 @@ public class Player : Diver
     public float maxOxygen = 100f;
     public float oxygenDepletionRate = 1f;
     public float lowStaminaMultiplier = 5f;
+    private const float DEFAULT_OXYGEN_DEPLETION_RATE = 1f;
 
     public float maxStamina = 20f;
     public float staminaDepletionRate = 2f;
     public float staminaRecoveryRate = 1f;
     public float lowStaminaThreshold = 5f;
+    private const float DEFAULT_STAMINA_DEPLETION_RATE = 2f;
 
     public GameObject SummaryScreen;
     public GameObject ruSureScreen;
@@ -140,6 +141,7 @@ public class Player : Diver
         SeaWeed.onPlayerSlowedDown += SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored += SeaweedSpeedRestored;
         Diver.onDamage += ChangeColor;
+        Diver.onDeath += GameOver;
     }
 
     private void OnDisable()
@@ -152,6 +154,7 @@ public class Player : Diver
         SeaWeed.onPlayerSlowedDown -= SeaweedSpeedSlowed;
         SeaWeed.onPlayerSpeedRestored -= SeaweedSpeedRestored;
         Diver.onDamage -= ChangeColor;
+        Diver.onDeath -= GameOver;
     }
 
     void Start()
@@ -183,7 +186,7 @@ public class Player : Diver
             ToggleSubmarine();
         }
         OxygenAndStamina();
-        gameOver();
+        GameOver();
         moveDirection = move.ReadValue<Vector2>();
     }
 
@@ -358,7 +361,7 @@ public class Player : Diver
         return playerTime;
     }
 
-    public void gameOver()
+    public void GameOver()
     {
         if (GetOxygenLevel() <= 0 && !isDead || getTimer() == 0)
         {
@@ -450,10 +453,9 @@ public class Player : Diver
     /// The player should not be able to use this in the final game - well, except if they really wanted to via Options.
     /// This prevents oxygen depletion, loss of stamina when sprinting,
     /// </summary>
-    private void GodMode()
+    private void GodMode(bool godModeActivation)
     {
-        // First, invert the bool. This covers the button being used to enable/disable god mode.
-        godMode = !godMode;
+        godMode = godModeActivation;
 
         Debug.Log($"Acquired signal from GodModeIndicator. God mode is now " + (godMode ? "enabled." : "disabled."));
 
@@ -466,8 +468,8 @@ public class Player : Diver
         else
         {
             // No god mode? Return to normal.
-            oxygenDepletionRate = 1;
-            staminaDepletionRate = 2;
+            oxygenDepletionRate = DEFAULT_OXYGEN_DEPLETION_RATE;
+            staminaDepletionRate = DEFAULT_STAMINA_DEPLETION_RATE;
         }
     }
 

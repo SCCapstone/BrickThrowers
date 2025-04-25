@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81279ae70c0c2f44092a1d902f76f4db, type: 3}
+  m_Script: {fileID: 11500000, guid: 5418247a52c8de149a86a655d1db03a8, type: 3}
   m_Name: Ruby
   m_EditorClassIdentifier: 
-  itemID: 0
+  itemID: 2
   itemName: Ruby
   itemIcon: {fileID: 21300000, guid: 98b337d552cac8f42bae213c59930e29, type: 3}
   prefab: {fileID: 5680212277124760220, guid: a489e82e3cdfffe4f82bacce03aedcc0, type: 3}
   itemType: 0
-  artifactType: 0
-  value: 0
+  cost: 0
+  artifactType: 1
+  value: 100

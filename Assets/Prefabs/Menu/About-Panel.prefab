@@ -375,7 +375,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3395863445782420739}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59ec751d1b1b14e4c951434f70ab3f15, type: 3}
+  m_Script: {fileID: 11500000, guid: d414afaeedcbb8444b56105840455db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
@@ -891,7 +891,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3306756432708166883}
   m_Direction: 2
   m_Value: 0.9999999
-  m_Size: 0.41309604
+  m_Size: 0.413096
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

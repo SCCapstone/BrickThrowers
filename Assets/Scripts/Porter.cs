@@ -8,6 +8,18 @@ public class Porter : MonoBehaviour
 
     public bool HasExtraSlotItem => extraSlotItem != null;
 
+    // This variable is here to allow the porter to be disabled or enabled.
+    private bool enableClass = false;
+
+    private void OnEnable()
+    {
+        enableClass = true;
+    }
+    private void OnDisable()
+    {
+        enableClass = false;
+    }
+
     public bool AddToExtraSlot(object item)
     {
         if (extraSlotItem == null) 

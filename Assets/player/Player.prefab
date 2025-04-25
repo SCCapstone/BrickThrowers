@@ -1220,6 +1220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3053bd0ca34d02745810dca3c91a5069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slot: {fileID: 4051580706256805587, guid: 94ccd277f9de6ce4bb156ffdfc50192c, type: 3}
+  slotHolder: {fileID: 7335966046746230471}
 --- !u!70 &8049067230788751416
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

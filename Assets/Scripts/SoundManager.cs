@@ -3,58 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundManager : MonoBehaviour
-{
-    public static SoundManager Instance { get; private set;}
-    
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioClip buttonClickSFX;
-    [SerializeField] private AudioClip bgMusic;
+public class SoundManager : MonoBehaviour {
+  public static SoundManager Instance { get; private set; }
 
-    void Start()
-    {
-        
+  [SerializeField] private AudioSource audioSource;
+  [SerializeField] private AudioSource musicSource;
+  [SerializeField] private AudioClip buttonClickSFX;
+  [SerializeField] private AudioClip bgMusic;
+
+  void Start() {
+
+  }
+
+  private void Awake() {
+    if (Instance != null && Instance != this) {
+      Destroy(gameObject);
+      return;
     }
+    Instance = this;
+    DontDestroyOnLoad(gameObject);
+    PlayBackgroundMusic(bgMusic);
+  }
 
-    private void Awake() {
-        if (Instance != null && Instance != this) {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        PlayBackgroundMusic(bgMusic);
+  public void PlayButtonClickSound() {
+    if (audioSource != null && buttonClickSFX != null) {
+      audioSource.PlayOneShot(buttonClickSFX);
     }
+  }
 
-    public void PlayButtonClickSound() {
-        if (audioSource != null && buttonClickSFX != null) {
-            audioSource.PlayOneShot(buttonClickSFX);
-        }
+  public void PlayBackgroundMusic(AudioClip musicClip = null) {
+    if (musicSource == null)
+      return;
+
+    if (musicClip != null)
+      musicSource.clip = musicClip;
+
+    if (musicSource.clip != null) {
+      if (!musicSource.isPlaying || musicSource.clip != musicClip) {
+        musicSource.loop = true;
+        musicSource.Play();
+      }
     }
+  }
 
-    public void PlayBackgroundMusic(AudioClip musicClip = null) {
-        if (musicSource == null)
-            return;
-
-        if (musicClip != null)
-            musicSource.clip = musicClip;
-        
-        if (musicSource.clip != null) {
-            if (!musicSource.isPlaying || musicSource.clip != musicClip) {
-                musicSource.loop = true;
-                musicSource.Play();
-            }
-        }
+  public void StopBackgroundMusic() {
+    if (musicSource != null) {
+      musicSource.Stop();
     }
+  }
 
-    public void StopBackgroundMusic() {
-        if(musicSource != null) {
-            musicSource.Stop();
-        }
-    }
-
-    public void AssignButtonClickSound(Button button) {
-        button.onClick.AddListener(PlayButtonClickSound);
-    }
+  public void AssignButtonClickSound(Button button) {
+    button.onClick.AddListener(PlayButtonClickSound);
+  }
 }

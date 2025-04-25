@@ -17,6 +17,6 @@ public class LobbyMenu : MonoBehaviour
     public void RunGame(int sceneIndexNum)
     {
         lobbyCountdown.StartCountdown(sceneIndexNum);
-        //SceneManager.LoadSceneAsync(sceneIndexNum); //edited to handle multiple scenes
+        
     }
 }

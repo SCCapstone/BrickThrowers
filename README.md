@@ -84,6 +84,6 @@ In the Test Runner window, you will see two tabs: **Edit Mode** and **Play Mode*
   LinkedIn: www.linkedin.com/in/kellyjthao
 
 - **tristenfornes (Tristen Fornes)**  
-  email: tfornes@email.sc.edu
-  git: https://github.com/tristenfornes/tristenfornes.github.io
+  email: tfornes@email.sc.edu  
+  git: https://github.com/tristenfornes/tristenfornes.github.io  
   linkedin: https://www.linkedin.com/in/tristen-fornes-019b61251/

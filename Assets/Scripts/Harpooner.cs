@@ -42,15 +42,15 @@ public class Harpooner : MonoBehaviour
 
         if (mousePos.x < Screen.width / 3f)
         {
-            PlayAttackAnimation("PlayerHarpoon-Attack-L");
+            PlayAttackAnimation("Attack-L");
         }
         else if (mousePos.x > Screen.width * 2f / 3f)
         {
-            PlayAttackAnimation("PlayerHarpoon-Attack-R");
+            PlayAttackAnimation("Attack-R");
         }
         else
         {
-            PlayAttackAnimation("PlayerHarpoon-Attack-Up");
+            PlayAttackAnimation("Attack-Up");
         }
 
         // After trigger attack animation, trigger "Attack" to transition back to idle/swimming.

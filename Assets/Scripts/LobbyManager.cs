@@ -2,44 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LobbyManager : MonoBehaviour
-{
-    private string selectedClass;
+public class LobbyManager : MonoBehaviour {
+  private string selectedClass;
 
-    void Start()
-    {
-        selectedClass = "None";  // Default value
-    }
+  void Start() {
+    selectedClass = "None";  // Default value
+  }
 
-    public void SelectHarpooner()
-    {
-        selectedClass = "Harpooner";
-        Debug.Log("Harpooner selected");
-    }
+  public void SelectHarpooner() {
+    selectedClass = "Harpooner";
+    Debug.Log("Harpooner selected");
+  }
 
-    public void SelectPorter()
-    {
-        selectedClass = "Porter";
-        Debug.Log("Porter selected");
-    }
+  public void SelectPorter() {
+    selectedClass = "Porter";
+    Debug.Log("Porter selected");
+  }
 
-    // Method to retrieve the selected class when transitioning to gameplay
-    public string GetSelectedClass()
-    {
-        return selectedClass;
-    }
+  // Method to retrieve the selected class when transitioning to gameplay
+  public string GetSelectedClass() {
+    return selectedClass;
+  }
 
-    public void ExitClassSelection()
-    {
-        // Save the selected class to PlayerPrefs
-        PlayerPrefs.SetString("PlayerClass", selectedClass);
-        PlayerPrefs.Save();  // Make sure to save the data
+  public void ExitClassSelection() {
+    // Save the selected class to PlayerPrefs
+    PlayerPrefs.SetString("PlayerClass", selectedClass);
+    PlayerPrefs.Save();  // Make sure to save the data
 
-        // Optionally, debug log to check that class is saved
-        Debug.Log("Class saved: " + selectedClass);
+    // Optionally, debug log to check that class is saved
+    Debug.Log("Class saved: " + selectedClass);
 
-        // Close the class selection panel (you may disable the panel or load a different UI)
-        gameObject.SetActive(false); // Example of deactivating the class selection panel
-    }
+    // Close the class selection panel (you may disable the panel or load a different UI)
+    gameObject.SetActive(false); // Example of deactivating the class selection panel
+  }
 
 }

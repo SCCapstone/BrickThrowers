@@ -1,0 +1,18 @@
+# Top-most EditorConfig file
+root = true
+
+# Core settings for all files
+[*]
+indent_style = space                 # Use spaces over tabs :contentReference[oaicite:2]{index=2}
+indent_size = 2                      # Google style uses 2 spaces :contentReference[oaicite:3]{index=3}
+max_line_length = 100                # Wrap lines at ~100 chars
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# C# files only
+[*.cs]
+# Brace placement: K&R style (same line) for all constructs
+csharp_new_line_before_open_brace = none      # no newline before '{' :contentReference[oaicite:4]{index=4}
+csharp_new_line_before_else       = false     # else on same line :contentReference[oaicite:5]{index=5}
+csharp_new_line_before_catch      = false     # catch on same line :contentReference[oaicite:6]{index=6}
+csharp_new_line_before_finally    = false     # finally on same line :contentReference[oaicite:7]{index=7}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Lionfish : MonoBehaviour {
+public class Lionfish : MonoBehaviour, IDamageable {
   public float patrolSpeed = 2f;               // Speed of patrol movement
   public float directionChangeInterval = 3f;  // Time between direction changes
   public int health = 40;                     // Health of the lionfish

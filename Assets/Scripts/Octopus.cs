@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Octopus : MonoBehaviour {
+public class Octopus : MonoBehaviour, IDamageable {
   public float detectionRange = 3f; // Range to detect the player
   public float latchDuration = 5f; // Default time to free from latch
   public int health = 60; // Health of the octopus

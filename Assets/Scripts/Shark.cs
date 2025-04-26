@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Shark : MonoBehaviour {
+public class Shark : MonoBehaviour, IDamageable {
   public float patrolSpeed = 3f; // Speed of shark patrol
   public float chargeSpeed = 7f; // Speed of shark when charging
   public float chargeCooldown = 3f; // Cooldown time between charges
@@ -124,7 +124,7 @@ public class Shark : MonoBehaviour {
     health -= damageAmount;
     if (health <= 0) {
       Destroy(gameObject);
-      Debug.Log("Lionfish defeated!");
+      Debug.Log("Shark defeated!");
     }
   }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Jellyfish : MonoBehaviour {
+public class Jellyfish : MonoBehaviour, IDamageable {
   public float floatSpeed = 1.5f;               // Speed of jellyfish floating
   public float directionChangeInterval = 2f;   // Interval for changing direction
   public float stunDuration = 60f;              // Duration of player's stun upon contact
@@ -59,7 +59,7 @@ public class Jellyfish : MonoBehaviour {
     health -= damageAmount;
     if (health <= 0) {
       Destroy(gameObject);
-      Debug.Log("Octopus defeated!");
+      Debug.Log("Jellyfish defeated!");
     }
   }
 }

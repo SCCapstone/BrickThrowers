@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Anglerfish : MonoBehaviour {
+public class Anglerfish : MonoBehaviour, IDamageable {
   // Anglerfish properties
   public float swimSpeed = 2f;                 // Speed of anglerfish movement
   public float directionChangeInterval = 5f;  // Time between direction changes

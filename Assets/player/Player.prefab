@@ -175,6 +175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a027b000fc812418f30573a69c47ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesInRange: []
+  zoneDirection: 1
 --- !u!1 &3048694082122345384
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,6 +557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a027b000fc812418f30573a69c47ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesInRange: []
+  zoneDirection: 0
 --- !u!1 &5832370907345062059
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +652,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a027b000fc812418f30573a69c47ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesInRange: []
+  zoneDirection: 2
 --- !u!1 &6975050386561231232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,11 +1455,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 9070999298247885673}
-  attackPoint: {fileID: 3711309659116421474}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
   knockbackForce: 10
+  attackZone: {fileID: 799297353573355878}
 --- !u!114 &6172847138549618891
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -296,6 +296,7 @@ MonoBehaviour:
   slotHolder: {fileID: 7335966046746230471}
   player: {fileID: 4266255823342324771}
   moveDelay: 0.2
+  instance: {fileID: 0}
 --- !u!1 &4121263498419148496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,7 +1256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f883fdd2a3ae84dbb39ac0f977f225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oxygenLevel: 100
+  oxygenLevel: 10
   isStunned: 0
   stunTimer: 0
   speed: 40

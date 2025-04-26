@@ -1273,6 +1273,7 @@ MonoBehaviour:
   SummaryScreen: {fileID: 0}
   Clock: {fileID: 0}
   timer: {fileID: 0}
+  areYouSureScreen: {fileID: 0}
   playerTime: 0
   gameTime: 0
   rb: {fileID: 7729310634631522524}
@@ -1289,6 +1290,7 @@ MonoBehaviour:
   submarineRb: {fileID: 0}
   visibilityRadius: {fileID: 4121263498419148496}
   visibilityScaleFactor: 1.8
+  inventory: {fileID: 8665365309149245438}
 --- !u!50 &7729310634631522524
 Rigidbody2D:
   serializedVersion: 4

@@ -3,24 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
+using System;
+
 
 public class SummaryScreenUI : MonoBehaviour {
 
   public GameObject summaryScreen;
+
   [Header("Summary")]
-  [SerializeField] Text Artifacts;
+  [SerializeField] TextMeshProUGUI artifact;
+  [SerializeField] TextMeshProUGUI score;
+  [SerializeField] TextMeshProUGUI missed;
+  [SerializeField] TextMeshProUGUI exp;
+  [SerializeField] TextMeshProUGUI coins;
+
+  [SerializeField] private LevelManager lm;
 
   Player player;
+
+  // Actions
+  public static Action<int> transferCurrency; 
+
   public void SetSummary(Player player) {
 
-    Artifacts.text = "" + player.artifactsGot;
+    artifact.text = "" + player.artifactsGot;
 
+  }
+
+  public void SetSummary() {
+    artifact.text = lm.Collected.ToString();
+    score.text = lm.Score.ToString();
+    missed.text = (lm.Artifacts.Length - lm.Collected).ToString();
+    exp.text = lm.CalculateExp().ToString();
+    coins.text = "$" + lm.CalculateCurr().ToString();
   }
 
   public void gameOver(Player player) {
     if (player.oxygenLevel <= 0) {
       summaryScreen.SetActive(true);
-      SetSummary(player);
+      SetSummary();
     }
   }
 
@@ -34,4 +57,10 @@ public class SummaryScreenUI : MonoBehaviour {
 
   }
 
+  #region Scene Management
+  public void ReturnToLobby() {
+    transferCurrency?.Invoke(lm.Score);
+    SceneManager.LoadSceneAsync(1);
+  }
+  #endregion
 }

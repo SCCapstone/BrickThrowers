@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ReturnToMainMenu",
+                    "type": "Button",
+                    "id": "67c82332-4c41-4eae-8ce7-24972bbf9f52",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -349,6 +358,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "InteractSubmarine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "916976f4-decf-4a63-80c7-2db0b3f17efc",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReturnToMainMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

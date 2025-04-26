@@ -32,6 +32,7 @@ public class Player : Diver {
   private InputAction move;
   private InputAction sprint;
   private InputAction subInteract;
+  private InputAction subLeaveLevel;
 
   // Movement
   public float speed = 40f;
@@ -70,6 +71,7 @@ public class Player : Diver {
   public GameObject SummaryScreen;
   public GameObject Clock;
   public TimerScript timer;
+  [SerializeField] private GameObject areYouSureScreen;
   public float playerTime;
   private bool isDead;
 
@@ -111,35 +113,41 @@ public class Player : Diver {
   private bool isInSubmarine = false;
   private bool nearSubmarine = false;
 
-  //private KeyCode subInteract = KeyCode.L;
-
+  // Inventory
+  [SerializeField] private InventoryManager inventory;
   #region Setup Functions
   private void Awake() {
     playerControls = new PlayerInputActions();
     sprint = GetComponent<PlayerInput>().actions["Sprint"];
+    
 
     sprint.started += OnSprintPress;
     sprint.canceled += OnSprintRelease;
+    
   }
 
   private void OnEnable() {
     move = playerControls.Player.Move;
     subInteract = playerControls.Player.InteractSubmarine;
+    subLeaveLevel = playerControls.Player.ReturnToMainMenu;
 
     move.Enable();
     subInteract.Enable();
+    subLeaveLevel.Enable();
 
     GodModeIndicator.onGodModeActivated += GodMode;
     SeaWeed.onPlayerSlowedDown += SeaweedSpeedSlowed;
     SeaWeed.onPlayerSpeedRestored += SeaweedSpeedRestored;
     Diver.onDamage += ChangeColor;
     Diver.onDeath += GameOver;
+    subLeaveLevel.performed += SubmarineLeaveLevel;
   }
 
   private void OnDisable() {
     move.Disable();
     sprint.Disable();
     subInteract.Disable();
+    subLeaveLevel.Disable();
 
     GodModeIndicator.onGodModeActivated -= GodMode;
     SeaWeed.onPlayerSlowedDown -= SeaweedSpeedSlowed;
@@ -459,6 +467,7 @@ public class Player : Diver {
       transform.localPosition = Vector2.zero;
       submarineRb.constraints = RigidbodyConstraints2D.FreezeRotation;
       Debug.Log("Entering sub");
+      inventory.RemoveArtifacts();
     } else {
       playerSprite.enabled = true;
       rb.simulated = true;
@@ -472,7 +481,13 @@ public class Player : Diver {
       submarineRb.velocity = Vector2.zero;
     }
   }
+  private void SubmarineLeaveLevel(InputAction.CallbackContext context) {
+    if (isInSubmarine) {
+      areYouSureScreen.SetActive(true);
+      SummaryScreen.GetComponent<SummaryScreenUI>().SetSummary();
+    }
 
+  }
   #endregion
   #region Damage Color Change
   // FF7A7A - Red-ish color for damage color change

@@ -37,6 +37,8 @@ public class InventoryManager : MonoBehaviour {
   public float moveDelay = 0.2f;
   private Coroutine moveCoroutine;
 
+  [SerializeField] private LevelManager instance;
+
   #region Setup
 
   private void Start() {
@@ -318,6 +320,21 @@ public class InventoryManager : MonoBehaviour {
     startingItems = new SlotClass[startItems.Count];
     for (int i = 0; i < startItems.Count; i++) {
       startingItems[i] = new SlotClass(startItems[i]);
+    }
+  }
+  public void RemoveArtifacts() {
+    foreach (SlotClass slot in items) {
+      if (slot != null && slot.Item.GetType() == typeof(ArtifactClass)) {
+        ArtifactClass artifact = slot.Item as ArtifactClass;
+        if (artifact != null) {
+          //LevelManager.Instance.AddScore(artifact.value);
+          instance.AddScore(artifact.value);
+          Remove(slot.Item);
+          Debug.Log("Removing Artifact");
+        } else {
+          Debug.LogWarning("slot.Item is not an ArtifactClass.");
+        }
+      }
     }
   }
 }

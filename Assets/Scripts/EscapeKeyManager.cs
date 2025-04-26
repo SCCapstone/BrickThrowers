@@ -31,7 +31,16 @@ public class EscapeKeyManager : MonoBehaviour {
 
   private void OnCancel(InputAction.CallbackContext contex) {
     // The case where there is no panel open.
-    if (pauseMenuPanel != null && !pauseMenuPanel.activeSelf) {
+    bool anyPanelNotPauseOpen = false;
+    for(int i = panels.Length - 1; i >= 0; i--) {
+      if (panels[i] != null && panels[i].activeSelf) {
+        anyPanelNotPauseOpen = true;
+        break;
+      }
+    }
+
+
+    if (pauseMenuPanel != null && !pauseMenuPanel.activeSelf && !anyPanelNotPauseOpen) {
       pauseMenuPanel.SetActive(true);
       return;
     }

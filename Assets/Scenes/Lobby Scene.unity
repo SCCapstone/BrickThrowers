@@ -908,7 +908,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1272940296}
+      - m_Target: {fileID: 8424136292750179198}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1424,7 +1424,7 @@ MonoBehaviour:
   - {fileID: 2125302479}
   - {fileID: 989689449}
   - {fileID: 1271094305}
-  - {fileID: 1272940296}
+  - {fileID: 8424136292750179198}
   pauseMenuPanel: {fileID: 2125302479}
 --- !u!1 &874548611
 GameObject:
@@ -2462,11 +2462,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272349242}
   m_CullTransparentMesh: 1
---- !u!1 &1272940296 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7779011675217992324, guid: d5f5b35c2071ea94d87d657feab6c9eb, type: 3}
-  m_PrefabInstance: {fileID: 8424136292750179197}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1460130126
 GameObject:
   m_ObjectHideFlags: 0
@@ -4607,19 +4602,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5994738370628673507, guid: d5f5b35c2071ea94d87d657feab6c9eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7779011675217992324, guid: d5f5b35c2071ea94d87d657feab6c9eb, type: 3}
       propertyPath: m_Name
       value: ShopCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 7779011675217992324, guid: d5f5b35c2071ea94d87d657feab6c9eb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5f5b35c2071ea94d87d657feab6c9eb, type: 3}
+--- !u!1 &8424136292750179198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5994738370628673507, guid: d5f5b35c2071ea94d87d657feab6c9eb, type: 3}
+  m_PrefabInstance: {fileID: 8424136292750179197}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

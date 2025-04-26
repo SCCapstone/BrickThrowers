@@ -8,6 +8,9 @@ using UnityEngine;
 // Retains the means of saving and loading currency JSON data.
 public class CurrencyManager : MonoBehaviour {
 
+  // If you want to cheat with money, path is:
+  // C:\Users\<your-username>\AppData\LocalLow\Brick Throwers\Daredivers\currency.json
+
   // Singleton instance
   private static Currency playerCurrency = new Currency();
   private static IDataService dataService = new JsonDataService();
@@ -22,6 +25,12 @@ public class CurrencyManager : MonoBehaviour {
       SerializeJson();
     }
     UpdateCurrencyText();
+  }
+  private void OnEnable() {
+    CurrencyTransporter.transportMoneyNow += GotMoneyFromGame;
+  }
+  private void OnDisable() {
+    CurrencyTransporter.transportMoneyNow -= GotMoneyFromGame;
   }
   #endregion
   #region JSON Serialization
@@ -63,6 +72,16 @@ public class CurrencyManager : MonoBehaviour {
     UpdateCurrencyText();
     SerializeJson();
     return true;
+  }
+
+  /// <summary>
+  /// Recieves the signal from CurrencyTransporter to update the currency.
+  /// </summary>
+  /// <param name="money"></param>
+  public void GotMoneyFromGame(int money) {
+    Debug.Log($"currency manager got your money: {money}");
+    UpdateCurrency(money);
+    Debug.Log($"the money is now {playerCurrency.CurrencyAmount}");
   }
 
   private void UpdateCurrencyText() {

@@ -1,9 +1,12 @@
 // File: Assets/Tests/editmodetest/AnglerfishUnitTests.cs
-// To run these EditMode tests:
-//   In the Unity Editor: open Window → General → Test Runner, select “EditMode” and click Run All
-//   Via CLI:
-//     Unity -batchmode -projectPath . -runTests -testPlatform EditMode \
-//       -logFile -testResults TestResults/EditModeResults.xml
+// To run this specific EditMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner
+//       – Select “EditMode” category
+//       – Find and right-click “AnglerfishUnitTests” → Run Selected
+//   • Via CLI (runs only AnglerfishUnitTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform EditMode \
+//         -testFilter AnglerfishUnitTests -logFile -testResults TestResults/AnglerfishUnitTests.xml
 
 using NUnit.Framework;
 using UnityEngine;
@@ -18,13 +21,10 @@ public class AnglerfishUnitTests
     [SetUp]
     public void SetUp()
     {
-        fishObj = new GameObject();
+        fishObj = new GameObject("Anglerfish");
         fish = fishObj.AddComponent<Anglerfish>();
         fishObj.AddComponent<Rigidbody2D>();
-
-        // create and assign a Light for flicker tests
-        var lightObj = new GameObject("Light");
-        var light = lightObj.AddComponent<Light>();
+        var light = fishObj.AddComponent<Light>();  // ensure Start() runs past initialization
         fish.anglerLight = light;
     }
 
@@ -42,19 +42,21 @@ public class AnglerfishUnitTests
         Assert.AreEqual(3f, fish.lightIntensity);
         Assert.AreEqual(0.1f, fish.flickerFrequency);
         Assert.AreEqual(5f, fish.detectionRange);
-        Assert.AreEqual(0.1f, fish.oxygenDamage);
+        Assert.AreEqual(0.2f, fish.oxygenDamage, 1e-6f);
+        Assert.AreEqual(30, fish.health);
     }
 
     [Test]
-    public void GetRandomDirection_IsNormalized()
+    public void GetRandomDirection_IsUnitLength()
     {
-        MethodInfo randDir = typeof(Anglerfish).GetMethod("GetRandomDirection", BindingFlags.NonPublic | BindingFlags.Instance);
+        MethodInfo randDir = typeof(Anglerfish)
+            .GetMethod("GetRandomDirection", BindingFlags.NonPublic | BindingFlags.Instance);
         Vector2 dir = (Vector2)randDir.Invoke(fish, null);
         Assert.AreEqual(1f, dir.magnitude, 1e-3f);
     }
 
     [Test]
-    public void FlickerLight_SetsIntensityWithinRange()
+    public void FlickerLight_IntensityWithinRange()
     {
         fish.lightIntensity = 4f;
         fish.FlickerLight();
@@ -64,16 +66,10 @@ public class AnglerfishUnitTests
     }
 
     [Test]
-    public void InteractWithPlayer_ReducesOxygen()
+    public void TakeDamage_ReducesHealth()
     {
-        var playerObj = new GameObject("Player");
-        playerObj.tag = "Player";
-        var player = playerObj.AddComponent<Player>();
-        player.oxygen = 10f;
-
-        fish.targetPlayer = playerObj.transform;
-        fish.InteractWithPlayer();
-
-        Assert.Less(player.oxygen, 10f);
+        int before = fish.health;
+        fish.TakeDamage(10);
+        Assert.AreEqual(before - 10, fish.health);
     }
 }

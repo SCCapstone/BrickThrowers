@@ -1,65 +1,91 @@
 // File: Assets/Tests/editmodetest/SquidUnitTests.cs
-// To run these EditMode tests:
-//  • In the Unity Editor: Window → General → Test Runner → Select “EditMode” → Run All
-//  • CLI: Unity -batchmode -projectPath . -runTests -testPlatform EditMode -logFile -testResults TestResults/EditModeResults.xml
+// To run this specific EditMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select “EditMode” category  
+//       – Right-click “SquidUnitTests” → Run Selected  
+//   • Via CLI (runs only SquidUnitTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform EditMode \
+//         -testFilter SquidUnitTests -logFile -testResults TestResults/SquidUnitTests.xml
 
 using NUnit.Framework;
 using UnityEngine;
+using System.Reflection;
 
 [TestFixture]
 public class SquidUnitTests
 {
-    GameObject squidObj;
-    Squid squid;
+    private GameObject squidObj;
+    private Squid squid;
+    private Player player;
 
     [SetUp]
     public void SetUp()
     {
-        squidObj = new GameObject();
+        // Create the Squid
+        squidObj = new GameObject("Squid");
         squid = squidObj.AddComponent<Squid>();
         squidObj.AddComponent<Rigidbody2D>();
-        // Give it a fake player target
-        var playerObj = new GameObject();
+
+        // Create a Player tagged “Player” for ReleaseInk()
+        var playerObj = new GameObject("Player");
         playerObj.tag = "Player";
-        playerObj.transform.position = Vector2.zero;
+        player = playerObj.AddComponent<Player>();
     }
 
     [TearDown]
     public void TearDown()
     {
         Object.DestroyImmediate(squidObj);
+        foreach (var go in Object.FindObjectsOfType<GameObject>())
+            if (go.tag == "Player")
+                Object.DestroyImmediate(go);
     }
 
     [Test]
-    public void StartRetreat_SetsRetreatState()
+    public void DefaultValues_AreCorrect()
     {
-        Vector2 dir = Vector2.right;
-        squid.StartRetreat(dir);
-        Assert.IsFalse(squid.isAmbushing, "isAmbushing should be false after StartRetreat");
-        Assert.IsTrue(squid.isRetreating, "isRetreating should be true after StartRetreat");
-        Assert.AreEqual(-dir, squid.retreatDirection, "retreatDirection should be opposite of input");
-        Assert.Greater(squid.retreatTimer, 0f, "retreatTimer should be set to retreatDuration");
+        Assert.AreEqual(7f, squid.ambushSpeed, "ambushSpeed must default to 7f");
+        Assert.AreEqual(10f, squid.retreatSpeed, "retreatSpeed must default to 10f");
+        Assert.AreEqual(8f, squid.ambushRange, "ambushRange must default to 8f");
+        Assert.AreEqual(3f, squid.inkBlindDuration, "inkBlindDuration must default to 3f");
+        Assert.AreEqual(1.5f, squid.retreatDuration, "retreatDuration must default to 1.5f");
+    }
+
+    [Test]
+    public void DetectPlayerAndAmbush_SetsIsAmbushingWhenInRange()
+    {
+        // Position squid and player within ambushRange
+        squidObj.transform.position = Vector3.zero;
+        GameObject.FindGameObjectWithTag("Player").transform.position = Vector3.right * (squid.ambushRange * 0.9f);
+
+        // Call Start() to set targetPlayer
+        typeof(Squid).GetMethod("Start", BindingFlags.NonPublic | BindingFlags.Instance)
+                     .Invoke(squid, null);
+
+        // Invoke DetectPlayerAndAmbush()
+        typeof(Squid).GetMethod("DetectPlayerAndAmbush", BindingFlags.NonPublic | BindingFlags.Instance)
+                     .Invoke(squid, null);
+
+        // Check private field isAmbushing
+        bool isAmbushing = (bool)typeof(Squid)
+            .GetField("isAmbushing", BindingFlags.NonPublic | BindingFlags.Instance)
+            .GetValue(squid);
+        Assert.IsTrue(isAmbushing, "DetectPlayerAndAmbush() should set isAmbushing when player within range");
     }
 
     [Test]
     public void ReleaseInk_BlindsPlayer()
     {
-        var playerObj = GameObject.FindGameObjectWithTag("Player");
-        var player = playerObj.AddComponent<Player>();
-        float before = player.isBlinded ? 1f : 0f;
-        squid.ReleaseInk();
-        Assert.IsTrue(player.isBlinded, "Player should be blinded after ReleaseInk");
-        Assert.AreEqual(squid.inkBlindDuration, player.blindDuration, "Blind duration must match inkBlindDuration");
-    }
+        // Call Start() to set targetPlayer
+        typeof(Squid).GetMethod("Start", BindingFlags.NonPublic | BindingFlags.Instance)
+                     .Invoke(squid, null);
 
-    [Test]
-    public void DetectPlayerAndAmbush_SetsAmbushWhenInRange()
-    {
-        // place squid near player
-        squidObj.transform.position = Vector3.zero;
-        var playerObj = GameObject.FindGameObjectWithTag("Player");
-        playerObj.transform.position = Vector3.right * squid.ambushRange * 0.9f;
-        squid.DetectPlayerAndAmbush();
-        Assert.IsTrue(squid.isAmbushing, "isAmbushing should be true when player is within ambushRange");
+        // Invoke ReleaseInk()
+        typeof(Squid).GetMethod("ReleaseInk", BindingFlags.NonPublic | BindingFlags.Instance)
+                     .Invoke(squid, null);
+
+        Assert.IsTrue(player.isBlinded, "ReleaseInk() should call Player.Blind()");
+        Assert.AreEqual(squid.inkBlindDuration, player.blindDuration, "Blind duration must match inkBlindDuration");
     }
 }

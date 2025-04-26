@@ -1,8 +1,12 @@
 // File: Assets/Tests/playmodetest/JellyfishPlayModeTests.cs
-// To run these PlayMode tests:
-//   In the Unity Editor: Window → General → Test Runner → select “PlayMode” and click Run All
-//   Via CLI:
-//     Unity -batchmode -projectPath . -runTests -testPlatform PlayMode -logFile -testResults TestResults/PlayModeResults.xml
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select the “PlayMode” category  
+//       – Right-click “JellyfishPlayModeTests” → Run Selected  
+//   • Via CLI (runs only JellyfishPlayModeTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
+//         -testFilter JellyfishPlayModeTests -logFile -testResults TestResults/JellyfishPlayModeTests.xml
 
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -22,7 +26,7 @@ public class JellyfishPlayModeTests
         jellyObj = new GameObject("Jellyfish");
         rb = jellyObj.AddComponent<Rigidbody2D>();
         jelly = jellyObj.AddComponent<Jellyfish>();
-        yield return null; // allow Start() to run and initial direction set
+        yield return null; // allow Start() to initialize
     }
 
     [UnityTearDown]
@@ -35,24 +39,23 @@ public class JellyfishPlayModeTests
     [UnityTest]
     public IEnumerator Jellyfish_Float_SetsVelocityMagnitude()
     {
-        // After one frame, Update has applied velocity
+        // After one frame, Update has applied the velocity
         yield return null;
-
-        float speed = rb.velocity.magnitude;
-        Assert.AreEqual(jelly.floatSpeed, speed, 0.1f);
+        Assert.AreEqual(jelly.floatSpeed, rb.velocity.magnitude, 0.1f);
     }
 
     [UnityTest]
     public IEnumerator Jellyfish_ChangesDirection_AfterInterval()
     {
         // Capture initial direction
-        FieldInfo dirField = typeof(Jellyfish).GetField("moveDirection", BindingFlags.NonPublic | BindingFlags.Instance);
-        Vector2 initialDir = (Vector2)dirField.GetValue(jelly);
+        FieldInfo dirField = typeof(Jellyfish)
+            .GetField("moveDirection", BindingFlags.NonPublic | BindingFlags.Instance);
+        Vector2 initial = (Vector2)dirField.GetValue(jelly);
 
-        // Wait for longer than directionChangeInterval
+        // Wait longer than the interval
         yield return new WaitForSeconds(jelly.directionChangeInterval + 0.1f);
 
-        Vector2 newDir = (Vector2)dirField.GetValue(jelly);
-        Assert.AreNotEqual(initialDir, newDir, "moveDirection should change after directionChangeInterval");
+        Vector2 updated = (Vector2)dirField.GetValue(jelly);
+        Assert.AreNotEqual(initial, updated, "moveDirection should change after directionChangeInterval");
     }
 }

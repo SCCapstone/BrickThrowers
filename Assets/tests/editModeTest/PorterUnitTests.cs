@@ -1,12 +1,16 @@
 // File: Assets/Tests/editmodetest/PorterUnitTests.cs
-// To run these EditMode tests:
-//   In the Unity Editor: Window → General → Test Runner → select “EditMode” and click Run All
-//   Via CLI:
-//     Unity -batchmode -projectPath . -runTests -testPlatform EditMode \
-//       -logFile -testResults TestResults/EditModeResults.xml
+// To run this specific EditMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select “EditMode” category  
+//       – Right-click “PorterUnitTests” → Run Selected  
+//   • Via CLI (runs only PorterUnitTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform EditMode \
+//         -testFilter PorterUnitTests -logFile -testResults TestResults/PorterUnitTests.xml
 
 using NUnit.Framework;
 using UnityEngine;
+using System.Reflection;
 
 [TestFixture]
 public class PorterUnitTests
@@ -17,7 +21,7 @@ public class PorterUnitTests
     [SetUp]
     public void SetUp()
     {
-        obj = new GameObject("Porter");
+        obj = new GameObject("PorterObj");
         porter = obj.AddComponent<Porter>();
     }
 
@@ -28,9 +32,24 @@ public class PorterUnitTests
     }
 
     [Test]
-    public void HasExtraSlotItem_IsFalseInitially()
+    public void OnEnable_SetsEnableClassTrue()
     {
-        Assert.IsFalse(porter.HasExtraSlotItem, "Porter should start with an empty extra slot");
+        // initially the component has just been added and OnEnable has run
+        var field = typeof(Porter).GetField("enableClass", BindingFlags.NonPublic | BindingFlags.Instance);
+        bool enabledState = (bool)field.GetValue(porter);
+        Assert.IsTrue(enabledState, "enableClass should be true after OnEnable");
+    }
+
+    [Test]
+    public void OnDisable_SetsEnableClassFalse()
+    {
+        // invoke OnDisable via reflection
+        MethodInfo onDisable = typeof(Porter).GetMethod("OnDisable", BindingFlags.NonPublic | BindingFlags.Instance);
+        onDisable.Invoke(porter, null);
+
+        var field = typeof(Porter).GetField("enableClass", BindingFlags.NonPublic | BindingFlags.Instance);
+        bool enabledState = (bool)field.GetValue(porter);
+        Assert.IsFalse(enabledState, "enableClass should be false after OnDisable");
     }
 
     [Test]
@@ -38,22 +57,20 @@ public class PorterUnitTests
     {
         var item = new object();
         bool result = porter.AddToExtraSlot(item);
-
-        Assert.IsTrue(result, "AddToExtraSlot should return true when slot is empty");
+        Assert.IsTrue(result, "Should return true when slot is empty");
         Assert.IsTrue(porter.HasExtraSlotItem, "HasExtraSlotItem should be true after adding");
-        Assert.AreSame(item, porter.GetExtraSlotItem(), "GetExtraSlotItem should return the added object");
+        Assert.AreSame(item, porter.GetExtraSlotItem(), "GetExtraSlotItem must return the added item");
     }
 
     [Test]
-    public void AddToExtraSlot_WhenOccupied_ReturnsFalseAndDoesNotOverwrite()
+    public void AddToExtraSlot_WhenOccupied_ReturnsFalse()
     {
         var first = new object();
         var second = new object();
         porter.AddToExtraSlot(first);
         bool result = porter.AddToExtraSlot(second);
-
-        Assert.IsFalse(result, "AddToExtraSlot should return false when slot is occupied");
-        Assert.AreSame(first, porter.GetExtraSlotItem(), "Existing item should remain unchanged");
+        Assert.IsFalse(result, "Should return false when slot already has an item");
+        Assert.AreSame(first, porter.GetExtraSlotItem(), "Original item should remain unchanged");
     }
 
     [Test]
@@ -62,8 +79,7 @@ public class PorterUnitTests
         var item = new object();
         porter.AddToExtraSlot(item);
         object removed = porter.RemoveFromExtraSlot();
-
-        Assert.AreSame(item, removed, "RemoveFromExtraSlot should return the previously added item");
+        Assert.AreSame(item, removed, "Should return the removed item");
         Assert.IsFalse(porter.HasExtraSlotItem, "Slot should be empty after removal");
     }
 
@@ -71,6 +87,6 @@ public class PorterUnitTests
     public void RemoveFromExtraSlot_WhenEmpty_ReturnsNull()
     {
         object removed = porter.RemoveFromExtraSlot();
-        Assert.IsNull(removed, "RemoveFromExtraSlot should return null when slot is already empty");
+        Assert.IsNull(removed, "Should return null when slot is already empty");
     }
 }

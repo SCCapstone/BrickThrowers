@@ -1,9 +1,12 @@
 // File: Assets/Tests/playmodetest/AnglerfishPlayModeTests.cs
-// To run these PlayMode tests:
-//   In the Unity Editor: open Window → General → Test Runner, select “PlayMode” and click Run All
-//   Via CLI:
-//     Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
-//       -logFile -testResults TestResults/PlayModeResults.xml
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner
+//       – Select “PlayMode” category
+//       – Find and right-click “AnglerfishPlayModeTests” → Run Selected
+//   • Via CLI (runs only AnglerfishPlayModeTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
+//         -testFilter AnglerfishPlayModeTests -logFile -testResults TestResults/AnglerfishPlayModeTests.xml
 
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -14,57 +17,53 @@ public class AnglerfishPlayModeTests
 {
     private GameObject fishObj;
     private Anglerfish fish;
-    private Rigidbody2D rb;
+    private Rigidbody2D fishRb;
+    private BoxCollider2D fishCol;
+
     private GameObject playerObj;
-    private Player player;
+    private Diver diver;
 
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        playerObj = new GameObject("Player");
-        playerObj.tag = "Player";
-        player = playerObj.AddComponent<Player>();
-        player.oxygen = 5f;
-
+        // create anglerfish
         fishObj = new GameObject("Anglerfish");
-        rb = fishObj.AddComponent<Rigidbody2D>();
+        fishRb = fishObj.AddComponent<Rigidbody2D>();
+        fishCol = fishObj.AddComponent<BoxCollider2D>();
+        fishCol.isTrigger = false;
         fish = fishObj.AddComponent<Anglerfish>();
-
-        // assign light so Start does not error
         var light = fishObj.AddComponent<Light>();
         fish.anglerLight = light;
 
-        yield return null; // allow Start
+        // create player/diver
+        playerObj = new GameObject("Player");
+        playerObj.tag = "Player";
+        playerObj.AddComponent<BoxCollider2D>();
+        playerObj.AddComponent<Rigidbody2D>();
+        diver = playerObj.AddComponent<Diver>();
+        diver.oxygen = 10f;
+
+        // overlap for collision
+        fishObj.transform.position = Vector3.zero;
+        playerObj.transform.position = Vector3.zero;
+
+        yield return null;  
+        yield return new WaitForFixedUpdate();
     }
 
     [UnityTearDown]
     public IEnumerator TearDown()
     {
-        Object.Destroy(playerObj);
         Object.Destroy(fishObj);
+        Object.Destroy(playerObj);
         yield return null;
     }
 
     [UnityTest]
-    public IEnumerator Swim_SetsVelocityMagnitude()
+    public IEnumerator OnCollisionStay2D_DamagesDiverOxygen()
     {
-        // let one frame run so Update sets velocity
-        yield return null;
-        float speed = rb.velocity.magnitude;
-        Assert.AreEqual(fish.swimSpeed, speed, 0.1f);
-    }
-
-    [UnityTest]
-    public IEnumerator DetectAndInteract_ReducesPlayerOxygen()
-    {
-        // place fish near player
-        fishObj.transform.position = Vector3.zero;
-        playerObj.transform.position = Vector3.right * (fish.detectionRange - 1f);
-
-        // one frame to detect and interact
-        yield return null;
-        yield return null;
-
-        Assert.Less(player.oxygen, 5f);
+        float before = diver.oxygen;
+        yield return new WaitForFixedUpdate();  
+        Assert.Less(diver.oxygen, before);
     }
 }

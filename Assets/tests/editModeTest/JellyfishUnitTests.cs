@@ -1,8 +1,12 @@
 // File: Assets/Tests/editmodetest/JellyfishUnitTests.cs
-// To run these EditMode tests:
-//   In the Unity Editor: Window → General → Test Runner → select “EditMode” and click Run All
-//   Via CLI:
-//     Unity -batchmode -projectPath . -runTests -testPlatform EditMode -logFile -testResults TestResults/EditModeResults.xml
+// To run this specific EditMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select the “EditMode” category  
+//       – Right-click “JellyfishUnitTests” → Run Selected  
+//   • Via CLI (runs only JellyfishUnitTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform EditMode \
+//         -testFilter JellyfishUnitTests -logFile -testResults TestResults/JellyfishUnitTests.xml
 
 using NUnit.Framework;
 using UnityEngine;
@@ -17,7 +21,7 @@ public class JellyfishUnitTests
     [SetUp]
     public void SetUp()
     {
-        jellyObj = new GameObject();
+        jellyObj = new GameObject("Jellyfish");
         jelly = jellyObj.AddComponent<Jellyfish>();
         jellyObj.AddComponent<Rigidbody2D>();
     }
@@ -33,20 +37,30 @@ public class JellyfishUnitTests
     {
         Assert.AreEqual(1.5f, jelly.floatSpeed, "floatSpeed must default to 1.5f");
         Assert.AreEqual(2f, jelly.directionChangeInterval, "directionChangeInterval must default to 2f");
-        Assert.AreEqual(2f, jelly.stunDuration, "stunDuration must default to 2f");
+        Assert.AreEqual(60f, jelly.stunDuration, "stunDuration must default to 60f");
+        Assert.AreEqual(20, jelly.health, "health must default to 20");
     }
 
     [Test]
-    public void ChangeDirection_SetsNormalizedMoveDirection()
+    public void GetRandomDirection_IsUnitLength()
     {
-        // Call private ChangeDirection()
-        MethodInfo changeDir = typeof(Jellyfish).GetMethod("ChangeDirection", BindingFlags.NonPublic | BindingFlags.Instance);
+        MethodInfo changeDir = typeof(Jellyfish)
+            .GetMethod("ChangeDirection", BindingFlags.NonPublic | BindingFlags.Instance);
+        // run ChangeDirection to set moveDirection
         changeDir.Invoke(jelly, null);
 
-        // Retrieve private field moveDirection
-        FieldInfo dirField = typeof(Jellyfish).GetField("moveDirection", BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo dirField = typeof(Jellyfish)
+            .GetField("moveDirection", BindingFlags.NonPublic | BindingFlags.Instance);
         Vector2 dir = (Vector2)dirField.GetValue(jelly);
 
-        Assert.AreEqual(1f, dir.magnitude, 1e-3f, "moveDirection should be unit length after ChangeDirection");
+        Assert.AreEqual(1f, dir.magnitude, 1e-3f, "moveDirection should be normalized");
+    }
+
+    [Test]
+    public void TakeDamage_ReducesHealth()
+    {
+        int before = jelly.health;
+        jelly.TakeDamage(5);
+        Assert.AreEqual(before - 5, jelly.health, "TakeDamage should subtract from health");
     }
 }

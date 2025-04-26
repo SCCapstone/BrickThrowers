@@ -1,9 +1,12 @@
 // File: Assets/Tests/editmodetest/HarpoonerUnitTests.cs
-// To run these EditMode tests:
-//   In the Unity Editor: Window → General → Test Runner → select “EditMode” and click Run All
-//   Via CLI:
-//     Unity -batchmode -projectPath . -runTests -testPlatform EditMode \
-//       -logFile -testResults TestResults/EditModeResults.xml
+// To run this specific EditMode test only:
+//   • In the Unity Editor Test Runner:  
+//       – Open Window → General → Test Runner  
+//       – Select the “EditMode” category  
+//       – Find and right-click “HarpoonerUnitTests” → Run Selected  
+//   • Via CLI (runs only HarpoonerUnitTests):  
+//       Unity -batchmode -projectPath . -runTests -testPlatform EditMode \
+//         -testFilter HarpoonerUnitTests -logFile -testResults TestResults/HarpoonerUnitTests.xml
 
 using NUnit.Framework;
 using UnityEngine;
@@ -19,6 +22,7 @@ public class HarpoonerUnitTests
     [SetUp]
     public void SetUp()
     {
+        ClassSelectionData.SelectedClass = "Harpooner";
         obj = new GameObject("HarpoonerObj");
         harpooner = obj.AddComponent<Harpooner>();
 
@@ -34,39 +38,34 @@ public class HarpoonerUnitTests
     }
 
     [Test]
-    public void Start_CreatesAndConfiguresAttackCollider_WhenMissing()
+    public void Start_AddsColliderIfMissing_AndConfiguresIt()
     {
         Assert.IsNull(attackPoint.GetComponent<CircleCollider2D>());
 
-        // Invoke Start()
-        MethodInfo startMethod = typeof(Harpooner)
+        MethodInfo start = typeof(Harpooner)
             .GetMethod("Start", BindingFlags.NonPublic | BindingFlags.Instance);
-        startMethod.Invoke(harpooner, null);
+        start.Invoke(harpooner, null);
 
-        var collider = attackPoint.GetComponent<CircleCollider2D>();
-        Assert.IsNotNull(collider, "Start should add a CircleCollider2D if none exists");
-        Assert.AreEqual(harpooner.attackRange, collider.radius, 
-            "Collider radius must match attackRange");
-        Assert.IsTrue(collider.isTrigger, "Collider must be set as a trigger");
+        var col = attackPoint.GetComponent<CircleCollider2D>();
+        Assert.IsNotNull(col, "Start should add a CircleCollider2D if none exists");
+        Assert.AreEqual(harpooner.attackRange, col.radius, "Collider radius must match attackRange");
+        Assert.IsTrue(col.isTrigger, "Collider must be a trigger");
     }
 
     [Test]
-    public void Start_UsesExistingAttackCollider_WhenPresent()
+    public void Start_UsesExistingCollider_AndUpdatesIt()
     {
         var existing = attackPoint.AddComponent<CircleCollider2D>();
         existing.radius = 0.2f;
         existing.isTrigger = false;
 
-        MethodInfo startMethod = typeof(Harpooner)
+        MethodInfo start = typeof(Harpooner)
             .GetMethod("Start", BindingFlags.NonPublic | BindingFlags.Instance);
-        startMethod.Invoke(harpooner, null);
+        start.Invoke(harpooner, null);
 
-        var collider = attackPoint.GetComponent<CircleCollider2D>();
-        Assert.AreSame(existing, collider, 
-            "Start should not replace an existing CircleCollider2D");
-        Assert.AreEqual(harpooner.attackRange, collider.radius, 
-            "Start should overwrite radius to match attackRange");
-        Assert.IsTrue(collider.isTrigger, 
-            "Start should set existing collider to be a trigger");
+        var col = attackPoint.GetComponent<CircleCollider2D>();
+        Assert.AreSame(existing, col, "Should keep the existing collider instance");
+        Assert.AreEqual(harpooner.attackRange, col.radius, "Should overwrite radius");
+        Assert.IsTrue(col.isTrigger, "Should set existing collider to trigger");
     }
 }

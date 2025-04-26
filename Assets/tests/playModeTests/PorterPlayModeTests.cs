@@ -1,9 +1,12 @@
 // File: Assets/Tests/playmodetest/PorterPlayModeTests.cs
-// To run these PlayMode tests:
-//   In the Unity Editor: Window → General → Test Runner → select “PlayMode” and click Run All
-//   Via CLI:
-//     Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
-//       -logFile -testResults TestResults/PlayModeResults.xml
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select “PlayMode” category  
+//       – Right-click “PorterPlayModeTests” → Run Selected  
+//   • Via CLI (runs only PorterPlayModeTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
+//         -testFilter PorterPlayModeTests -logFile -testResults TestResults/PorterPlayModeTests.xml
 
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -18,9 +21,9 @@ public class PorterPlayModeTests
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        obj = new GameObject("Porter");
+        obj = new GameObject("PorterObj");
         porter = obj.AddComponent<Porter>();
-        yield return null; // wait one frame
+        yield return null; // wait one frame for OnEnable
     }
 
     [UnityTearDown]
@@ -35,11 +38,11 @@ public class PorterPlayModeTests
     {
         var testItem = new object();
         bool added = porter.AddToExtraSlot(testItem);
-        yield return null; // let any internal state settle
+        yield return null; // let any state settle
 
-        Assert.IsTrue(added, "Should be able to add to empty slot");
+        Assert.IsTrue(added, "Should successfully add to empty slot");
         Assert.IsTrue(porter.HasExtraSlotItem, "HasExtraSlotItem should be true after adding");
-        Assert.AreSame(testItem, porter.GetExtraSlotItem(), "GetExtraSlotItem should return the same object across frames");
+        Assert.AreSame(testItem, porter.GetExtraSlotItem(), "GetExtraSlotItem returns the same object across frames");
     }
 
     [UnityTest]
@@ -52,10 +55,10 @@ public class PorterPlayModeTests
         var removed = porter.RemoveFromExtraSlot();
         yield return null;
 
-        Assert.AreSame(testItem, removed, "First removal should return the item");
+        Assert.AreSame(testItem, removed, "First removal returns the item");
         Assert.IsFalse(porter.HasExtraSlotItem, "Slot should be empty after removal");
 
         var removedAgain = porter.RemoveFromExtraSlot();
-        Assert.IsNull(removedAgain, "Removing again should return null");
+        Assert.IsNull(removedAgain, "Second removal should return null");
     }
 }

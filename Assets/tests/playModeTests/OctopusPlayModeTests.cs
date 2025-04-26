@@ -1,8 +1,12 @@
 // File: Assets/Tests/playmodetest/OctopusPlayModeTests.cs
-// To run these PlayMode tests:
-//   In the Unity Editor: Window → General → Test Runner → select “PlayMode” and click Run All
-//   Via CLI:
-//     Unity -batchmode -projectPath . -runTests -testPlatform PlayMode -logFile -testResults TestResults/PlayModeResults.xml
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select “PlayMode” category  
+//       – Right-click “OctopusPlayModeTests” → Run Selected  
+//   • Via CLI (runs only OctopusPlayModeTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
+//         -testFilter OctopusPlayModeTests -logFile -testResults TestResults/OctopusPlayModeTests.xml
 
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -11,16 +15,18 @@ using System.Collections;
 
 public class OctopusPlayModeTests
 {
-    GameObject octoObj;
-    Octopus octo;
+    private GameObject octoObj;
+    private Octopus octo;
+    private Rigidbody2D rb;
 
     [UnitySetUp]
     public IEnumerator SetUp()
     {
         octoObj = new GameObject("Octopus");
-        octoObj.AddComponent<Rigidbody2D>();
+        rb = octoObj.AddComponent<Rigidbody2D>();
         octo = octoObj.AddComponent<Octopus>();
-        yield return null; // allow Start to run
+        yield return null;               // allow Start() and first frame
+        yield return new WaitForFixedUpdate();  // let Roam() coroutine apply velocity
     }
 
     [UnityTearDown]
@@ -33,10 +39,9 @@ public class OctopusPlayModeTests
     [UnityTest]
     public IEnumerator Octopus_Roam_SetsVelocityMagnitude()
     {
-        // After one frame, Update has called Roam
-        yield return null;
-        var rb = octoObj.GetComponent<Rigidbody2D>();
+        // After the initial Roam, velocity magnitude should equal moveSpeed
         float speed = rb.velocity.magnitude;
-        Assert.AreEqual(octo.moveSpeed, speed, 0.1f);
+        Assert.AreEqual(octo.moveSpeed, speed, 0.1f, "Octopus should roam at moveSpeed after Start");
+        yield break;
     }
 }

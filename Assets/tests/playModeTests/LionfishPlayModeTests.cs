@@ -1,27 +1,34 @@
 // File: Assets/Tests/playmodetest/LionfishPlayModeTests.cs
-// To run these PlayMode tests:
-//   In the Unity Editor: Window → General → Test Runner → select “PlayMode” and click Run All
-//   Via CLI:
-//     Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
-//       -logFile -testResults TestResults/PlayModeResults.xml
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select “PlayMode” category  
+//       – Right-click “LionfishPlayModeTests” → Run Selected  
+//   • Via CLI (runs only LionfishPlayModeTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
+//         -testFilter LionfishPlayModeTests -logFile -testResults TestResults/LionfishPlayModeTests.xml
 
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
+using UnityEngine.TestTools.Utils;
 
 public class LionfishPlayModeTests
 {
     private GameObject fishObj;
     private Lionfish fish;
+    private Rigidbody2D fishRb;
 
     [UnitySetUp]
     public IEnumerator SetUp()
     {
         fishObj = new GameObject("Lionfish");
-        fishObj.AddComponent<Rigidbody2D>();
+        fishRb = fishObj.AddComponent<Rigidbody2D>();
+        fishObj.AddComponent<BoxCollider2D>();
         fish = fishObj.AddComponent<Lionfish>();
-        yield return null; // allow Start to run
+
+        yield return null; // allow Start & first Update
     }
 
     [UnityTearDown]
@@ -34,11 +41,31 @@ public class LionfishPlayModeTests
     [UnityTest]
     public IEnumerator Patrol_SetsVelocityMagnitudeToPatrolSpeed()
     {
-        // After one frame, Update calls Patrol()
+        // After one frame, Update has applied Patrol()
         yield return null;
+        Assert.AreEqual(fish.patrolSpeed, fishRb.velocity.magnitude, 0.1f);
+    }
 
-        Rigidbody2D rb = fishObj.GetComponent<Rigidbody2D>();
-        float speed = rb.velocity.magnitude;
-        Assert.AreEqual(fish.patrolSpeed, speed, 0.1f);
+    [UnityTest]
+    public IEnumerator OnCollisionEnter2D_CallsApplyPoisonAndLogsMessage()
+    {
+        // Create a diver (player) with tag "Player"
+        var diverObj = new GameObject("Diver");
+        diverObj.tag = "Player";
+        diverObj.AddComponent<Rigidbody2D>();
+        diverObj.AddComponent<BoxCollider2D>();
+        var diver = diverObj.AddComponent<Diver>();
+
+        // Position overlapping
+        fishObj.transform.position = Vector3.zero;
+        diverObj.transform.position = Vector3.zero;
+
+        // Expect the log
+        LogAssert.Expect(LogType.Log, "Lionfish attacked the diver!");
+
+        // Wait for physics collision
+        yield return new WaitForFixedUpdate();
+
+        Object.Destroy(diverObj);
     }
 }

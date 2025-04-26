@@ -1,23 +1,31 @@
 // File: Assets/Tests/editmodetest/SharkUnitTests.cs
-// To run these EditMode tests:
-//  • In the Unity Editor: Window → General → Test Runner → Select “EditMode” → Run All
-//  • CLI: Unity -batchmode -projectPath . -runTests -testPlatform EditMode -logFile -testResults TestResults/EditModeResults.xml
+// To run this specific EditMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select the “EditMode” category  
+//       – Right-click “SharkUnitTests” → Run Selected  
+//   • Via CLI (runs only SharkUnitTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform EditMode \
+//         -testFilter SharkUnitTests -logFile -testResults TestResults/SharkUnitTests.xml
 
 using NUnit.Framework;
 using UnityEngine;
+using System.Collections;
+using System.Reflection;
 
 [TestFixture]
 public class SharkUnitTests
 {
-    GameObject sharkObj;
-    Shark shark;
+    private GameObject sharkObj;
+    private Shark shark;
+    private Rigidbody2D rb;
 
     [SetUp]
     public void SetUp()
     {
-        sharkObj = new GameObject();
+        sharkObj = new GameObject("Shark");
         shark = sharkObj.AddComponent<Shark>();
-        sharkObj.AddComponent<Rigidbody2D>();
+        rb = sharkObj.AddComponent<Rigidbody2D>();
     }
 
     [TearDown]
@@ -27,30 +35,60 @@ public class SharkUnitTests
     }
 
     [Test]
-    public void GetRandomDirection_IsNormalized()
+    public void DefaultValues_AreCorrect()
     {
-        Vector2 dir = shark.GetRandomDirection();
-        float length = dir.magnitude;
-        Assert.AreEqual(1f, length, 1e-3f, "Random direction should be unit length");
+        Assert.AreEqual(3f, shark.patrolSpeed);
+        Assert.AreEqual(7f, shark.chargeSpeed);
+        Assert.AreEqual(3f, shark.chargeCooldown);
+        Assert.AreEqual(10f, shark.detectionRange);
+        Assert.AreEqual(10f, shark.chargeDuration);
+        Assert.AreEqual(20, shark.oxygenDamage);
+        Assert.AreEqual(2f, shark.roamDuration);
+        Assert.IsFalse(shark.isCharging);
+        Assert.IsFalse(shark.isPatrolling);
     }
 
     [Test]
-    public void StartCharging_SetsStateCorrectly()
+    public void GetRandomDirection_IsUnitLength()
     {
-        shark.StartCharging();
-        Assert.IsTrue(sharkObj.GetComponent<Shark>().isCharging, "Shark should be charging after StartCharging()");
-        Assert.Greater(shark.chargeTimer, 0f, "chargeTimer should be initialized");
-        Assert.GreaterOrEqual(shark.cooldownTimer, shark.chargeCooldown, "cooldownTimer should be reset to at least chargeCooldown");
+        MethodInfo randDir = typeof(Shark).GetMethod("GetRandomDirection", BindingFlags.NonPublic | BindingFlags.Instance);
+        Vector2 dir = (Vector2)randDir.Invoke(shark, null);
+        Assert.AreEqual(1f, dir.magnitude, 1e-3f);
     }
 
     [Test]
-    public void StopCharging_StopsMovement()
+    public void PatrolCoroutine_SetsIsPatrollingTrueAndVelocity()
     {
-        // Simulate a charge in progress
-        shark.StartCharging();
-        shark.StopCharging();
-        var rb = sharkObj.GetComponent<Rigidbody2D>();
-        Assert.AreEqual(Vector2.zero, rb.velocity, "Shark velocity must be zero after StopCharging()");
-        Assert.IsFalse(sharkObj.GetComponent<Shark>().isCharging, "isCharging must be false after StopCharging()");
+        MethodInfo patrolMethod = typeof(Shark).GetMethod("Patrol", BindingFlags.NonPublic | BindingFlags.Instance);
+        var enumerator = (IEnumerator)patrolMethod.Invoke(shark, null);
+        Assert.IsTrue(enumerator.MoveNext(), "Patrol coroutine should yield once");
+        Assert.IsTrue(shark.isPatrolling, "isPatrolling should be true when Patrol starts");
+        float speed = rb.velocity.magnitude;
+        Assert.AreEqual(shark.patrolSpeed, speed, 1e-3f, "Patrol should set velocity to patrolSpeed");
+    }
+
+    [Test]
+    public void Charge_SetsStateAndTimers()
+    {
+        MethodInfo chargeMethod = typeof(Shark).GetMethod("Charge", BindingFlags.NonPublic | BindingFlags.Instance);
+        chargeMethod.Invoke(shark, null);
+        Assert.IsTrue(shark.isCharging, "Charge() should set isCharging true");
+        float chargeTimer = (float)typeof(Shark).GetField("chargeTimer", BindingFlags.NonPublic | BindingFlags.Instance)
+                                  .GetValue(shark);
+        float cooldownTimer = (float)typeof(Shark).GetField("cooldownTimer", BindingFlags.NonPublic | BindingFlags.Instance)
+                                    .GetValue(shark);
+        Assert.AreEqual(shark.chargeDuration, chargeTimer);
+        Assert.AreEqual(shark.chargeCooldown, cooldownTimer);
+    }
+
+    [Test]
+    public void StopCharging_ResetsStateAndVelocity()
+    {
+        shark.isCharging = true;
+        rb.velocity = new Vector2(5f, 0f);
+        MethodInfo stop = typeof(Shark).GetMethod("StopCharging", BindingFlags.NonPublic | BindingFlags.Instance);
+        stop.Invoke(shark, null);
+        Assert.IsFalse(shark.isCharging, "StopCharging() should set isCharging false");
+        Assert.AreEqual(Vector2.zero, rb.velocity, "StopCharging() should zero out velocity");
     }
 }

@@ -629,9 +629,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 437866580854393277, guid: 266ea4ebe821c594aaee595dd1585dca, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2989820893998000954, guid: 266ea4ebe821c594aaee595dd1585dca, type: 3}
       propertyPath: m_Name
       value: Summary-T
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989820893998000954, guid: 266ea4ebe821c594aaee595dd1585dca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4868766116177838428, guid: 266ea4ebe821c594aaee595dd1585dca, type: 3}
       propertyPath: lm
@@ -134490,9 +134498,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 421878278}
     - target: {fileID: 4266255823342324771, guid: 11aef1a6d31f1ff43874e3ca15444a41, type: 3}
+      propertyPath: isStunned
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4266255823342324771, guid: 11aef1a6d31f1ff43874e3ca15444a41, type: 3}
       propertyPath: submarine
       value: 
       objectReference: {fileID: 1735487251}
+    - target: {fileID: 4266255823342324771, guid: 11aef1a6d31f1ff43874e3ca15444a41, type: 3}
+      propertyPath: oxygenLevel
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4266255823342324771, guid: 11aef1a6d31f1ff43874e3ca15444a41, type: 3}
       propertyPath: submarineRb
       value: 

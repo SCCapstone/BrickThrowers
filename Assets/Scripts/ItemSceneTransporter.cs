@@ -47,15 +47,13 @@ public class ItemSceneTransporter : MonoBehaviour {
       Debug.Log($"Scene changed to {activeSceneName}.");
       Debug.Log($"Items in the list: {itemList.Count}");
       // Check if the list is empty. If not, send the items to the scene.
-      if (itemList.Count < 0) {
+      if (itemList.Count <= 0) {
         Debug.Log("Nothing in here.");
       } else {
         startingItemsArrived?.Invoke(itemList);
       }
     } else {
-      Debug.Log(
-          $"Hooray! You are in the {activeSceneName} which should be the {lobbySceneName}."
-      );
+      itemList.Clear();
     }
   }
 }

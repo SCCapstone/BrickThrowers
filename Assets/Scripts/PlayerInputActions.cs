@@ -107,6 +107,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReturnToMainMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""67c82332-4c41-4eae-8ce7-24972bbf9f52"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -371,6 +380,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""InteractSubmarine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""916976f4-decf-4a63-80c7-2db0b3f17efc"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReturnToMainMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -967,6 +987,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Drop = m_Player.FindAction("Drop", throwIfNotFound: true);
         m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
         m_Player_InteractSubmarine = m_Player.FindAction("InteractSubmarine", throwIfNotFound: true);
+        m_Player_ReturnToMainMenu = m_Player.FindAction("ReturnToMainMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1049,6 +1070,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Drop;
     private readonly InputAction m_Player_Use;
     private readonly InputAction m_Player_InteractSubmarine;
+    private readonly InputAction m_Player_ReturnToMainMenu;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1062,6 +1084,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Drop => m_Wrapper.m_Player_Drop;
         public InputAction @Use => m_Wrapper.m_Player_Use;
         public InputAction @InteractSubmarine => m_Wrapper.m_Player_InteractSubmarine;
+        public InputAction @ReturnToMainMenu => m_Wrapper.m_Player_ReturnToMainMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1098,6 +1121,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InteractSubmarine.started += instance.OnInteractSubmarine;
             @InteractSubmarine.performed += instance.OnInteractSubmarine;
             @InteractSubmarine.canceled += instance.OnInteractSubmarine;
+            @ReturnToMainMenu.started += instance.OnReturnToMainMenu;
+            @ReturnToMainMenu.performed += instance.OnReturnToMainMenu;
+            @ReturnToMainMenu.canceled += instance.OnReturnToMainMenu;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1129,6 +1155,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InteractSubmarine.started -= instance.OnInteractSubmarine;
             @InteractSubmarine.performed -= instance.OnInteractSubmarine;
             @InteractSubmarine.canceled -= instance.OnInteractSubmarine;
+            @ReturnToMainMenu.started -= instance.OnReturnToMainMenu;
+            @ReturnToMainMenu.performed -= instance.OnReturnToMainMenu;
+            @ReturnToMainMenu.canceled -= instance.OnReturnToMainMenu;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1320,6 +1349,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnDrop(InputAction.CallbackContext context);
         void OnUse(InputAction.CallbackContext context);
         void OnInteractSubmarine(InputAction.CallbackContext context);
+        void OnReturnToMainMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

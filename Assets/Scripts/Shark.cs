@@ -15,6 +15,7 @@ public class Shark : MonoBehaviour {
   private float chargeTimer = 0f;
   private float cooldownTimer = 0f;
   public float roamDuration = 2f;
+  private int health = 120;
   private Vector2 patrolDirection;
   public bool isCharging = false;
   public bool isPatrolling = false;
@@ -119,4 +120,11 @@ public class Shark : MonoBehaviour {
     }
   }
   #endregion
+  public void TakeDamage(int damageAmount) {
+    health -= damageAmount;
+    if (health <= 0) {
+      Destroy(gameObject);
+      Debug.Log("Lionfish defeated!");
+    }
+  }
 }

@@ -22,16 +22,8 @@ public class PlayerAnimController : MonoBehaviour {
   private void OnDisable() {
     move.Disable();
   }
-
+  #endregion
   private void Update() {
-    /*
-     * On Update, we get the input from the player and set the animator parameters.
-     * There are three parameters to set: MoveUp, MoveLeft, and MoveRight.
-     * For the up direction on input key W, MoveUp is set to true. Everything else is set to false.
-     * For the left direction on input key A, MoveLeft is set to true. Everything else is set to false.
-     * For the right direction on input key D, MoveRight is set to true. Everything else is set to false.
-     * For no movement, all three parameters are set to false.
-     */
 
     Vector2 input = move.ReadValue<Vector2>();
 
@@ -53,6 +45,4 @@ public class PlayerAnimController : MonoBehaviour {
       playerAnimator.SetBool("MoveRight", false);
     }
   }
-  #endregion
-
 }

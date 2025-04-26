@@ -23,12 +23,12 @@ public class ItemSceneTransporter : MonoBehaviour {
   private void OnEnable() {
     // Subscribe to the scene loaded event
     // Also need the onItemPurchased event from the ShopManager
-    ShopManager.onItemPurchased += AddPurchasedItemToList;
+    ShopManager.onItemAcquired += AddPurchasedItemToList;
     SceneManager.sceneLoaded += OnSceneChanged;
   }
 
   private void OnDisable() {
-    ShopManager.onItemPurchased -= AddPurchasedItemToList;
+    ShopManager.onItemAcquired -= AddPurchasedItemToList;
     SceneManager.sceneLoaded -= OnSceneChanged;
   }
 
@@ -41,9 +41,6 @@ public class ItemSceneTransporter : MonoBehaviour {
   }
 
   private void OnSceneChanged(Scene scene, LoadSceneMode mode) {
-    /*
-     * When the scene is loaded, ensure that it is not the lobby scene.
-     */
     activeSceneName = SceneManager.GetActiveScene().name;
 
     if (activeSceneName != lobbySceneName) {

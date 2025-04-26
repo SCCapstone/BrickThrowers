@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-/// <summary>
-/// Copyright 2025 Scott Do
-/// Retains the means of saving and loading currency JSON data.
-/// </summary>
+// Copyright 2025 Scott Do
+// Retains the means of saving and loading currency JSON data.
 public class CurrencyManager : MonoBehaviour {
+
+  // Singleton instance
   private static Currency playerCurrency = new Currency();
   private static IDataService dataService = new JsonDataService();
   private const string CURRENCY_PATH = "currency.json";
   [SerializeField] private TextMeshProUGUI currencyText;
 
+  #region Setup
   private void Start() {
     if (!LoadJsonCurrency()) {
       Debug.Log("Failed to load currency data, creating new one.");
@@ -22,7 +23,8 @@ public class CurrencyManager : MonoBehaviour {
     }
     UpdateCurrencyText();
   }
-
+  #endregion
+  #region JSON Serialization
   private void SerializeJson() {
     if (dataService.SaveData(CURRENCY_PATH, playerCurrency)) {
       Debug.Log("Data saved successfully");
@@ -41,7 +43,7 @@ public class CurrencyManager : MonoBehaviour {
       return false;
     }
   }
-
+  #endregion
 
   /// <summary>
   /// Returns reference type of Currency.

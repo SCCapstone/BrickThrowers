@@ -989,7 +989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 9159250986113533160, guid: 11aef1a6d31f1ff43874e3ca15444a41, type: 3}
   diverAnimatorController: {fileID: 9100000, guid: 0ac7fd81c2400c149a8e2e34b29a1474, type: 2}
-  harpoonerAnimatorController: {fileID: 9100000, guid: e20be3ff0bc3a6942ade5a21492ef09f, type: 2}
+  harpoonerAnimatorController: {fileID: 9100000, guid: b91bccf4c3679614ca8ce263ab491c85, type: 2}
   porterAnimatorController: {fileID: 9100000, guid: 5935addd277225c4d8e4dfef6b421b18, type: 2}
   diverButton: {fileID: 1809844512}
   harpoonerButton: {fileID: 1529933833}

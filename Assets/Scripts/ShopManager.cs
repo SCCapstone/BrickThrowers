@@ -1,24 +1,35 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ShopManager : MonoBehaviour {
-
   // Game objects
-  [SerializeField] private GameObject shopOverlay;
-  [SerializeField] private GameObject buyOptionPrefab;
-  [SerializeField] private GameObject contentDisplay;
+  [SerializeField]
+  private GameObject shopOverlay;
+
+  [SerializeField]
+  private GameObject buyOptionPrefab;
+
+  [SerializeField]
+  private GameObject contentDisplay;
+
+  [SerializeField]
+  private TextMeshProUGUI announceText;
 
   // Database
-  [SerializeField] private ItemDatabaseObject purchaseDatabase;
+  [SerializeField]
+  private ItemDatabaseObject purchaseDatabase;
 
   // Currency manager
-  [SerializeField] private CurrencyManager currency;
+  [SerializeField]
+  private CurrencyManager currency;
 
   // Actions
-  public static event Action<ItemClass> onItemPurchased;
+  public static event Action<ItemClass> onItemAcquired;
 
+  #region Setup
   void Awake() {
     shopOverlay.SetActive(false);
     for (int i = 0; i < purchaseDatabase.itemsDatabase.Length; i++) {
@@ -30,7 +41,22 @@ public class ShopManager : MonoBehaviour {
     ShopItem.onItemPurchased += UpdatePurchase;
   }
 
+  private void OnDisable() {
+    ShopItem.onItemPurchased -= UpdatePurchase;
+  }
 
+  private void Start() {
+    if (announceText == null) {
+      announceText = GameObject.Find("AnnouncementText").GetComponent<TextMeshProUGUI>();
+    }
+    announceText.text = "";
+  }
+  #endregion
+  #region Purchase Logic
+  /// <summary>
+  /// Places an item from the Item Database resource into the shop.
+  /// </summary>
+  /// <param name="i">Index of the item database.</param>
   private void PopulateStore(int i) {
     // Instantiate the prefab.
     GameObject buyOption = Instantiate(buyOptionPrefab, contentDisplay.transform);
@@ -45,34 +71,34 @@ public class ShopManager : MonoBehaviour {
     buyOption.GetComponent<ShopItem>().SetSprite();
   }
 
+  /// <summary>
+  /// Updates the currency and invokes the item purchased event.
+  /// </summary>
+  /// <param name="cost"></param>
+  /// <param name="item"></param>
   private void UpdatePurchase(int cost, ItemClass item) {
-    /*
-     * What must be done:
-     * 1. Check if the player has enough currency. If yes, proceed. No, do nothing.
-     * 2. Update the currency.
-     * 3. Make a record of the purchase in a GameObject that will not be destroyed on load.
-     * 
-     * Q: Should I let then purchase the same item repeatedly? A: I really want to, because it would be funny. It is their money.
-     */
-
-    // Just in case, find the Game Object that has the currency manager and assign it.
     if (currency == null) {
       currency = FindObjectOfType<CurrencyManager>();
     }
-
     Currency playerCurrency = currency.ReturnCurrency();
-
-    // Check if the player does not have enough currency. If so, do nothing.
     if (playerCurrency.CurrencyAmount < cost) {
       Debug.Log("Not enough currency.");
+      StartCoroutine(Announce(item.itemName, false));
       return;
     }
-
-    // Update the currency.
     currency.UpdateCurrency(-cost);
-
-    // Make a record of the purchase in a GameObject that will not be destroyed on load.
-    onItemPurchased?.Invoke(item);
+    StartCoroutine(Announce(item.itemName, true));
+    onItemAcquired?.Invoke(item);
   }
 
+  private IEnumerator Announce(string itemName, bool purchaseSuccess) {
+    if (purchaseSuccess) {
+      announceText.text = $"You purchased {itemName}!";
+    } else {
+      announceText.text = $"You do not have enough currency to purchase {itemName}!";
+    }
+    yield return new WaitForSeconds(2);
+    announceText.text = "";
+  }
+  #endregion
 }

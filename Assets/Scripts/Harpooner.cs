@@ -67,7 +67,6 @@ public class Harpooner : MonoBehaviour {
       animator.SetTrigger("Attack-L");
     } else {
       // dir.y is negative (downwards)—ignore or default
-      Debug.Log("at least you are in the loop, eh?");
       return;
     }
     OnAttackAnimationEnd();

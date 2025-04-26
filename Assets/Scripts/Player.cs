@@ -435,7 +435,6 @@ public class Player : Diver {
   public void OnTriggerExit2D(Collider2D collision) {
     if (collision.gameObject == submarine) {
       nearSubmarine = false;
-      Debug.Log("Left the sub");
     }
   }
   #endregion

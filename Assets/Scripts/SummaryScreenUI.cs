@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
+using System.Threading.Tasks;
 
 
 public class SummaryScreenUI : MonoBehaviour {
@@ -58,8 +59,9 @@ public class SummaryScreenUI : MonoBehaviour {
   }
 
   #region Scene Management
-  public void ReturnToLobby() {
+  public async void ReturnToLobby() {
     transferCurrency?.Invoke(lm.Score);
+    await Task.Delay(1000); // Wait for 1 second
     SceneManager.LoadSceneAsync(1);
   }
   #endregion

@@ -336,7 +336,7 @@ public class Player : Diver {
   public void GameOver() {
     if (GetOxygenLevel() <= 0 && !isDead || getTimer() == 0) {
       isDead = true;
-
+      Debug.Log("Game is Over!");
       SummaryScreen.SetActive(true);
     }
   }

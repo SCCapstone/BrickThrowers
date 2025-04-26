@@ -39,7 +39,6 @@ public class LevelManager : MonoBehaviour {
     collected = 0;
     CalculateLevelScore();
     Instance = new LevelManager();
-    Debug.Log($"True for instance made, false otherwise: {Instance == null}");
   }
 
   void Update() {
@@ -49,7 +48,6 @@ public class LevelManager : MonoBehaviour {
   public void AddScore(int val) {
     score += val;
     collected++;
-    Debug.Log($"score: {score} collected: {collected} maxScore: {maxScore}");
   }
 
   public void CalculateLevelScore() {

@@ -1,56 +1,71 @@
+// File: Assets/Tests/PlayMode/PorterPTest.cs
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select “PlayMode” category  
+//       – Right-click “PorterPTest” → Run Selected  
+//   • Via CLI (runs only PorterPTest):  
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \  
+//         -testFilter PorterPTest -logFile -testResults TestResults/PorterPTest.xml
+
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
 using UnityEngine.UI;
 using System.Reflection;
-public class PorterPTest 
-{
-    private GameObject porterObj;
-    private Porter porter;
-    private GameObject slotPrefab;
-    private GameObject slotHolder;
-    private GridLayoutGroup grid;
-    private RectTransform holderRect;
-    private Animator playerAnimator;
-    private RuntimeAnimatorController testController;
 
-    const int MAX_SLOTS = 4;
-    const int DEFAULT_SLOTS = 3;
+public class PorterPTest
+{
+    GameObject porterObj;
+    Porter porter;
+    GameObject slotPrefab, slotHolder;
+    GridLayoutGroup grid;
+    RectTransform holderRect;
+    Animator playerAnimator;
+    RuntimeAnimatorController testController;
+
+    const int MAX_SLOTS = 4, DEFAULT_SLOTS = 3;
     const float EXTRA_SLOT_WIDTH = 95f;
 
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        // Create Porter component
+        // Create the Porter and its dependencies
         porterObj = new GameObject("PorterObj");
-        porter = porterObj.AddComponent<Porter>();
+        porter    = porterObj.AddComponent<Porter>();
 
-        // Prepare slot prefab and holder
         slotPrefab = new GameObject("SlotPrefab");
         slotHolder = new GameObject("SlotHolder", typeof(RectTransform));
-        grid = slotHolder.AddComponent<GridLayoutGroup>();
+        grid       = slotHolder.AddComponent<GridLayoutGroup>();
         holderRect = slotHolder.GetComponent<RectTransform>();
-        holderRect.sizeDelta = Vector2.zero;
+
+        // Initial layout
         grid.constraintCount = DEFAULT_SLOTS;
+        holderRect.sizeDelta = Vector2.zero;
 
-        // Prepare animator
-        var playerObj = new GameObject("Player");
-        playerAnimator = playerObj.AddComponent<Animator>();
-        testController = new AnimatorOverrideController();
+        // Dummy animator
+        var playerGO       = new GameObject("PlayerSprite");
+        playerAnimator     = playerGO.AddComponent<Animator>();
+        testController     = new AnimatorOverrideController();
 
-        // Inject serialized fields via reflection
-        var type = typeof(Porter);
-        type.GetField("slot", BindingFlags.NonPublic | BindingFlags.Instance)
+        // Inject serialized fields
+        var t = typeof(Porter);
+        t.GetField("slot",               BindingFlags.NonPublic|BindingFlags.Instance)
             .SetValue(porter, slotPrefab);
-        type.GetField("slotHolder", BindingFlags.NonPublic | BindingFlags.Instance)
+        t.GetField("slotHolder",         BindingFlags.NonPublic|BindingFlags.Instance)
             .SetValue(porter, slotHolder);
-        type.GetField("porterAnimator", BindingFlags.NonPublic | BindingFlags.Instance)
+        t.GetField("porterAnimator",     BindingFlags.NonPublic|BindingFlags.Instance)
             .SetValue(porter, testController);
-        type.GetField("playerSpriteAnimator", BindingFlags.NonPublic | BindingFlags.Instance)
+        t.GetField("playerSpriteAnimator", BindingFlags.NonPublic|BindingFlags.Instance)
             .SetValue(porter, playerAnimator);
 
-        // Let Unity call OnEnable
+        // Manually invoke OnEnable
+        typeof(Porter)
+            .GetMethod("OnEnable", BindingFlags.NonPublic|BindingFlags.Instance)
+            .Invoke(porter, null);
+
+        // Wait a frame for the inventory to be set up
         yield return null;
     }
 
@@ -67,27 +82,31 @@ public class PorterPTest
     [UnityTest]
     public IEnumerator OnEnable_ConfiguresInventoryAndAnimator()
     {
-        // After one frame, OnEnable() has run
-        yield return null;
-
-        Assert.AreEqual(MAX_SLOTS, grid.constraintCount, "constraintCount should be set to MAX_SLOTS");
-        Assert.AreEqual(EXTRA_SLOT_WIDTH, holderRect.sizeDelta.x, 1e-3f, "holder width should increase by EXTRA_SLOT_WIDTH");
-        Assert.AreEqual(1, slotHolder.transform.childCount, "A slot child should have been added");
-        Assert.AreEqual(testController, playerAnimator.runtimeAnimatorController, "Animator should be set to porterAnimator");
+        // After Setup, OnEnable() has run
+        Assert.AreEqual(MAX_SLOTS,        grid.constraintCount, "constraintCount should be MAX_SLOTS");
+        Assert.AreEqual(EXTRA_SLOT_WIDTH, holderRect.sizeDelta.x, 1e-3f, "holder width should increase");
+        Assert.AreEqual(1,                slotHolder.transform.childCount, "One slot should be added");
+        Assert.AreEqual(testController,   playerAnimator.runtimeAnimatorController,
+            "playerSpriteAnimator should be set to porterAnimator");
+        yield break;
     }
 
     [UnityTest]
     public IEnumerator OnDisable_ResetsInventoryAndAnimator()
     {
-        // Disable the component to trigger OnDisable
-        porter.enabled = false;
+        // Manually invoke OnDisable
+        typeof(Porter)
+            .GetMethod("OnDisable", BindingFlags.NonPublic|BindingFlags.Instance)
+            .Invoke(porter, null);
 
-        // Wait one frame for OnDisable to apply
+        // Wait a frame so Destroy() in ResetPorterInventory completes
         yield return null;
 
         Assert.AreEqual(DEFAULT_SLOTS, grid.constraintCount, "constraintCount should reset to DEFAULT_SLOTS");
-        Assert.AreEqual(0f, holderRect.sizeDelta.x, 1e-3f, "holder width should reset to original");
-        Assert.AreEqual(0, slotHolder.transform.childCount, "Slot child should be removed");
-        Assert.IsNull(playerAnimator.runtimeAnimatorController, "Animator should be cleared after disable");
+        Assert.AreEqual(0f,            holderRect.sizeDelta.x, 1e-3f, "holder width should reset");
+        Assert.AreEqual(0,             slotHolder.transform.childCount, "Slot should be removed");
+        Assert.IsNull(playerAnimator.runtimeAnimatorController,
+            "playerSpriteAnimator.runtimeAnimatorController should be null after disable");
+        yield break;
     }
 }

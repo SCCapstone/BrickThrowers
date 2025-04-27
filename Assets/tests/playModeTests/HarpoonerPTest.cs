@@ -1,34 +1,42 @@
-using UnityEngine;
-using UnityEngine.TestTools;
+// File: Assets/Tests/PlayMode/HarpoonerPTest.cs
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:  
+//       – Window → General → Test Runner  
+//       – Select the “PlayMode” category  
+//       – Right-click “HarpoonerPTest” → Run Selected  
+//   • Via CLI (runs only HarpoonerPTest):  
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
+//         -testFilter HarpoonerPTest -logFile -testResults TestResults/HarpoonerPTest.xml
+
 using NUnit.Framework;
-using System.Collections;
+using UnityEngine;
 using System.Reflection;
 
 public class HarpoonerPTest
 {
-   private GameObject go;
+    private GameObject go;
     private Harpooner harpooner;
     private GameObject attackZone;
     private Animator playerAnimator;
     private RuntimeAnimatorController testController;
 
-    [UnitySetUp]
-    public IEnumerator SetUp()
+    [SetUp]
+    public void SetUp()
     {
-        // Create GameObject and add Harpooner
+        // Create the Harpooner GameObject and its Animator
         go = new GameObject("Harpooner");
-        go.AddComponent<Animator>(); // to satisfy internal animator
+        go.AddComponent<Animator>();
         harpooner = go.AddComponent<Harpooner>();
 
-        // Create and assign attackZone
+        // Create and assign the attackZone
         attackZone = new GameObject("AttackZone");
         attackZone.SetActive(false);
         typeof(Harpooner)
             .GetField("attackZone", BindingFlags.NonPublic | BindingFlags.Instance)
             .SetValue(harpooner, attackZone);
 
-        // Create and assign playerSpriteAnimator & harpoonerAnimator
-        var playerGO = new GameObject("Player");
+        // Create and assign the playerSpriteAnimator & harpoonerAnimator
+        var playerGO = new GameObject("PlayerSprite");
         playerAnimator = playerGO.AddComponent<Animator>();
         testController = new AnimatorOverrideController();
         typeof(Harpooner)
@@ -37,40 +45,52 @@ public class HarpoonerPTest
         typeof(Harpooner)
             .GetField("playerSpriteAnimator", BindingFlags.NonPublic | BindingFlags.Instance)
             .SetValue(harpooner, playerAnimator);
-
-        yield return null; // let Awake → OnEnable → Start run
     }
 
-    [UnityTearDown]
-    public IEnumerator TearDown()
+    [TearDown]
+    public void TearDown()
     {
-        Object.Destroy(go);
-        Object.Destroy(attackZone);
-        Object.Destroy(playerAnimator.gameObject);
-        yield return null;
+        Object.DestroyImmediate(go);
+        Object.DestroyImmediate(attackZone);
+        Object.DestroyImmediate(playerAnimator.gameObject);
     }
 
-    [UnityTest]
-    public IEnumerator OnEnable_ActivatesZone_AndSetsAnimator()
+    [Test]
+    public void OnEnable_ActivatesZone_AndSetsAnimator()
     {
-        // After a frame, OnEnable() has run
-        Assert.IsTrue(attackZone.activeSelf, "attackZone should be active after OnEnable");
+        // Simulate Awake and OnEnable
+        typeof(Harpooner)
+            .GetMethod("Awake", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(harpooner, null);
+        typeof(Harpooner)
+            .GetMethod("OnEnable", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(harpooner, null);
+
+        Assert.IsTrue(attackZone.activeSelf, 
+            "OnEnable() must activate the attackZone");
         Assert.AreEqual(testController, playerAnimator.runtimeAnimatorController,
-            "playerSpriteAnimator should have harpoonerAnimator assigned");
-        yield break;
+            "OnEnable() must assign the harpoonerAnimator to playerSpriteAnimator");
     }
 
-    [UnityTest]
-    public IEnumerator OnDisable_DeactivatesZone_AndClearsAnimator()
+    [Test]
+    public void OnDisable_DeactivatesZone_AndClearsAnimator()
     {
-        // Disable component to trigger OnDisable
-        harpooner.enabled = false;
-        yield return null; // wait one frame
+        // First simulate enabling
+        typeof(Harpooner)
+            .GetMethod("Awake", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(harpooner, null);
+        typeof(Harpooner)
+            .GetMethod("OnEnable", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(harpooner, null);
 
-        Assert.IsFalse(attackZone.activeSelf, "attackZone should be inactive after OnDisable");
+        // Now simulate disabling
+        typeof(Harpooner)
+            .GetMethod("OnDisable", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(harpooner, null);
+
+        Assert.IsFalse(attackZone.activeSelf, 
+            "OnDisable() must deactivate the attackZone");
         Assert.IsNull(playerAnimator.runtimeAnimatorController,
-            "playerSpriteAnimator.runtimeAnimatorController should be null after OnDisable");
-        yield break;
+            "OnDisable() must clear playerSpriteAnimator.runtimeAnimatorController");
     }
-
 }

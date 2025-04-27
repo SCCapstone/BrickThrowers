@@ -3,9 +3,9 @@ using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
 
-public class OctupusPTest
+public class OctopusPTest
 {
-     private GameObject octoObj;
+    private GameObject octoObj;
     private Octopus octo;
     private Rigidbody2D rb;
 
@@ -13,10 +13,15 @@ public class OctupusPTest
     public IEnumerator SetUp()
     {
         octoObj = new GameObject("Octopus");
-        rb = octoObj.AddComponent<Rigidbody2D>();
-        octo = octoObj.AddComponent<Octopus>();
-        yield return null;               // allow Start() and first frame
-        yield return new WaitForFixedUpdate();  // let Roam() coroutine apply velocity
+        rb      = octoObj.AddComponent<Rigidbody2D>();
+        octo    = octoObj.AddComponent<Octopus>();
+
+        // Inject the Rigidbody2D so the private Roam() sets its velocity
+        typeof(Octopus)
+            .GetField("rb", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .SetValue(octo, rb);
+
+        yield return null;
     }
 
     [UnityTearDown]
@@ -29,9 +34,10 @@ public class OctupusPTest
     [UnityTest]
     public IEnumerator Octopus_Roam_SetsVelocityMagnitude()
     {
-        // After the initial Roam, velocity magnitude should equal moveSpeed
-        float speed = rb.velocity.magnitude;
-        Assert.AreEqual(octo.moveSpeed, speed, 0.1f, "Octopus should roam at moveSpeed after Start");
-        yield break;
+        // On the first Update(), StartCoroutine(Roam()) will run
+        yield return null;
+
+        Assert.AreEqual(octo.moveSpeed, rb.velocity.magnitude, 0.1f,
+            "After one frame, octopus should be roaming at moveSpeed");
     }
 }

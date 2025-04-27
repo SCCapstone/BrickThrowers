@@ -10,6 +10,8 @@ public class Porter : MonoBehaviour {
   private const int DEFAULT_SLOTS = 3;
   private const float EXTRA_SLOT_WIDTH = 95f;
   // 95 more width to make the visual look good
+  [SerializeField] private RuntimeAnimatorController porterAnimator;
+  [SerializeField] private Animator playerSpriteAnimator;
 
   // Script enabling and disabling
   private bool enableClass = false;
@@ -17,11 +19,13 @@ public class Porter : MonoBehaviour {
   private void OnEnable() {
     enableClass = true;
     SetPorterInventory();
+    playerSpriteAnimator.runtimeAnimatorController = porterAnimator;
 
   }
   private void OnDisable() {
     enableClass = false;
     ResetPorterInventory();
+    playerSpriteAnimator.runtimeAnimatorController = null;
   }
 
   private void SetPorterInventory() {

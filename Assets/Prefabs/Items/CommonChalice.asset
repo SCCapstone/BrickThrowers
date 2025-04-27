@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 3
   itemName: Chalice
-  itemIcon: {fileID: 21300000, guid: 2f966138aaa70e4429911edec465ff62, type: 3}
-  prefab: {fileID: 4354763325453435087, guid: ee5801c4822ce00428664ab03df16b4d, type: 3}
+  itemIcon: {fileID: 21300000, guid: 97e8ad41096213a4487c66d032006586, type: 3}
+  prefab: {fileID: 4354763325453435087, guid: cba1ddcd7deb9c549a83a895ea533c50, type: 3}
   itemType: 0
   cost: 0
   artifactType: 1

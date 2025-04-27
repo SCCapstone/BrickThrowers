@@ -20,7 +20,6 @@ public class Porter : MonoBehaviour {
     enableClass = true;
     SetPorterInventory();
     playerSpriteAnimator.runtimeAnimatorController = porterAnimator;
-
   }
   private void OnDisable() {
     enableClass = false;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class ClassSelector : MonoBehaviour {
   public GameObject player;
@@ -22,6 +23,9 @@ public class ClassSelector : MonoBehaviour {
   // New fields for audio
   public AudioClip classSelectionSound;  // Drag your sound clip here in the Inspector
   private AudioSource audioSource;
+
+  // Action
+  public static event Action<RuntimeAnimatorController, string> onClassSelected;
 
   void Start() {
     playerAnimator = player.transform.GetChild(3).GetComponent<Animator>();
@@ -59,6 +63,7 @@ public class ClassSelector : MonoBehaviour {
     if (diver != null) diver.enabled = true;
 
     UpdateClassIndicator();
+    onClassSelected?.Invoke(diverAnimatorController, selectedClass);
   }
 
   public void SelectHarpooner() {
@@ -72,6 +77,7 @@ public class ClassSelector : MonoBehaviour {
     if (harpooner != null) harpooner.enabled = true;
 
     UpdateClassIndicator();
+    onClassSelected?.Invoke(harpoonerAnimatorController, selectedClass);
   }
 
   public void SelectPorter() {
@@ -85,6 +91,7 @@ public class ClassSelector : MonoBehaviour {
     if (porter != null) porter.enabled = true;
 
     UpdateClassIndicator();
+    onClassSelected?.Invoke(porterAnimatorController, selectedClass);
   }
 
   private void UpdateClassIndicator() {

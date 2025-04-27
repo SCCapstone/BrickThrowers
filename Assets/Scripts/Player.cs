@@ -142,6 +142,7 @@ public class Player : Diver {
     Diver.onDamage += ChangeColor;
     Diver.onDeath += GameOver;
     subLeaveLevel.performed += SubmarineLeaveLevel;
+    ClassInfoTransporter.transportClassInfo += ApplyChosenClass;
 
     rb.simulated = true;
   }
@@ -157,6 +158,7 @@ public class Player : Diver {
     SeaWeed.onPlayerSpeedRestored -= SeaweedSpeedRestored;
     Diver.onDamage -= ChangeColor;
     Diver.onDeath -= GameOver;
+    ClassInfoTransporter.transportClassInfo -= ApplyChosenClass;
   }
 
   void Start() {
@@ -314,7 +316,7 @@ public class Player : Diver {
   }
 
   #endregion
-
+  #region Artifact Collecting Logic
   // Added because was in PirateB.cs, and causing compile errors
   public bool HasArtifact() {
     return true;
@@ -348,9 +350,8 @@ public class Player : Diver {
       SummaryScreen.SetActive(true);
     }
   }
-
   public void RemoveArtifact() { }
-
+  #endregion
   #region Octopus Latching Logic
   // Added becasue was in Octopus.cs, and causing compile errors.
   public void SuppressLight(bool val) {
@@ -375,6 +376,7 @@ public class Player : Diver {
     return 0;
   }
   #endregion
+  #region Experience Logic (depreciated)
   //Handling XP and Level up
   private void HandleExperienceChange(int newExperience) {
     currentXp += newExperience;
@@ -390,6 +392,7 @@ public class Player : Diver {
     maxXp += 100;
     currentXp = 0;
   }
+  #endregion
   #region Stun Logic
   public override async void Stun(float duration) {
     isStunned = true;
@@ -508,4 +511,40 @@ public class Player : Diver {
     Invoke("ResetColor", 0.3f);
   }
   #endregion
+  private void ApplyChosenClass(RuntimeAnimatorController selectedAnimator, string className) {
+    // Find the animator amonst this gameObject's chioldren.
+    Animator animator = GetComponentInChildren<Animator>();
+
+    // Set the animator to the one that the player has chosen
+    if (animator != null) {
+      animator.runtimeAnimatorController = selectedAnimator;
+    } else {
+      Debug.LogError("Animator not found in children.");
+    }
+
+    // Now, enable the Porter and Harpooner scripts based on Class Name choice. These scripts
+    // are found in the current game object as components.
+    // If "Diver" - disable the Harpooner and Porter scripts
+    // If "Harpooner" - disable Porter and enable Harpooner
+    // If "Porter" - disable Harpooner and enable Porter
+    if (className == "Diver") {
+      var harpooner = GetComponent<Harpooner>();
+      if (harpooner != null) harpooner.enabled = false;
+
+      var porter = GetComponent<Porter>();
+      if (porter != null) porter.enabled = false;
+    } else if (className == "Harpooner") {
+      var harpooner = GetComponent<Harpooner>();
+      if (harpooner != null) harpooner.enabled = true;
+
+      var porter = GetComponent<Porter>();
+      if (porter != null) porter.enabled = false;
+    } else if (className == "Porter") {
+      var harpooner = GetComponent<Harpooner>();
+      if (harpooner != null) harpooner.enabled = false;
+
+      var porter = GetComponent<Porter>();
+      if (porter != null) porter.enabled = true;
+    }
+  }
 }

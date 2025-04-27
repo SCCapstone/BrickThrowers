@@ -37,12 +37,16 @@ public class Harpooner : MonoBehaviour {
     attack.Enable();
     attack.performed += Attack;
     playerSpriteAnimator.runtimeAnimatorController = harpoonerAnimator;
+    playerSpriteAnimator.Rebind();
+    playerSpriteAnimator.Update(0f); // Force the animator to update immediately
   }
   private void OnDisable() {
     attackZone.SetActive(false);
     attack.performed -= Attack;
     attack.Disable();
     playerSpriteAnimator.runtimeAnimatorController = null;
+    playerSpriteAnimator.Rebind();
+    playerSpriteAnimator.Update(0f); // Force the animator to update immediately
   }
   private void Start() {
     enemyLayerMask = LayerMask.GetMask("Enemy");

@@ -1878,6 +1878,7 @@ MonoBehaviour:
   - {fileID: 989689449}
   - {fileID: 1271094305}
   - {fileID: 8424136292750179198}
+  - {fileID: 1169221725}
   pauseMenuPanel: {fileID: 2125302479}
 --- !u!1 &874548611
 GameObject:

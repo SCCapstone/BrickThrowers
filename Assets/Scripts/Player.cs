@@ -347,6 +347,7 @@ public class Player : Diver {
       subInteract.Disable();
       subLeaveLevel.Disable();
       rb.simulated = false;
+      summaryScreenUI.SetSummary();
       SummaryScreen.SetActive(true);
     }
   }

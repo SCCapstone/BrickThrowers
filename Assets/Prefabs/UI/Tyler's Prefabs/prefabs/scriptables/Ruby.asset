@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 2
   itemName: Ruby
-  itemIcon: {fileID: 21300000, guid: 98b337d552cac8f42bae213c59930e29, type: 3}
-  prefab: {fileID: 5680212277124760220, guid: a489e82e3cdfffe4f82bacce03aedcc0, type: 3}
+  itemIcon: {fileID: 21300000, guid: d051f357e78a8ee42a3f3700edc762e9, type: 3}
+  prefab: {fileID: 5680212277124760220, guid: 3521fa884703cde42bc952bbc36ceba5, type: 3}
   itemType: 0
   cost: 0
   artifactType: 1

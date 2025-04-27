@@ -747,10 +747,10 @@ MonoBehaviour:
     Loot and Earn Points:</b> Gather artifacts, return them to the submarine to clear
     your inventory to collect more loot. Collect as many points as possible before
     your oxygen runs out.\r\n\n<u><b>When Finished Collecting Loot</b></u>\nBe sure
-    to \"Complete Mission\" by pressing 'C'.\nThis will finialize your loot! You
-    can then go back to the lobby and buy upgrades. The upgrades will be added into
-    your inventory when you enter the map again! Little reminder that the items are
-    indeed a one-time use!\n\n"
+    to return back to the submarine and \"Complete Mission\" by pressing 'C'.\nThis
+    will finialize your loot! You can then go back to the lobby and buy upgrades.
+    The upgrades will be added into your inventory when you enter the map again!
+    Little reminder that the items are indeed a one-time use!\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}

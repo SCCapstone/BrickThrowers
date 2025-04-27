@@ -18,14 +18,19 @@ public class HarpoonerUnitTests
     private GameObject obj;
     private Harpooner harpooner;
     private GameObject attackPoint;
+    private Animator animator;
 
     [SetUp]
     public void SetUp()
     {
         ClassSelectionData.SelectedClass = "Harpooner";
+
+        // Create the harpooner object and add Animator
         obj = new GameObject("HarpoonerObj");
+        animator = obj.AddComponent<Animator>();
         harpooner = obj.AddComponent<Harpooner>();
 
+        // Create and assign the attack point
         attackPoint = new GameObject("AttackPoint");
         attackPoint.transform.parent = obj.transform;
         harpooner.attackPoint = attackPoint.transform;
@@ -35,17 +40,27 @@ public class HarpoonerUnitTests
     public void TearDown()
     {
         Object.DestroyImmediate(obj);
+        Object.DestroyImmediate(attackPoint);
     }
 
     [Test]
-    public void Start_AddsColliderIfMissing_AndConfiguresIt()
+    public void Start_InitializesAnimator_AndAddsColliderIfMissing()
     {
+        // Before Start: no collider, animator field should be null
         Assert.IsNull(attackPoint.GetComponent<CircleCollider2D>());
 
-        MethodInfo start = typeof(Harpooner)
-            .GetMethod("Start", BindingFlags.NonPublic | BindingFlags.Instance);
-        start.Invoke(harpooner, null);
+        // Invoke Start()
+        typeof(Harpooner)
+            .GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic)
+            .Invoke(harpooner, null);
 
+        // Verify Animator was assigned from the component
+        var animField = typeof(Harpooner)
+            .GetField("animator", BindingFlags.Instance | BindingFlags.NonPublic);
+        Assert.AreSame(animator, animField.GetValue(harpooner),
+            "Start should cache the Animator component");
+
+        // Now verify collider was added and configured
         var col = attackPoint.GetComponent<CircleCollider2D>();
         Assert.IsNotNull(col, "Start should add a CircleCollider2D if none exists");
         Assert.AreEqual(harpooner.attackRange, col.radius, "Collider radius must match attackRange");
@@ -53,19 +68,28 @@ public class HarpoonerUnitTests
     }
 
     [Test]
-    public void Start_UsesExistingCollider_AndUpdatesIt()
+    public void Start_UsesExistingCollider_AndUpdatesIt_AndInitializesAnimator()
     {
+        // Pre-add an existing collider with bogus settings
         var existing = attackPoint.AddComponent<CircleCollider2D>();
         existing.radius = 0.2f;
         existing.isTrigger = false;
 
-        MethodInfo start = typeof(Harpooner)
-            .GetMethod("Start", BindingFlags.NonPublic | BindingFlags.Instance);
-        start.Invoke(harpooner, null);
+        // Invoke Start()
+        typeof(Harpooner)
+            .GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic)
+            .Invoke(harpooner, null);
 
+        // Animator assignment
+        var animField = typeof(Harpooner)
+            .GetField("animator", BindingFlags.Instance | BindingFlags.NonPublic);
+        Assert.AreSame(animator, animField.GetValue(harpooner),
+            "Start should cache the Animator component");
+
+        // Collider should not be replaced but updated
         var col = attackPoint.GetComponent<CircleCollider2D>();
-        Assert.AreSame(existing, col, "Should keep the existing collider instance");
-        Assert.AreEqual(harpooner.attackRange, col.radius, "Should overwrite radius");
-        Assert.IsTrue(col.isTrigger, "Should set existing collider to trigger");
+        Assert.AreSame(existing, col, "Start should keep the existing collider instance");
+        Assert.AreEqual(harpooner.attackRange, col.radius, "Start should overwrite radius to match attackRange");
+        Assert.IsTrue(col.isTrigger, "Start should set existing collider to trigger");
     }
 }

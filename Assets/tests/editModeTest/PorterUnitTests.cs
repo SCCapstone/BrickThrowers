@@ -10,83 +10,130 @@
 
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Reflection;
 
 [TestFixture]
 public class PorterUnitTests
 {
-    private GameObject obj;
+    private GameObject porterObj;
     private Porter porter;
+    private GameObject slotPrefab;
+    private GameObject slotHolder;
+    private GridLayoutGroup grid;
+    private RectTransform holderRect;
+    private Animator playerAnimator;
+    private RuntimeAnimatorController testController;
+
+    const int MAX_SLOTS = 4;
+    const int DEFAULT_SLOTS = 3;
+    const float EXTRA_SLOT_WIDTH = 95f;
 
     [SetUp]
     public void SetUp()
     {
-        obj = new GameObject("PorterObj");
-        porter = obj.AddComponent<Porter>();
+        // Create Porter and dependencies
+        porterObj = new GameObject("PorterObj");
+        porter = porterObj.AddComponent<Porter>();
+
+        slotPrefab = new GameObject("SlotPrefab");
+        slotHolder = new GameObject("SlotHolder", typeof(RectTransform));
+        grid = slotHolder.AddComponent<GridLayoutGroup>();
+        holderRect = slotHolder.GetComponent<RectTransform>();
+        holderRect.sizeDelta = Vector2.zero;
+        grid.constraintCount = DEFAULT_SLOTS;
+
+        var playerObj = new GameObject("Player");
+        playerAnimator = playerObj.AddComponent<Animator>();
+        testController = new AnimatorOverrideController();
+
+        // Inject serialized fields via reflection
+        var type = typeof(Porter);
+        type.GetField("slot", BindingFlags.NonPublic | BindingFlags.Instance)
+            .SetValue(porter, slotPrefab);
+        type.GetField("slotHolder", BindingFlags.NonPublic | BindingFlags.Instance)
+            .SetValue(porter, slotHolder);
+        type.GetField("porterAnimator", BindingFlags.NonPublic | BindingFlags.Instance)
+            .SetValue(porter, testController);
+        type.GetField("playerSpriteAnimator", BindingFlags.NonPublic | BindingFlags.Instance)
+            .SetValue(porter, playerAnimator);
     }
 
     [TearDown]
     public void TearDown()
     {
-        Object.DestroyImmediate(obj);
+        Object.DestroyImmediate(porterObj);
+        Object.DestroyImmediate(slotPrefab);
+        Object.DestroyImmediate(slotHolder);
+        Object.DestroyImmediate(playerAnimator.gameObject);
     }
 
     [Test]
-    public void OnEnable_SetsEnableClassTrue()
+    public void OnEnable_ConfiguresInventoryAndAnimator_AndSetsEnableClass()
     {
-        // initially the component has just been added and OnEnable has run
-        var field = typeof(Porter).GetField("enableClass", BindingFlags.NonPublic | BindingFlags.Instance);
-        bool enabledState = (bool)field.GetValue(porter);
-        Assert.IsTrue(enabledState, "enableClass should be true after OnEnable");
+        // Preconditions
+        Assert.AreEqual(DEFAULT_SLOTS, grid.constraintCount);
+        Assert.AreEqual(0f, holderRect.sizeDelta.x);
+        Assert.AreEqual(0, slotHolder.transform.childCount);
+        Assert.IsNull(playerAnimator.runtimeAnimatorController);
+        // enableClass is private, but OnEnable should set it true
+        var flagField = typeof(Porter)
+            .GetField("enableClass", BindingFlags.NonPublic | BindingFlags.Instance);
+        Assert.IsFalse((bool)flagField.GetValue(porter));
+
+        // Invoke OnEnable
+        typeof(Porter)
+            .GetMethod("OnEnable", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(porter, null);
+
+        // enableClass
+        Assert.IsTrue((bool)flagField.GetValue(porter), "enableClass should be true after OnEnable");
+
+        // Inventory: grid and rect
+        Assert.AreEqual(MAX_SLOTS, grid.constraintCount, "constraintCount should be MAX_SLOTS");
+        Assert.AreEqual(EXTRA_SLOT_WIDTH, holderRect.sizeDelta.x, 1e-3f,
+            "holder width should increase by EXTRA_SLOT_WIDTH");
+
+        // Slot instantiation
+        Assert.AreEqual(1, slotHolder.transform.childCount, "should add one slot child");
+        var newSlot = slotHolder.transform.GetChild(0).gameObject;
+        Assert.AreEqual("Porter Slot", newSlot.name);
+        Assert.AreEqual(Vector3.one, newSlot.transform.localScale);
+        Assert.AreEqual(Vector3.zero, newSlot.transform.localPosition);
+        Assert.AreEqual(Quaternion.identity, newSlot.transform.localRotation);
+
+        // Animator assignment
+        Assert.AreEqual(testController, playerAnimator.runtimeAnimatorController,
+            "playerSpriteAnimator should be set to porterAnimator");
     }
 
     [Test]
-    public void OnDisable_SetsEnableClassFalse()
+    public void OnDisable_ResetsInventoryAndAnimator_AndClearsEnableClass()
     {
-        // invoke OnDisable via reflection
-        MethodInfo onDisable = typeof(Porter).GetMethod("OnDisable", BindingFlags.NonPublic | BindingFlags.Instance);
-        onDisable.Invoke(porter, null);
+        // First enable to setup state
+        typeof(Porter)
+            .GetMethod("OnEnable", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(porter, null);
+        Assert.AreEqual(1, slotHolder.transform.childCount);
 
-        var field = typeof(Porter).GetField("enableClass", BindingFlags.NonPublic | BindingFlags.Instance);
-        bool enabledState = (bool)field.GetValue(porter);
-        Assert.IsFalse(enabledState, "enableClass should be false after OnDisable");
-    }
+        // Invoke OnDisable
+        typeof(Porter)
+            .GetMethod("OnDisable", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(porter, null);
 
-    [Test]
-    public void AddToExtraSlot_WhenEmpty_ReturnsTrueAndStoresItem()
-    {
-        var item = new object();
-        bool result = porter.AddToExtraSlot(item);
-        Assert.IsTrue(result, "Should return true when slot is empty");
-        Assert.IsTrue(porter.HasExtraSlotItem, "HasExtraSlotItem should be true after adding");
-        Assert.AreSame(item, porter.GetExtraSlotItem(), "GetExtraSlotItem must return the added item");
-    }
+        // enableClass
+        var flagField = typeof(Porter)
+            .GetField("enableClass", BindingFlags.NonPublic | BindingFlags.Instance);
+        Assert.IsFalse((bool)flagField.GetValue(porter), "enableClass should be false after OnDisable");
 
-    [Test]
-    public void AddToExtraSlot_WhenOccupied_ReturnsFalse()
-    {
-        var first = new object();
-        var second = new object();
-        porter.AddToExtraSlot(first);
-        bool result = porter.AddToExtraSlot(second);
-        Assert.IsFalse(result, "Should return false when slot already has an item");
-        Assert.AreSame(first, porter.GetExtraSlotItem(), "Original item should remain unchanged");
-    }
+        // Inventory reset
+        Assert.AreEqual(DEFAULT_SLOTS, grid.constraintCount, "constraintCount reset to DEFAULT_SLOTS");
+        Assert.AreEqual(0f, holderRect.sizeDelta.x, 1e-3f,
+            "holder width reset after OnDisable");
+        Assert.AreEqual(0, slotHolder.transform.childCount, "slot child should be removed");
 
-    [Test]
-    public void RemoveFromExtraSlot_WhenHasItem_ReturnsItemAndClearsSlot()
-    {
-        var item = new object();
-        porter.AddToExtraSlot(item);
-        object removed = porter.RemoveFromExtraSlot();
-        Assert.AreSame(item, removed, "Should return the removed item");
-        Assert.IsFalse(porter.HasExtraSlotItem, "Slot should be empty after removal");
-    }
-
-    [Test]
-    public void RemoveFromExtraSlot_WhenEmpty_ReturnsNull()
-    {
-        object removed = porter.RemoveFromExtraSlot();
-        Assert.IsNull(removed, "Should return null when slot is already empty");
+        // Animator cleared
+        Assert.IsNull(playerAnimator.runtimeAnimatorController,
+            "playerSpriteAnimator.runtimeAnimatorController should be null after OnDisable");
     }
 }

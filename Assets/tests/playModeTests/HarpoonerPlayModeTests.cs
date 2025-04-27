@@ -5,7 +5,7 @@
 //       – Select the “PlayMode” category  
 //       – Find and right-click “HarpoonerPlayModeTests” → Run Selected  
 //   • Via CLI (runs only HarpoonerPlayModeTests):  
-//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \  
 //         -testFilter HarpoonerPlayModeTests -logFile -testResults TestResults/HarpoonerPlayModeTests.xml
 
 using UnityEngine;
@@ -16,7 +16,7 @@ using System.Reflection;
 
 public class HarpoonerPlayModeTests
 {
-    private GameObject obj;
+    private GameObject harpoonerObj;
     private Harpooner harpooner;
     private GameObject attackPoint;
     private GameObject enemy;
@@ -27,29 +27,38 @@ public class HarpoonerPlayModeTests
     {
         ClassSelectionData.SelectedClass = "Harpooner";
 
-        obj = new GameObject("Harpooner");
-        harpooner = obj.AddComponent<Harpooner>();
-        obj.AddComponent<Rigidbody2D>();
+        // Create Harpooner game object and add required components
+        harpoonerObj = new GameObject("Harpooner");
+        harpoonerObj.AddComponent<Animator>();
+        harpoonerObj.AddComponent<Rigidbody2D>();
+        harpooner = harpoonerObj.AddComponent<Harpooner>();
 
+        // Create and assign the attack point (must match Start logic)
         attackPoint = new GameObject("AttackPoint");
-        attackPoint.transform.parent = obj.transform;
+        attackPoint.transform.parent = harpoonerObj.transform;
         harpooner.attackPoint = attackPoint.transform;
-        var col = attackPoint.AddComponent<CircleCollider2D>();
-        col.radius = harpooner.attackRange;
-        col.isTrigger = true;
 
+        // Wait a frame to let Start() run and attach the collider
+        yield return null;
+
+        // Ensure the collider is present
+        var col = attackPoint.GetComponent<CircleCollider2D>();
+        Assert.IsNotNull(col, "Start should have added a CircleCollider2D");
+
+        // Create an enemy within range
         enemy = new GameObject("Enemy");
         enemy.tag = "Enemy";
         enemyRb = enemy.AddComponent<Rigidbody2D>();
-        enemy.transform.position = attackPoint.transform.position + Vector3.right * (harpooner.attackRange * 0.5f);
+        enemy.transform.position = attackPoint.transform.position
+                                  + Vector3.right * (harpooner.attackRange * 0.5f);
 
-        yield return null;
+        yield return null; // let physics settle
     }
 
     [UnityTearDown]
     public IEnumerator TearDown()
     {
-        Object.Destroy(obj);
+        Object.Destroy(harpoonerObj);
         Object.Destroy(enemy);
         yield return null;
     }
@@ -57,12 +66,15 @@ public class HarpoonerPlayModeTests
     [UnityTest]
     public IEnumerator HandleAttack_AppliesKnockbackToEnemy()
     {
-        MethodInfo handle = typeof(Harpooner)
+        // Invoke the private HandleAttack method directly
+        var handle = typeof(Harpooner)
             .GetMethod("HandleAttack", BindingFlags.NonPublic | BindingFlags.Instance);
         handle.Invoke(harpooner, null);
 
+        // Wait for physics to process the impulse
         yield return new WaitForFixedUpdate();
 
-        Assert.Greater(enemyRb.velocity.magnitude, 0f, "Enemy should be knocked back on attack");
+        Assert.Greater(enemyRb.velocity.magnitude, 0f,
+            "Enemy Rigidbody should receive a knockback impulse when HandleAttack is called");
     }
 }

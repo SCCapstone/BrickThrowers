@@ -16,6 +16,8 @@ public class Harpooner : MonoBehaviour {
   [SerializeField] private Animator animator;
   public float knockbackForce = 10f;
   private LayerMask enemyLayerMask;
+  [SerializeField] private RuntimeAnimatorController harpoonerAnimator;
+  [SerializeField] private Animator playerSpriteAnimator;
 
   // Actions
   public PlayerInputActions playerControls;
@@ -34,11 +36,13 @@ public class Harpooner : MonoBehaviour {
     attackZone.SetActive(true);
     attack.Enable();
     attack.performed += Attack;
+    playerSpriteAnimator.runtimeAnimatorController = harpoonerAnimator;
   }
   private void OnDisable() {
     attackZone.SetActive(false);
     attack.performed -= Attack;
     attack.Disable();
+    playerSpriteAnimator.runtimeAnimatorController = null;
   }
   private void Start() {
     enemyLayerMask = LayerMask.GetMask("Enemy");

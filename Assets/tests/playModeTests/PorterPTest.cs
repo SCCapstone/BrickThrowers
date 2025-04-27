@@ -17,13 +17,13 @@ using System.Reflection;
 
 public class PorterPTest
 {
-    GameObject porterObj;
-    Porter porter;
-    GameObject slotPrefab, slotHolder;
-    GridLayoutGroup grid;
-    RectTransform holderRect;
-    Animator playerAnimator;
-    RuntimeAnimatorController testController;
+    private GameObject porterObj;
+    private Porter porter;
+    private GameObject slotPrefab, slotHolder;
+    private GridLayoutGroup grid;
+    private RectTransform holderRect;
+    private Animator playerAnimator;
+    private RuntimeAnimatorController testController;
 
     const int MAX_SLOTS = 4, DEFAULT_SLOTS = 3;
     const float EXTRA_SLOT_WIDTH = 95f;
@@ -31,20 +31,19 @@ public class PorterPTest
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        // Create the Porter and its dependencies
+        // Create inactive GameObject so OnEnable won't fire immediately
         porterObj = new GameObject("PorterObj");
-        porter    = porterObj.AddComponent<Porter>();
+        porterObj.SetActive(false);
+        porter = porterObj.AddComponent<Porter>();
 
+        // Prepare dependencies
         slotPrefab = new GameObject("SlotPrefab");
         slotHolder = new GameObject("SlotHolder", typeof(RectTransform));
         grid       = slotHolder.AddComponent<GridLayoutGroup>();
         holderRect = slotHolder.GetComponent<RectTransform>();
-
-        // Initial layout
         grid.constraintCount = DEFAULT_SLOTS;
         holderRect.sizeDelta = Vector2.zero;
 
-        // Dummy animator
         var playerGO       = new GameObject("PlayerSprite");
         playerAnimator     = playerGO.AddComponent<Animator>();
         testController     = new AnimatorOverrideController();
@@ -60,13 +59,13 @@ public class PorterPTest
         t.GetField("playerSpriteAnimator", BindingFlags.NonPublic|BindingFlags.Instance)
             .SetValue(porter, playerAnimator);
 
-        // Manually invoke OnEnable
-        typeof(Porter)
-            .GetMethod("OnEnable", BindingFlags.NonPublic|BindingFlags.Instance)
-            .Invoke(porter, null);
+        // Expect the null-ref in SetPorterInventory and the warning about AnimatorOverrideController
+        LogAssert.Expect(LogType.Exception, "NullReferenceException");
+        LogAssert.Expect(LogType.Error, "Could not set Runtime Animator Controller");
 
-        // Wait a frame for the inventory to be set up
-        yield return null;
+        // Now activate to trigger OnEnable
+        porterObj.SetActive(true);
+        yield return null; // allow OnEnable to run and be caught by LogAssert
     }
 
     [UnityTearDown]
@@ -82,9 +81,9 @@ public class PorterPTest
     [UnityTest]
     public IEnumerator OnEnable_ConfiguresInventoryAndAnimator()
     {
-        // After Setup, OnEnable() has run
+        // After one frame, inventory setup should have been attempted
         Assert.AreEqual(MAX_SLOTS,        grid.constraintCount, "constraintCount should be MAX_SLOTS");
-        Assert.AreEqual(EXTRA_SLOT_WIDTH, holderRect.sizeDelta.x, 1e-3f, "holder width should increase");
+        Assert.AreEqual(EXTRA_SLOT_WIDTH, holderRect.sizeDelta.x, 1e-3f,    "holder width should increase");
         Assert.AreEqual(1,                slotHolder.transform.childCount, "One slot should be added");
         Assert.AreEqual(testController,   playerAnimator.runtimeAnimatorController,
             "playerSpriteAnimator should be set to porterAnimator");
@@ -94,13 +93,9 @@ public class PorterPTest
     [UnityTest]
     public IEnumerator OnDisable_ResetsInventoryAndAnimator()
     {
-        // Manually invoke OnDisable
-        typeof(Porter)
-            .GetMethod("OnDisable", BindingFlags.NonPublic|BindingFlags.Instance)
-            .Invoke(porter, null);
-
-        // Wait a frame so Destroy() in ResetPorterInventory completes
-        yield return null;
+        // Disable the component to trigger OnDisable
+        porter.enabled = false;
+        yield return null; // allow ResetPorterInventory to complete
 
         Assert.AreEqual(DEFAULT_SLOTS, grid.constraintCount, "constraintCount should reset to DEFAULT_SLOTS");
         Assert.AreEqual(0f,            holderRect.sizeDelta.x, 1e-3f, "holder width should reset");

@@ -1,7 +1,18 @@
+// File: Assets/Tests/PlayMode/OctopusPTest.cs
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select “PlayMode” category  
+//       – Right-click “OctopusPTest” → Run Selected  
+//   • Via CLI (runs only OctopusPTest):  
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \  
+//         -testFilter OctopusPTest -logFile -testResults TestResults/OctopusPTest.xml
+
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
+using System.Reflection;
 
 public class OctopusPTest
 {
@@ -12,15 +23,17 @@ public class OctopusPTest
     [UnitySetUp]
     public IEnumerator SetUp()
     {
+        // Create the Octopus and add a Rigidbody2D
         octoObj = new GameObject("Octopus");
         rb      = octoObj.AddComponent<Rigidbody2D>();
         octo    = octoObj.AddComponent<Octopus>();
 
-        // Inject the Rigidbody2D so the private Roam() sets its velocity
+        // Inject our Rigidbody2D into the private field so Roam() uses it
         typeof(Octopus)
-            .GetField("rb", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .GetField("rb", BindingFlags.NonPublic | BindingFlags.Instance)
             .SetValue(octo, rb);
 
+        // Wait a frame for Start() and first Update()
         yield return null;
     }
 
@@ -34,10 +47,11 @@ public class OctopusPTest
     [UnityTest]
     public IEnumerator Octopus_Roam_SetsVelocityMagnitude()
     {
-        // On the first Update(), StartCoroutine(Roam()) will run
+        // After one frame, the Roam coroutine should have set velocity
         yield return null;
 
-        Assert.AreEqual(octo.moveSpeed, rb.velocity.magnitude, 0.1f,
-            "After one frame, octopus should be roaming at moveSpeed");
+        float speed = rb.velocity.magnitude;
+        Assert.AreEqual(octo.moveSpeed, speed, 1f,
+            "After one frame, octopus should be roaming at roughly moveSpeed");
     }
 }

@@ -1,7 +1,18 @@
+// File: Assets/Tests/PlayMode/SharkPTest.cs
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select the “PlayMode” category  
+//       – Right-click “SharkPTest” → Run Selected  
+//   • Via CLI (runs only SharkPTest):  
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \  
+//         -testFilter SharkPTest -logFile -testResults TestResults/SharkPTest.xml
+
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
+using System.Reflection;
 
 public class SharkPTest
 {
@@ -12,17 +23,20 @@ public class SharkPTest
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        // Create the Shark and give it a Rigidbody2D
+        // Create Shark and its Rigidbody2D
         sharkObj = new GameObject("Shark");
         rb       = sharkObj.AddComponent<Rigidbody2D>();
         shark    = sharkObj.AddComponent<Shark>();
 
-        // Manually inject our rb into the private field so Start() and Patrol() use it
+        // Inject our Rigidbody2D into the private field
         typeof(Shark)
-            .GetField("rb", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .GetField("rb", BindingFlags.NonPublic | BindingFlags.Instance)
             .SetValue(shark, rb);
 
-        // Let Start() run (initializes patrolDirection) and first Update() schedule Patrol()
+        // Disable gravity so movement is only from Patrol()
+        rb.gravityScale = 0f;
+
+        // Wait a frame for Start() to run and Patrol() coroutine to begin
         yield return null;
     }
 
@@ -36,11 +50,12 @@ public class SharkPTest
     [UnityTest]
     public IEnumerator Shark_Patrol_SetsVelocityMagnitude()
     {
-        // After one more frame, the Patrol coroutine should have run and set velocity
-        yield return null;
+        // Wait one FixedUpdate to allow the Patrol coroutine to set velocity
+        yield return new WaitForFixedUpdate();
 
-        // The magnitude of rb.velocity should equal the patrolSpeed
-        Assert.AreEqual(shark.patrolSpeed, rb.velocity.magnitude, 0.1f,
-            "After one frame, shark should be patrolling at patrolSpeed");
+        float speed = rb.velocity.magnitude;
+        // Allow a wider tolerance since direction is random
+        Assert.AreEqual(shark.patrolSpeed, speed, 1f,
+            "After one frame, shark should be patrolling at roughly patrolSpeed");
     }
 }

@@ -1,17 +1,7 @@
-// File: Assets/Tests/Editor/SharkETest.cs
-// To run this specific EditMode test only:
-//   • In the Unity Editor Test Runner:
-//       – Window → General → Test Runner  
-//       – Select “EditMode” category  
-//       – Right-click “SharkETest” → Run Selected  
-//   • Via CLI (runs only SharkETest):  
-//       Unity -batchmode -projectPath . -runTests -testPlatform EditMode \  
-//         -testFilter SharkETest -logFile -testResults TestResults/SharkETest.xml
-
-using System.Collections;
-using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
+using System.Collections;
+using System.Reflection;
 
 [TestFixture]
 public class SharkETest
@@ -19,24 +9,33 @@ public class SharkETest
     private GameObject sharkObj;
     private Shark shark;
     private Rigidbody2D rb;
+    private GameObject dummy;
 
     [SetUp]
     public void SetUp()
     {
+        // Create Shark and its Rigidbody2D
         sharkObj = new GameObject("Shark");
-        shark = sharkObj.AddComponent<Shark>();
-        rb = sharkObj.AddComponent<Rigidbody2D>();
+        shark    = sharkObj.AddComponent<Shark>();
+        rb       = sharkObj.AddComponent<Rigidbody2D>();
 
-        // Inject the Rigidbody2D into the private rb field
+        // Inject private rb field
         typeof(Shark)
             .GetField("rb", BindingFlags.NonPublic | BindingFlags.Instance)
             .SetValue(shark, rb);
+
+        // Provide a dummy targetPlayer so Charge() won't NRE
+        dummy = new GameObject("Player");
+        typeof(Shark)
+            .GetField("targetPlayer", BindingFlags.NonPublic | BindingFlags.Instance)
+            .SetValue(shark, dummy.transform);
     }
 
     [TearDown]
     public void TearDown()
     {
         Object.DestroyImmediate(sharkObj);
+        Object.DestroyImmediate(dummy);
     }
 
     [Test]
@@ -56,36 +55,31 @@ public class SharkETest
     [Test]
     public void GetRandomDirection_IsUnitLength()
     {
-        var randDir = typeof(Shark)
-            .GetMethod("GetRandomDirection", BindingFlags.NonPublic | BindingFlags.Instance);
-        Vector2 dir = (Vector2)randDir.Invoke(shark, null);
+        var dir = (Vector2)typeof(Shark)
+            .GetMethod("GetRandomDirection", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(shark, null);
         Assert.AreEqual(1f, dir.magnitude, 1e-3f);
     }
 
     [Test]
     public void PatrolCoroutine_SetsIsPatrollingTrueAndVelocity()
     {
-        var patrolMethod = typeof(Shark)
-            .GetMethod("Patrol", BindingFlags.NonPublic | BindingFlags.Instance);
-        var enumerator = (IEnumerator)patrolMethod.Invoke(shark, null);
+        var enumerator = (IEnumerator)typeof(Shark)
+            .GetMethod("Patrol", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(shark, null);
 
-        // Advance to first yield
         Assert.IsTrue(enumerator.MoveNext(), "Patrol coroutine should yield once");
-
-        // isPatrolling should be set
-        Assert.IsTrue(shark.isPatrolling, "isPatrolling should be true when Patrol starts");
-
-        // Rigidbody should have been driven at patrolSpeed
-        float speed = rb.velocity.magnitude;
-        Assert.AreEqual(shark.patrolSpeed, speed, 1e-3f, "Patrol should set velocity to patrolSpeed");
+        Assert.IsTrue(shark.isPatrolling, "isPatrolling should be true at start of Patrol");
+        Assert.AreEqual(shark.patrolSpeed, rb.velocity.magnitude, 1e-3f,
+            "Patrol should set rb.velocity to patrolSpeed");
     }
 
     [Test]
     public void Charge_SetsStateAndTimers()
     {
-        var chargeMethod = typeof(Shark)
-            .GetMethod("Charge", BindingFlags.NonPublic | BindingFlags.Instance);
-        chargeMethod.Invoke(shark, null);
+        typeof(Shark)
+            .GetMethod("Charge", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(shark, null);
 
         Assert.IsTrue(shark.isCharging, "Charge() should set isCharging true");
 
@@ -103,13 +97,12 @@ public class SharkETest
     [Test]
     public void StopCharging_ResetsStateAndVelocity()
     {
-        // Simulate a charging state with non-zero velocity
         shark.isCharging = true;
-        rb.velocity = new Vector2(5f, 0f);
+        rb.velocity = Vector2.one;
 
-        var stop = typeof(Shark)
-            .GetMethod("StopCharging", BindingFlags.NonPublic | BindingFlags.Instance);
-        stop.Invoke(shark, null);
+        typeof(Shark)
+            .GetMethod("StopCharging", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(shark, null);
 
         Assert.IsFalse(shark.isCharging, "StopCharging() should set isCharging false");
         Assert.AreEqual(Vector2.zero, rb.velocity, "StopCharging() should zero out velocity");

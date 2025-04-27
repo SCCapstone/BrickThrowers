@@ -141,6 +141,8 @@ public class Player : Diver {
     Diver.onDamage += ChangeColor;
     Diver.onDeath += GameOver;
     subLeaveLevel.performed += SubmarineLeaveLevel;
+
+    rb.simulated = true;
   }
 
   private void OnDisable() {
@@ -337,6 +339,11 @@ public class Player : Diver {
     if (GetOxygenLevel() <= 0 && !isDead || getTimer() == 0) {
       isDead = true;
       Debug.Log("Game is Over!");
+      move.Disable();
+      sprint.Disable();
+      subInteract.Disable();
+      subLeaveLevel.Disable();
+      rb.simulated = false;
       SummaryScreen.SetActive(true);
     }
   }

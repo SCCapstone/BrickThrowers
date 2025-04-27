@@ -1256,7 +1256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f883fdd2a3ae84dbb39ac0f977f225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oxygenLevel: 10
+  oxygenLevel: 100
   isStunned: 0
   stunTimer: 0
   speed: 40

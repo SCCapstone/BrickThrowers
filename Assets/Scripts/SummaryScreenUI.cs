@@ -61,7 +61,7 @@ public class SummaryScreenUI : MonoBehaviour {
   #region Scene Management
   public async void ReturnToLobby() {
     transferCurrency?.Invoke(lm.Score);
-    await Task.Delay(1000); // Wait for 1 second
+    await Task.Delay(500); // Wait for 1 second
     SceneManager.LoadSceneAsync(1);
   }
   #endregion

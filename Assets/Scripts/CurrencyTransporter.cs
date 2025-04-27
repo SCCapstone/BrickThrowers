@@ -8,8 +8,7 @@ using UnityEngine.SceneManagement;
  * Copyright 2025 Brick Throwers CSCE-492
  * Transport money from the game scenes into the lobby scene and add to the current currency.
  */
-public class CurrencyTransporter : MonoBehaviour
-{
+public class CurrencyTransporter : MonoBehaviour {
   // Money to transport
   private static int moneyFromGame;
 

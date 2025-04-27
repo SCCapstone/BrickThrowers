@@ -1,3 +1,6 @@
+// Copyright 2025 Brick Throwers
+// PirateA.cs - Controls the behavior of PirateA, including movement, attacking, and stealing artifacts.
+// Not in use.
 using UnityEngine;
 
 public class PirateA : MonoBehaviour {

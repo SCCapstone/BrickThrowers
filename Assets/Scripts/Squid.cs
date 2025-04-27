@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// Squid.cs - Handles the squid enemy behavior, including ambushing and retreating.
 using UnityEngine;
 
 public class Squid : MonoBehaviour {

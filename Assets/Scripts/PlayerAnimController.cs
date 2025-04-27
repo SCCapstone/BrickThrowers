@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// PlayerAnimController.cs - Controls the player animations based on input.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,5 +1,6 @@
 /*
- * Copyright 2025 Scott Do
+ * Copyright 2025 Brick Throwers
+ * Done by Reshlynt (Scott Do)
  * Defines the interface to save and load data.
  */
 public interface IDataService {

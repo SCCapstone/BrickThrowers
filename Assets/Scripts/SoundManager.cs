@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// SoundManager.cs - Manages the sound effects and background music for the game.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +32,10 @@ public class SoundManager : MonoBehaviour {
       audioSource.PlayOneShot(buttonClickSFX);
     }
   }
-
+  /// <summary>
+  /// Play the background music. If a music clip is provided, it will be played instead of the default one.
+  /// </summary>
+  /// <param name="musicClip"></param>
   public void PlayBackgroundMusic(AudioClip musicClip = null) {
     if (musicSource == null)
       return;
@@ -45,13 +50,18 @@ public class SoundManager : MonoBehaviour {
       }
     }
   }
-
+  /// <summary>
+  /// Stop the background music.
+  /// </summary>
   public void StopBackgroundMusic() {
     if (musicSource != null) {
       musicSource.Stop();
     }
   }
-
+  /// <summary>
+  /// Bu
+  /// </summary>
+  /// <param name="button"></param>
   public void AssignButtonClickSound(Button button) {
     button.onClick.AddListener(PlayButtonClickSound);
   }

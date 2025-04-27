@@ -1,4 +1,6 @@
+// Copyright 2025 Brick Throwers
 // kjthao 2024
+// SettingsMenu.cs - Manages the settings menu for the game.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

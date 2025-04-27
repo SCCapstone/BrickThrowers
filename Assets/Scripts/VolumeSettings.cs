@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// VolumeSettings.cs - Manages the volume settings for the game.
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;

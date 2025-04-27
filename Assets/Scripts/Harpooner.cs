@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// // Harpooner.cs - Handles the harpooner class's attack logic and animations.
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
@@ -53,6 +55,10 @@ public class Harpooner : MonoBehaviour {
   }
   #endregion
   #region Attack Logic
+  /// <summary>
+  /// Attacks in the direction of the mouse when the attack button is pressed.
+  /// </summary>
+  /// <param name="context"></param>
   public void Attack(InputAction.CallbackContext context) {
 
     Vector2 dir = MouseDirection();
@@ -103,58 +109,3 @@ public class Harpooner : MonoBehaviour {
   #endregion
 
 }
-
-#region Old Code
-/*
-   private Animator animator;
-public Transform attackPoint;
-public float attackRange = 1f;
-public LayerMask enemyLayer;
-public float knockbackForce = 10f;
-
-private CircleCollider2D attackCollider;
-
-void Start() {
-  animator = GetComponent<Animator>();
-
-  attackCollider = attackPoint.GetComponent<CircleCollider2D>();
-
-  if (attackCollider == null) {
-    attackCollider = attackPoint.gameObject.AddComponent<CircleCollider2D>();
-    attackCollider.radius = attackRange;  // radius to the attackRange
-    attackCollider.isTrigger = true;
-  }
-}
-
-void Update() {
-  if (ClassSelectionData.SelectedClass == "Harpooner") {
-    if (Input.GetMouseButtonDown(0)) {
-      HandleAttack();
-    }
-  }
-}
-
-private void HandleAttack() {
-  Vector3 mousePos = Input.mousePosition;
-
-  if (mousePos.x < Screen.width / 3f) {
-    PlayAttackAnimation("Attack-L");
-  } else if (mousePos.x > Screen.width * 2f / 3f) {
-    PlayAttackAnimation("Attack-R");
-  } else {
-    PlayAttackAnimation("Attack-Up");
-  }
-
-  // After trigger attack animation, trigger "Attack" to transition back to idle/swimming.
-  animator.SetTrigger("Attack");
-
-  ApplyKnockbackToEnemies();
-}
-
-private void PlayAttackAnimation(string triggerName) {
-  animator.SetTrigger(triggerName);
-}
-
-
- */
-#endregion

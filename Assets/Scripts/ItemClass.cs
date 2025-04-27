@@ -1,6 +1,7 @@
 /*
  * Copyright 2025 Scott Do
  * 2/15/2025
+ * Defines the item class for the game.
  */
 using System.Collections;
 using System.Collections.Generic;

@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// SummaryScreenUI.cs - Manages the summary screen UI for the game.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,14 +27,16 @@ public class SummaryScreenUI : MonoBehaviour {
   Player player;
 
   // Actions
-  public static Action<int> transferCurrency; 
+  public static Action<int> transferCurrency;
 
   public void SetSummary(Player player) {
 
     artifact.text = "" + player.artifactsGot;
 
   }
-
+  /// <summary>
+  /// Prepares the summary screen for display.
+  /// </summary>
   public void SetSummary() {
     artifact.text = lm.Collected.ToString();
     score.text = lm.Score.ToString();

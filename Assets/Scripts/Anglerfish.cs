@@ -1,5 +1,6 @@
+// Copyright 2025 Brick Throwers
+// Anglerfish.cs - controls Anglerfish behavior and interactions
 using UnityEngine;
-
 public class Anglerfish : MonoBehaviour, IDamageable {
   // Anglerfish properties
   public float swimSpeed = 2f;                 // Speed of anglerfish movement
@@ -10,8 +11,6 @@ public class Anglerfish : MonoBehaviour, IDamageable {
   public float detectionRange = 5f;           // Range at which the anglerfish interacts with the player
   public float oxygenDamage = 0.2f;               // Amount of oxygen damage to apply to the player
   public int health = 30;
-
-
 
   private Rigidbody2D rb;
   private Vector2 swimDirection;
@@ -55,26 +54,24 @@ public class Anglerfish : MonoBehaviour, IDamageable {
     rb.velocity = swimDirection * swimSpeed;
   }
 
+  /// <summary>
+  /// Flickers the anglerfish's light by randomizing its intensity.
+  /// </summary>
   void FlickerLight() {
     if (anglerLight != null) {
       anglerLight.intensity = Random.Range(0.5f, lightIntensity); // Randomize light intensity
     }
   }
-
+  /// <summary>
+  /// Get a random direction for the anglerfish to swim in.
+  /// </summary>
+  /// <returns></returns>
   Vector2 GetRandomDirection() {
     float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
     return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
   }
-
-  // Damage logic.
   private void OnCollisionStay2D(Collision2D collision) {
     if (collision == null) return;
-
-    /*
-     * Determine if the game object that has collided with the anglerfish is the player.
-     * The Player game object has the Player tag.
-     * If the collisiding game object is the player, call the function to damage the player in Diver.cs
-     */
     if (collision.gameObject.CompareTag("Player")) {
       Diver diver = collision.gameObject.GetComponent<Diver>();
       if (diver != null) {
@@ -85,7 +82,10 @@ public class Anglerfish : MonoBehaviour, IDamageable {
       }
     }
   }
-
+  /// <summary>
+  /// Damage the anglerfish.
+  /// </summary>
+  /// <param name="damageAmount"></param>
   public void TakeDamage(int damageAmount) {
     health -= damageAmount;
     if (health <= 0) {

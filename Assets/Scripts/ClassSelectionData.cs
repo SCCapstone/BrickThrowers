@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// ClassSelectionData.cs - Holds the selected class data for the player.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

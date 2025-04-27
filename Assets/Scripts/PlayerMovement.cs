@@ -1,4 +1,6 @@
+// Copyright 2025 Brick Throwers
 // kjthao
+// PlayerMovement.cs - Manages the player movement and animations.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

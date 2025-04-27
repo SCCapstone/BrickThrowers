@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Scott Do
+ * Copyright 2025 Brick Throwers
  * 2/15/2025
  * This script is used to manage the player's inventory.
  */
@@ -87,6 +87,9 @@ public class InventoryManager : MonoBehaviour {
   #endregion
 
   #region Inventory Utilities
+  /// <summary>
+  /// Refreshes the inventory UI.
+  /// </summary>
   [ContextMenu("Refresh Inventory")]
   public void RefreshUI() {
     for (int i = 0; i < slots.Length; i++) {
@@ -108,11 +111,6 @@ public class InventoryManager : MonoBehaviour {
   /// <param name="item"></param>
   /// <returns></returns>
   public bool Add(ItemClass item) {
-    /*
-     * Bug: When adding an item, if there already is an item, it will replace with the next item and
-     * make the picked up item. The result is that there are two of the same item and the original first item
-     * picked up is lost.
-     */
     // First, check if the item is valid. If not, return false.
     if (item == null)
       return false;
@@ -129,12 +127,6 @@ public class InventoryManager : MonoBehaviour {
         break;
       }
     }
-
-    // In the case that the item is an artifact, add the value to the player's accumulated value.
-    //if (item.GetType() == typeof(ArtifactClass))
-    //{
-    //    player.accumulatedValue += item.GetValue();
-    //}
 
     return true;
   }
@@ -159,11 +151,10 @@ public class InventoryManager : MonoBehaviour {
     RefreshUI();
     return temp;
   }
-
-  /*
-   * The function is called by the ItemCollectionManager script. When called, this function should remove the item
-   * where the current cursor is located. It will then create the GameObject of the item and place it in the world.
-   */
+  /// <summary>
+  /// Drops the item at the cursor position in the inventory.
+  /// </summary>
+  /// <returns></returns>
   public bool DropItem() {
     // First, at the cursor, determine if there is an item. If not, disregard the command.
     if (items[currentPos].Item == null)
@@ -313,6 +304,10 @@ public class InventoryManager : MonoBehaviour {
     return true;
   }
   #endregion
+  /// <summary>
+  ///  Adds the starting items to the inventory.
+  /// </summary>
+  /// <param name="startItems"></param>
   private void AddStartingItems(List<ItemClass> startItems) {
     // populate the starting array.
     // But first, initialize the starting array. The length is equivalent to the number of items in the List.
@@ -322,6 +317,9 @@ public class InventoryManager : MonoBehaviour {
       startingItems[i] = new SlotClass(startItems[i]);
     }
   }
+  /// <summary>
+  /// Removes all artifacts from the inventory.
+  /// </summary>
   public void RemoveArtifacts() {
     foreach (SlotClass slot in items) {
       if (slot != null && slot.Item.GetType() == typeof(ArtifactClass)) {

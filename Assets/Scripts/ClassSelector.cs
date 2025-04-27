@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// // ClassSelector.cs - Handles the selection of player classes and updates the player's animator and class scripts.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,7 +42,9 @@ public class ClassSelector : MonoBehaviour {
     harpoonerButton.onClick.AddListener(SelectHarpooner);
     porterButton.onClick.AddListener(SelectPorter);
   }
-
+  /// <summary>
+  /// Disables all class scripts on the player.
+  /// </summary>
   private void DisableAllClassScripts() {
     //var diver = player.GetComponent<Diver>();
     //if (diver != null) diver.enabled = false;
@@ -51,7 +55,9 @@ public class ClassSelector : MonoBehaviour {
     var porter = player.GetComponent<Porter>();
     if (porter != null) porter.enabled = false;
   }
-
+  /// <summary>
+  /// Assigns the selected class to the player and updates the animator.
+  /// </summary>
   public void SelectDiver() {
     DisableAllClassScripts();
 
@@ -65,7 +71,9 @@ public class ClassSelector : MonoBehaviour {
     UpdateClassIndicator();
     onClassSelected?.Invoke(diverAnimatorController, selectedClass);
   }
-
+  /// <summary>
+  /// Assigns the selected class to the player and updates the animator.
+  /// </summary>
   public void SelectHarpooner() {
     DisableAllClassScripts();
 
@@ -79,7 +87,9 @@ public class ClassSelector : MonoBehaviour {
     UpdateClassIndicator();
     onClassSelected?.Invoke(harpoonerAnimatorController, selectedClass);
   }
-
+  /// <summary>
+  /// Assigns the selected class to the player and updates the animator.
+  /// </summary>
   public void SelectPorter() {
     DisableAllClassScripts();
 
@@ -93,7 +103,9 @@ public class ClassSelector : MonoBehaviour {
     UpdateClassIndicator();
     onClassSelected?.Invoke(porterAnimatorController, selectedClass);
   }
-
+  /// <summary>
+  /// Updates the class indicator text and plays the sound.
+  /// </summary>
   private void UpdateClassIndicator() {
     classIndicatorText.text = $"You have chosen {selectedClass}!";
     classIndicatorText.color = Color.green;

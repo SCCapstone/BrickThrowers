@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// // Enemy.cs - Base class for all enemies in the game.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// TimerScript.cs - Manages the timer for the game.
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;

@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// Shark.cs - Controls the shark's behavior, including patrolling and charging at the player.
 using System.Collections;
 using UnityEngine;
 

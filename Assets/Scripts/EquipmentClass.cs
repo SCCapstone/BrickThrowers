@@ -1,6 +1,7 @@
 /*
  * Copyright 2025 Scott Do
  * 2/15/2025
+ * Handles the equipment items in the game.
  */
 using System;
 using System.Collections;

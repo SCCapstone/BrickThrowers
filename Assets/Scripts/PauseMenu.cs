@@ -1,5 +1,7 @@
+// Copyright 2025 Brick Throwers
 // kjthao 2024
 // God mode additions by Reshlynt.
+// PauseMenu.cs - Manages the pause menu and game state.
 using System;
 using System.Collections;
 using System.Collections.Generic;

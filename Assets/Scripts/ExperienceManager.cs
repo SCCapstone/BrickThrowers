@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// ExperienceManager.cs - Manages the experience points in the game.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

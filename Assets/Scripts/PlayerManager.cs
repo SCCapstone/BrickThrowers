@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// Manages the player animations and class selection.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +16,10 @@ public class PlayerManager : MonoBehaviour {
   public RuntimeAnimatorController porterAnimatorController;
 
   private Animator playerAnimator;
-
+  /// <summary>
+  ///  Applies the selected class to the player and updates the animator.
+  /// </summary>
+  /// <param name="className"></param>
   public void ApplyClassAnimation(string className) {
     switch (className) {
       case "Diver":

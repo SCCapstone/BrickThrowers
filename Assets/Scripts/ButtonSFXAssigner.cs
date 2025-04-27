@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// ButtonSoundAssigner.cs - Assigns sound effects to buttons in the scene.
 using UnityEngine;
 using UnityEngine.UI;
 

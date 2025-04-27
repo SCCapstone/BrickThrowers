@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// Player.cs - Defines the player class and its functionalities.
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -120,11 +122,11 @@ public class Player : Diver {
   private void Awake() {
     playerControls = new PlayerInputActions();
     sprint = GetComponent<PlayerInput>().actions["Sprint"];
-    
+
 
     sprint.started += OnSprintPress;
     sprint.canceled += OnSprintRelease;
-    
+
   }
 
   private void OnEnable() {

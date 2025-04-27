@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// JsonDataService.cs - Handles the saving and loading of JSON data.
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +8,13 @@ using Newtonsoft.Json;
 using UnityEngine;
 
 public class JsonDataService : IDataService {
+  /// <summary>
+  /// Save data to a file.
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="relativePath"></param>
+  /// <param name="data"></param>
+  /// <returns></returns>
   public bool SaveData<T>(string relativePath, T data) {
     string path = Application.persistentDataPath + "/" + relativePath;
 
@@ -25,7 +34,13 @@ public class JsonDataService : IDataService {
       return false;
     }
   }
-
+  /// <summary>
+  /// Load data from a file.
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="relativePath"></param>
+  /// <returns></returns>
+  /// <exception cref="FileNotFoundException"></exception>
   public T LoadData<T>(string relativePath) {
     string path = Application.persistentDataPath + "/" + relativePath;
 

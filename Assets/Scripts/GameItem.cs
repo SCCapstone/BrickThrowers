@@ -1,6 +1,7 @@
 /*
  * Copyright 2025 Scott Do
  * 2/15/2025
+ * Allows for the ItemClass to be used in the game.
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -9,13 +10,9 @@ using UnityEngine;
 public class GameItem : MonoBehaviour {
   // The type of item associated with every collectable that appears in the game.
   public ItemClass gameItemClass;
-
-  /*
-   * I need a private variable for if an artifact in particular is in a drop zone.
-   * By default, all items that are NOT artifacts are not in the drop zone.
-   */
   private bool inDropZone = false;
 
+  // Defunct code
   public bool InDropZone {
     get {
       return inDropZone;

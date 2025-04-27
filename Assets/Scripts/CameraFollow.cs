@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// CameraFollow.cs - Follows the target object with a specified offset and speed.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

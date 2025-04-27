@@ -1,4 +1,6 @@
+// Copyright 2025 Brick Throwers
 // kjthao
+// LobbyCountdown.cs - Handles the countdown before starting a game scene.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,14 +23,20 @@ public class LobbyCountdown : MonoBehaviour {
     audioSource = gameObject.AddComponent<AudioSource>();
 
   }
-
+  /// <summary>
+  /// Starts the countdown for the game scene.
+  /// </summary>
+  /// <param name="sceneIndex"></param>
   public void StartCountdown(int sceneIndex) {
     sceneToLoad = sceneIndex; // need to store the map first!
     mapPanel.SetActive(false); // then need to hide map panel as the countdown happens:)
     countdownPanel.SetActive(true);
     StartCoroutine(CountdownRoutine());
   }
-
+  /// <summary>
+  /// Starts the countdown routine.
+  /// </summary>
+  /// <returns></returns>
   private IEnumerator CountdownRoutine() {
     int countdown = 3;
 

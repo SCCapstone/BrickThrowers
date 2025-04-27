@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// // Octopus.cs - Defines the Octopus enemy class.
 using System.Collections;
 using UnityEngine;
 
@@ -32,6 +34,10 @@ public class Octopus : MonoBehaviour, IDamageable {
     }
   }
   #region Roam Logic
+  /// <summary>
+  /// Roam the octopus in a random direction for a set duration.
+  /// </summary>
+  /// <returns></returns>
   IEnumerator Roam() {
     isRoaming = true;
     Vector2 randomDirection = Random.insideUnitCircle.normalized;
@@ -40,7 +46,7 @@ public class Octopus : MonoBehaviour, IDamageable {
     isRoaming = false;
 
   }
-
+  
   public void TakeDamage(int damageAmount) {
     health -= damageAmount;
     if (health <= 0) {
@@ -61,7 +67,11 @@ public class Octopus : MonoBehaviour, IDamageable {
       }
     }
   }
-
+  /// <summary>
+  /// Latch onto the player and suppress their movement and light.
+  /// </summary>
+  /// <param name="player"></param>
+  /// <param name="playerTransform"></param>
   private void Latch(Player player, Transform playerTransform) {
     player.SuppressMovement(true);
     player.SuppressLight(true);
@@ -74,14 +84,12 @@ public class Octopus : MonoBehaviour, IDamageable {
     rb.gravityScale = 1f;
   }
 
-  /*
-   * Octopus grabs player.d
-   * Player has no visibilty.
-   * Player has no movement.
-   * Last as long as the timer is running.
-   * When the timer finishes, return the player to normal.
-   * Have the octopus roam away from the player.
-   */
+  /// <summary>
+  /// Coroutine to latch onto the player for a set duration.
+  /// </summary>
+  /// <param name="player"></param>
+  /// <param name="playerTransform"></param>
+  /// <returns></returns>
   IEnumerator LatchOntoPlayer(Player player, Transform playerTransform) {
     isLatched = true;
     currentLatchTime = latchDuration;
@@ -94,7 +102,10 @@ public class Octopus : MonoBehaviour, IDamageable {
     Vector2 direction = (transform.position - player.transform.position).normalized;
     rb.velocity = direction * moveSpeed;
   }
-
+  /// <summary>
+  /// Release the player from the octopus latch.
+  /// </summary>
+  /// <param name="player"></param>
   void Release(Player player) {
     isLatched = false;
     player.SuppressMovement(false);

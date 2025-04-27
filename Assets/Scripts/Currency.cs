@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// Currency.cs - Manages the currency amount in the game.
 using System;
 using System.Collections;
 using System.Collections.Generic;

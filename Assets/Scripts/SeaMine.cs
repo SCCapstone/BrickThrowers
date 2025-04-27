@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// SeaMine.cs - Handles the sea mine explosion and damage to the player.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

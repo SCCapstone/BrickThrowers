@@ -1,6 +1,7 @@
 /*
  * Copyright 2025 Scott Do
  * 2/15/2025
+ * Defines the item database object for the game.
  */
 using UnityEngine;
 

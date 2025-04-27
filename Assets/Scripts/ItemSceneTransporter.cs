@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// // ItemSceneTransporter.cs - This script is used to transport items between scenes. Used by the shop.
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,14 +34,19 @@ public class ItemSceneTransporter : MonoBehaviour {
     SceneManager.sceneLoaded -= OnSceneChanged;
   }
 
-  /*
-   * The onItemPurchased action. When the signal is invoked, it will send an ItemClass object as an argument.
-   * Add this to the list.
-   */
+  /// <summary>
+  /// Adds the purchased item to the list.
+  /// </summary>
+  /// <param name="item"></param>
   private void AddPurchasedItemToList(ItemClass item) {
     itemList.Add(item);
   }
-
+  /// <summary>
+  /// Invokes signal to update the item list when a scene is loaded. InventoryManager.cs will
+  /// listen for the signal.
+  /// </summary>
+  /// <param name="scene"></param>
+  /// <param name="mode"></param>
   private void OnSceneChanged(Scene scene, LoadSceneMode mode) {
     activeSceneName = SceneManager.GetActiveScene().name;
 

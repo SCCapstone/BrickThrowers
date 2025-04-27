@@ -1,6 +1,7 @@
 /*
- * Copyright 2025 Scott Do
- * 2/15/2025
+ * Copyright 2025 Brick Throwers
+ * Done by Reshlynt (Scott Do) 2/15/2025
+ * Class for consumable items.
  */
 using System.Collections;
 using System.Collections.Generic;

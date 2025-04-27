@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// Jellyfish.cs - Handles the jellyfish enemy behavior and interactions.
 using UnityEngine;
 
 public class Jellyfish : MonoBehaviour, IDamageable {
@@ -34,7 +36,9 @@ public class Jellyfish : MonoBehaviour, IDamageable {
     // Move the jellyfish
     rb.velocity = moveDirection * floatSpeed;
   }
-
+  /// <summary>
+  /// Changes the jellyfish's movement direction randomly.
+  /// </summary>
   void ChangeDirection() {
     // Choose a random direction
     float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
@@ -54,7 +58,10 @@ public class Jellyfish : MonoBehaviour, IDamageable {
       }
     }
   }
-
+  /// <summary>
+  /// Jellyfish takes damage from the player.
+  /// </summary>
+  /// <param name="damageAmount"></param>
   public void TakeDamage(int damageAmount) {
     health -= damageAmount;
     if (health <= 0) {

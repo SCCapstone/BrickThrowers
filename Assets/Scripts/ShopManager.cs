@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// ShopManager.cs - Manages the shop overlay and item purchases.
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -90,7 +92,12 @@ public class ShopManager : MonoBehaviour {
     StartCoroutine(Announce(item.itemName, true));
     onItemAcquired?.Invoke(item);
   }
-
+  /// <summary>
+  /// Announces the purchase result to the player.
+  /// </summary>
+  /// <param name="itemName"></param>
+  /// <param name="purchaseSuccess"></param>
+  /// <returns></returns>
   private IEnumerator Announce(string itemName, bool purchaseSuccess) {
     if (purchaseSuccess) {
       announceText.text = $"You purchased {itemName}!";

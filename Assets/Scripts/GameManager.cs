@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// GameManager.cs - Manages the game state and player interactions.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

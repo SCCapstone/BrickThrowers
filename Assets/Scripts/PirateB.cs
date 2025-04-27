@@ -1,3 +1,6 @@
+// Copyright 2025 Brick Throwers
+// // PirateB.cs - Defines the behavior of the PirateB enemy.
+// Not in use.
 using UnityEngine;
 
 public class PirateB : MonoBehaviour {

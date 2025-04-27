@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// PlayerUI.cs - Manages the player UI, including oxygen and stamina bars.
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;

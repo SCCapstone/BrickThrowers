@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// Porter.cs - Manages the porter's inventory slots.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +28,9 @@ public class Porter : MonoBehaviour {
     ResetPorterInventory();
     playerSpriteAnimator.runtimeAnimatorController = null;
   }
-
+  /// <summary>
+  /// Sets the porter's inventory slots and updates the slotHolder's grid layout group.
+  /// </summary>
   private void SetPorterInventory() {
     // Set the contraint count of the slotHolder's grid layout group to the porter slots
     slotHolder.GetComponent<UnityEngine.UI.GridLayoutGroup>().constraintCount = MAX_SLOTS;
@@ -42,6 +46,9 @@ public class Porter : MonoBehaviour {
 
 
   }
+  /// <summary>
+  /// Resets the porter's inventory slots and updates the slotHolder's grid layout group.
+  /// </summary>
   private void ResetPorterInventory() {
     // Reset all the changes from the SetPorterInventory function
     slotHolder.GetComponent<UnityEngine.UI.GridLayoutGroup>().constraintCount = DEFAULT_SLOTS;

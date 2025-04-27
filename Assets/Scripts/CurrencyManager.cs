@@ -34,6 +34,9 @@ public class CurrencyManager : MonoBehaviour {
   }
   #endregion
   #region JSON Serialization
+  /// <summary>
+  /// Serializes the currency data to JSON format and saves it to a file.
+  /// </summary>
   private void SerializeJson() {
     if (dataService.SaveData(CURRENCY_PATH, playerCurrency)) {
       Debug.Log("Data saved successfully");
@@ -41,7 +44,10 @@ public class CurrencyManager : MonoBehaviour {
       Debug.Log("Data failed to save");
     }
   }
-
+  /// <summary>
+  /// Loads the currency data from a JSON file.
+  /// </summary>
+  /// <returns>True if operation success, false otherwise.</returns>
   private bool LoadJsonCurrency() {
     try {
       playerCurrency = dataService.LoadData<Currency>(CURRENCY_PATH);

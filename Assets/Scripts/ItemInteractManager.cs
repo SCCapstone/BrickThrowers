@@ -1,6 +1,7 @@
 /*
  * Copyright 2025 Scott Do
  * 2/15/2025
+ * Controls the item interaction for the player.
  */
 using System.Collections;
 using System.Collections.Generic;

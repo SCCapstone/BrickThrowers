@@ -1,4 +1,5 @@
-﻿
+﻿// Copyright 2025 Brick Throwers
+// Diver.cs - Base class for all diver types in the game.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,17 +40,29 @@ public abstract class Diver : MonoBehaviour {
       }
     }
   }
+  /// <summary>
+  ///  Stun the diver for a specified duration.
+  /// </summary>
+  /// <param name="duration"></param>
   public virtual void Stun(float duration) {
     isStunned = true;
     stunTimer = duration;
     Debug.Log("Diver is stunned!");
   }
+  /// <summary>
+  ///  Blind the diver for a specified duration.
+  /// </summary>
+  /// <param name="duration"></param>
   public void Blind(float duration) {
     isBlinded = true;
     blindTimer = duration;
     Debug.Log("Diver is blinded by squid ink!");
     // Trigger vision-obscuring effect here, like fading screen or overlaying dark filter
   }
+  /// <summary>
+  ///  Deal damage to the diver's oxygen level.
+  /// </summary>
+  /// <param name="damage"></param>
   public void TakeOxygenDamage(float damage) {
     if (isStunned) return;  // Diver takes no action while stunned
     if (isBlinded) return;  // Optional: Divers could take reduced or no actions when blinded
@@ -69,6 +82,8 @@ public abstract class Diver : MonoBehaviour {
   // All pirates should always have this set to false.
   // Player is the only one that can toggle this.
   public abstract bool GodModeStatus();
-
+  /// <summary>
+  ///  Apply poison effect to the diver.
+  /// </summary>
   public abstract void ApplyPoison();
 }

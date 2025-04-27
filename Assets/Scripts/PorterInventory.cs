@@ -1,3 +1,5 @@
+// Copyright 2025 Brick Throwers
+// Does nothing currently.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

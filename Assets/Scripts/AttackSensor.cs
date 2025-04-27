@@ -1,14 +1,16 @@
+// Copyright 2025 Brick Throwers
+// // AttackSensor.cs - Detects enemies in range and applies damage when attacked
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackSensor : MonoBehaviour {
+  // References
   public List<GameObject> enemiesInRange = new List<GameObject>();
   private const int ATTACK_DMG = 15;
   [SerializeField] private Harpooner.Direction zoneDirection;
 
   #region Setup Functions
-  // 2) Use a dedicated method:
   private void OnEnable() {
     Harpooner.onAttack += HandleAttack;
   }
@@ -16,7 +18,10 @@ public class AttackSensor : MonoBehaviour {
   private void OnDisable() {
     Harpooner.onAttack -= HandleAttack;
   }
-
+  /// <summary>
+  /// Calls attack function if the attack direction matches the zone direction.
+  /// </summary>
+  /// <param name="dir"></param>
   private void HandleAttack(Harpooner.Direction dir) {
     if (dir == zoneDirection)
       Attack();
@@ -38,6 +43,9 @@ public class AttackSensor : MonoBehaviour {
     }
   }
   #endregion
+  /// <summary>
+  /// Attacks all enemies in range.
+  /// </summary>
   private void Attack() {
     // 1) Remove destroyed entries
     enemiesInRange.RemoveAll(e => e == null);

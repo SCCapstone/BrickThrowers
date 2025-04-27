@@ -81,7 +81,7 @@ public class LevelManager : MonoBehaviour {
   }
 
   public int CalculateCurr() {
-    return score / 10; // Change when game testing, needs balancing
+    return score; // Change when game testing, needs balancing
   }
 
   public void UpdatePlayer() {

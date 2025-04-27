@@ -844,7 +844,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8289488832147173829}
         m_TargetAssemblyTypeName: PauseMenu, GameAssembly
-        m_MethodName: Lobby
+        m_MethodName: MainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

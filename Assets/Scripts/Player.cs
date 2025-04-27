@@ -69,6 +69,7 @@ public class Player : Diver {
   private const float DEFAULT_STAMINA_DEPLETION_RATE = 2f;
 
   public GameObject SummaryScreen;
+  [SerializeField] private SummaryScreenUI summaryScreenUI;
   public GameObject Clock;
   public TimerScript timer;
   [SerializeField] private GameObject areYouSureScreen;
@@ -490,7 +491,9 @@ public class Player : Diver {
   private void SubmarineLeaveLevel(InputAction.CallbackContext context) {
     if (isInSubmarine) {
       areYouSureScreen.SetActive(true);
-      SummaryScreen.GetComponent<SummaryScreenUI>().SetSummary();
+      // SummaryScreen.GetComponent<SummaryScreenUI>().SetSummary();
+      summaryScreenUI.SetSummary();
+
     }
 
   }

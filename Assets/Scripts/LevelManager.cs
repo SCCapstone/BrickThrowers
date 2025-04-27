@@ -38,7 +38,6 @@ public class LevelManager : MonoBehaviour {
     maxScore = 0;
     collected = 0;
     CalculateLevelScore();
-    Instance = new LevelManager();
   }
 
   void Update() {
@@ -51,7 +50,18 @@ public class LevelManager : MonoBehaviour {
   }
 
   public void CalculateLevelScore() {
-    artifacts = GameObject.FindObjectsOfType<ArtifactClass>();
+    int artifactsLength = 0;
+    GameItem[] items = GameObject.FindObjectsOfType<GameItem>();
+    List<ArtifactClass> itemsToCovert = new List<ArtifactClass>();
+
+    foreach (GameItem item in items) {
+      if(item.gameItemClass.itemType == ItemClass.ItemType.artifact) {
+        artifactsLength++;
+        itemsToCovert.Add((ArtifactClass) item.gameItemClass);
+      }
+    }
+
+    artifacts = itemsToCovert.ToArray();
 
     foreach (ArtifactClass item in artifacts) {
       maxScore += item.value;

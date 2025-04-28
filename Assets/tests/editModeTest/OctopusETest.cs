@@ -1,10 +1,19 @@
-using NUnit.Framework;
-using UnityEngine;
+// File: Assets/Tests/Editor/OctopusETest.cs
+// To run this specific EditMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select “EditMode” category  
+//       – Right-click “OctopusETest” → Run Selected  
+//   • Via CLI (runs only OctopusETest):  
+//       Unity -batchmode -projectPath . -runTests -testPlatform EditMode \  
+//         -testFilter OctopusETest -logFile -testResults TestResults/OctopusETest.xml
+
 using System.Collections;
 using System.Reflection;
+using NUnit.Framework;
+using UnityEngine;
 
 [TestFixture]
-
 public class OctopusETest 
 {
     private GameObject octoObj;
@@ -14,9 +23,15 @@ public class OctopusETest
     [SetUp]
     public void SetUp()
     {
+        // Create Octopus GameObject and attach Rigidbody2D
         octoObj = new GameObject("Octopus");
-        rb = octoObj.AddComponent<Rigidbody2D>();
-        octo = octoObj.AddComponent<Octopus>();
+        rb      = octoObj.AddComponent<Rigidbody2D>();
+        octo    = octoObj.AddComponent<Octopus>();
+
+        // Inject the private rb field so Roam() can use it
+        typeof(Octopus)
+            .GetField("rb", BindingFlags.NonPublic | BindingFlags.Instance)
+            .SetValue(octo, rb);
     }
 
     [TearDown]
@@ -28,13 +43,14 @@ public class OctopusETest
     [Test]
     public void DefaultValues_AreCorrect()
     {
-        Assert.AreEqual(3f, octo.detectionRange, "detectionRange must default to 3f");
-        Assert.AreEqual(5f, octo.latchDuration, "latchDuration must default to 5f");
-        Assert.AreEqual(60, octo.health, "health must default to 60");
-        Assert.AreEqual(15f, octo.moveSpeed, "moveSpeed must default to 15f");
-        
+        Assert.AreEqual(3f, octo.detectionRange,  "detectionRange must default to 3f");
+        Assert.AreEqual(5f, octo.latchDuration,    "latchDuration must default to 5f");
+        Assert.AreEqual(60,  octo.health,          "health must default to 60");
+        Assert.AreEqual(15f, octo.moveSpeed,       "moveSpeed must default to 15f");
+
         // private roamDuration default is 2f
-        var roamField = typeof(Octopus).GetField("roamDuration", BindingFlags.NonPublic | BindingFlags.Instance);
+        var roamField = typeof(Octopus)
+            .GetField("roamDuration", BindingFlags.NonPublic | BindingFlags.Instance);
         float roamDur = (float)roamField.GetValue(octo);
         Assert.AreEqual(2f, roamDur, "roamDuration must default to 2f");
     }
@@ -50,18 +66,19 @@ public class OctopusETest
     [Test]
     public void RoamCoroutine_SetsIsRoamingTrueAndVelocity()
     {
-        // Call the private Roam() method directly
-        MethodInfo roamMethod = typeof(Octopus)
+        // Call the private Roam() coroutine
+        var roamMethod = typeof(Octopus)
             .GetMethod("Roam", BindingFlags.NonPublic | BindingFlags.Instance);
         var enumerator = (IEnumerator)roamMethod.Invoke(octo, null);
 
-        // Move to first yield (after setting isRoaming and velocity)
+        // First yield: after setting isRoaming and velocity
         Assert.IsTrue(enumerator.MoveNext(), "Roam coroutine should yield at least once");
 
         // Check isRoaming flag
-        var flagField = typeof(Octopus).GetField("isRoaming", BindingFlags.NonPublic | BindingFlags.Instance);
+        var flagField = typeof(Octopus)
+            .GetField("isRoaming", BindingFlags.NonPublic | BindingFlags.Instance);
         bool isRoaming = (bool)flagField.GetValue(octo);
-        Assert.IsTrue(isRoaming, "isRoaming should be set to true at start of Roam()");
+        Assert.IsTrue(isRoaming, "isRoaming should be true at start of Roam()");
 
         // Check velocity magnitude
         float speed = rb.velocity.magnitude;

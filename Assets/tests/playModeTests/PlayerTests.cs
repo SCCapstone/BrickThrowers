@@ -1,46 +1,55 @@
-using System;
+// File: Assets/Tests/PlayMode/PlayerTests.cs
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select the “PlayMode” category  
+//       – Right-click “PlayerTests” → Run Selected  
+//   • Via CLI (runs only PlayerTests):  
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
+//         -testFilter PlayerTests -logFile -testResults TestResults/PlayerTests.xml
+
 using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-using UnityEngine.UIElements;
 
 public class PlayerTests
 {
-    private GameObject antidoteItem = Resources.Load<GameObject>("antidoteTest");
-    private GameObject playerPrefab = Resources.Load<GameObject>("TempPlayerTest");
-
     private GameObject playerObject;
     private Player player;
 
-    private GameObject itemObject;
-
-    [SetUp]
-    public void Setup()
+    [UnitySetUp]
+    public IEnumerator Setup()
     {
-        CreatePlayer();
+        // Create a plain GameObject and attach your Player script
+        playerObject = new GameObject("PlayerTest");
+        player = playerObject.AddComponent<Player>();
+
+        // Ensure there's a Camera.main
         if (Camera.main == null)
         {
-            GameObject cam = new GameObject("Main Camera");
-            Camera cameraComponent = cam.AddComponent<Camera>();
+            var cam = new GameObject("Main Camera");
             cam.tag = "MainCamera";
-            cam.transform.position = new Vector3(0, 0, -50);
+            cam.transform.position = new Vector3(0f, 0f, -50f);
+            cam.AddComponent<Camera>();
         }
+
+        // Let the scene initialize (Awake/Start)
+        yield return null;
     }
 
-    private void CreatePlayer()
+    [UnityTearDown]
+    public IEnumerator Teardown()
     {
-        playerObject = GameObject.Instantiate(playerPrefab);
-        player = playerObject.GetComponent<Player>();
+        Object.Destroy(playerObject);
+        yield return null;
     }
 
-    // Create a placeholder Unity test that does nothing and sends a success message on execution.
     [UnityTest]
     public IEnumerator PlayerTest()
     {
+        // A trivial smoke‐test that your Player component exists and Awake/Start didn’t blow up
+        Assert.IsNotNull(player, "Player component should have been added in Setup");
         yield return null;
-        Assert.IsTrue(true, "Player test executed successfully.");
     }
 }

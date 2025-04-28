@@ -387,7 +387,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 7207560456990739015}
   optionsMenu: {fileID: 6915756221008773939}
   godModeIndicator: {fileID: 0}
-  bgMusic: {fileID: 0}
+  bgMusic: {fileID: 8300000, guid: d717c5f600299c041be08c508231b3b4, type: 3}
 --- !u!114 &1833802889958439391
 MonoBehaviour:
   m_ObjectHideFlags: 0

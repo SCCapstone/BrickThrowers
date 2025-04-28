@@ -18,10 +18,18 @@ public class GodModeIndicator : MonoBehaviour {
   [SerializeField] private string lobbySceneName;
   [SerializeField] private string activeSceneName;
 
+  // Singleton
+  public static GodModeIndicator Instance { get; private set; }
+
   // Actions
   public static event System.Action<bool> onGodModeActivated;
   #region Setup Functions
   void Awake() {
+    if(Instance != null && Instance != this) {
+      Destroy(gameObject);
+      return;
+    }
+    Instance = this;
     lobbySceneName = SceneManager.GetActiveScene().name;
     DontDestroyOnLoad(this.gameObject);
   }

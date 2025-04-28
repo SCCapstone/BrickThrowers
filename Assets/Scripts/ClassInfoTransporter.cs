@@ -13,8 +13,16 @@ public class ClassInfoTransporter : MonoBehaviour {
   // Actions
   public static event System.Action<RuntimeAnimatorController, string> transportClassInfo;
 
+  // Singleton
+  private static ClassInfoTransporter instance;
+
   #region Setup Functions
   private void Awake() {
+    if (instance != null && instance != this) {
+      Destroy(gameObject);
+      return;
+    }
+    instance = this;
     DontDestroyOnLoad(this.gameObject);
   }
   private void OnEnable() {

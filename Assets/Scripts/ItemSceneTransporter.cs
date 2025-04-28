@@ -8,17 +8,24 @@ using UnityEngine.SceneManagement;
 
 public class ItemSceneTransporter : MonoBehaviour {
   // List
-  private static List<ItemClass> itemList = new List<ItemClass>();
+  [SerializeField] private List<ItemClass> itemList = new List<ItemClass>();
+
+  // Singleton
+  public static ItemSceneTransporter Instance { get; private set; }
 
   // Scene name
-  private string lobbySceneName;
+  private string lobbySceneName = "Lobby Scene";
   private string activeSceneName;
 
   // Actions
   public static event Action<List<ItemClass>> startingItemsArrived;
 
   void Awake() {
-    lobbySceneName = SceneManager.GetActiveScene().name;
+    if (Instance != null && Instance != this) {
+      Destroy(gameObject);
+      return;
+    }
+    Instance = this;
     DontDestroyOnLoad(this.gameObject);
   }
 
@@ -39,6 +46,7 @@ public class ItemSceneTransporter : MonoBehaviour {
   /// </summary>
   /// <param name="item"></param>
   private void AddPurchasedItemToList(ItemClass item) {
+    Debug.Log($"add item: {item.itemName}");
     itemList.Add(item);
   }
   /// <summary>
@@ -49,17 +57,11 @@ public class ItemSceneTransporter : MonoBehaviour {
   /// <param name="mode"></param>
   private void OnSceneChanged(Scene scene, LoadSceneMode mode) {
     activeSceneName = SceneManager.GetActiveScene().name;
-
+    // If you are not in the lobby scene, call the signal.
+    // Then, clear the list to avoid duplicates.
     if (activeSceneName != lobbySceneName) {
-      Debug.Log($"Scene changed to {activeSceneName}.");
-      Debug.Log($"Items in the list: {itemList.Count}");
-      // Check if the list is empty. If not, send the items to the scene.
-      if (itemList.Count <= 0) {
-        Debug.Log("Nothing in here.");
-      } else {
-        startingItemsArrived?.Invoke(itemList);
-      }
+      startingItemsArrived?.Invoke(itemList);
+      itemList.Clear();
     }
-    itemList.Clear();
   }
 }

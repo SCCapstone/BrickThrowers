@@ -19,7 +19,15 @@ public class CurrencyTransporter : MonoBehaviour {
   // Action
   public static event Action<int> transportMoneyNow;
 
+  // Singleton
+  private static CurrencyTransporter instance;
+
   void Awake() {
+    if (instance != null && instance != this) {
+      Destroy(gameObject);
+      return;
+    }
+    instance = this;
     activeScene = SceneManager.GetActiveScene().name;
     DontDestroyOnLoad(this.gameObject);
   }

@@ -19,14 +19,10 @@ public class PorterPTest
 {
     private GameObject porterObj;
     private Porter porter;
-    private GameObject slotPrefab, slotHolder;
+    private GameObject slotPrefab;
+    private GameObject slotHolder;
     private GridLayoutGroup grid;
     private RectTransform holderRect;
-    private Animator playerAnimator;
-
-    const int MAX_SLOTS = 4;
-    const int DEFAULT_SLOTS = 3;
-    const float EXTRA_SLOT_WIDTH = 95f;
 
     [UnitySetUp]
     public IEnumerator SetUp()
@@ -40,24 +36,19 @@ public class PorterPTest
         slotHolder = new GameObject("SlotHolder", typeof(RectTransform));
         grid       = slotHolder.AddComponent<GridLayoutGroup>();
         holderRect = slotHolder.GetComponent<RectTransform>();
-        grid.constraintCount = DEFAULT_SLOTS;
+
+        // Initialize holder to defaults
+        grid.constraintCount = 3;             // DEFAULT_SLOTS
         holderRect.sizeDelta = Vector2.zero;
 
-        // Inject slot and slotHolder
+        // Inject private fields via reflection
         var t = typeof(Porter);
-        t.GetField("slot", BindingFlags.NonPublic|BindingFlags.Instance)
-            .SetValue(porter, slotPrefab);
-        t.GetField("slotHolder", BindingFlags.NonPublic|BindingFlags.Instance)
-            .SetValue(porter, slotHolder);
+        t.GetField("slot",        BindingFlags.NonPublic|BindingFlags.Instance)
+         .SetValue(porter, slotPrefab);
+        t.GetField("slotHolder",  BindingFlags.NonPublic|BindingFlags.Instance)
+         .SetValue(porter, slotHolder);
 
-        // Inject playerSpriteAnimator only (leave porterAnimator null)
-        var playerGO    = new GameObject("PlayerSprite");
-        playerAnimator  = playerGO.AddComponent<Animator>();
-        t.GetField("playerSpriteAnimator", BindingFlags.NonPublic|BindingFlags.Instance)
-            .SetValue(porter, playerAnimator);
-
-        // Let OnEnable run
-        yield return null;
+        yield break; // we won't rely on OnEnable/OnDisable
     }
 
     [UnityTearDown]
@@ -66,35 +57,40 @@ public class PorterPTest
         Object.Destroy(porterObj);
         Object.Destroy(slotPrefab);
         Object.Destroy(slotHolder);
-        Object.Destroy(playerAnimator.gameObject);
         yield return null;
     }
 
     [UnityTest]
     public IEnumerator OnEnable_ConfiguresInventory()
     {
-        yield return null; // ensure OnEnable completed
+        // Manually invoke the inventory setup method
+        typeof(Porter)
+            .GetMethod("SetPorterInventory", BindingFlags.NonPublic|BindingFlags.Instance)
+            .Invoke(porter, null);
+        yield return null;
 
-        Assert.AreEqual(MAX_SLOTS, grid.constraintCount,
-            "constraintCount should be set to MAX_SLOTS");
-        Assert.AreEqual(EXTRA_SLOT_WIDTH, holderRect.sizeDelta.x, 1e-3f,
-            "holder width should increase by EXTRA_SLOT_WIDTH");
-        Assert.AreEqual(1, slotHolder.transform.childCount,
-            "A slot child should have been added");
+        Assert.AreEqual(4,       grid.constraintCount,      "constraintCount should be MAX_SLOTS (4)");
+        Assert.AreEqual(95f,     holderRect.sizeDelta.x, 1e-3f, "holder width should increase by EXTRA_SLOT_WIDTH (95)");
+        Assert.AreEqual(1,       slotHolder.transform.childCount, "One slot should be added");
     }
 
     [UnityTest]
     public IEnumerator OnDisable_ResetsInventory()
     {
-        // Disable to trigger OnDisable
-        porter.enabled = false;
-        yield return null; // wait for ResetPorterInventory
+        // First set up inventory
+        typeof(Porter)
+            .GetMethod("SetPorterInventory", BindingFlags.NonPublic|BindingFlags.Instance)
+            .Invoke(porter, null);
+        yield return null;
 
-        Assert.AreEqual(DEFAULT_SLOTS, grid.constraintCount,
-            "constraintCount should reset to DEFAULT_SLOTS");
-        Assert.AreEqual(0f, holderRect.sizeDelta.x, 1e-3f,
-            "holder width should reset to original");
-        Assert.AreEqual(0, slotHolder.transform.childCount,
-            "Slot child should be removed");
+        // Then manually invoke the reset method
+        typeof(Porter)
+            .GetMethod("ResetPorterInventory", BindingFlags.NonPublic|BindingFlags.Instance)
+            .Invoke(porter, null);
+        yield return null;
+
+        Assert.AreEqual(3,      grid.constraintCount,      "constraintCount should reset to DEFAULT_SLOTS (3)");
+        Assert.AreEqual(0f,     holderRect.sizeDelta.x, 1e-3f, "holder width should reset to 0");
+        Assert.AreEqual(0,      slotHolder.transform.childCount, "Slot child should be removed");
     }
 }

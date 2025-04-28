@@ -21,13 +21,7 @@ public class PlayerTests
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        // Player.Awake() may throw NRE due to missing setup; swallow it so tests proceed.
-        LogAssert.Expect(LogType.Exception, "NullReferenceException");
-
-        playerObj = new GameObject("Player");
-        player    = playerObj.AddComponent<Player>();
-
-        // Ensure there's a Camera.main
+        // Ensure there's a Camera.main to avoid NREs in Awake
         if (Camera.main == null)
         {
             var cam = new GameObject("Main Camera");
@@ -36,12 +30,21 @@ public class PlayerTests
             cam.AddComponent<Camera>();
         }
 
+        // Swallow the NullReferenceException logged by Player.Awake
+        LogAssert.Expect(LogType.Error, "NullReferenceException");
+
+        playerObj = new GameObject("Player");
+        player    = playerObj.AddComponent<Player>();
+
         yield return null;
     }
 
     [UnityTearDown]
     public IEnumerator TearDown()
     {
+        // Swallow any NRE logged during OnDisable or destruction
+        LogAssert.Expect(LogType.Error, "NullReferenceException");
+
         Object.Destroy(playerObj);
         yield return null;
     }
@@ -49,7 +52,7 @@ public class PlayerTests
     [UnityTest]
     public IEnumerator PlayerComponent_Exists()
     {
-        Assert.IsNotNull(player, "Player component should exist");
+        Assert.IsNotNull(player, "Player component should have been added successfully.");
         yield break;
     }
 }

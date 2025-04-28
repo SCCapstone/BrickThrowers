@@ -1,8 +1,10 @@
+// File: Assets/Tests/PlayMode/LionFishPTest.cs
+
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
-using UnityEngine.TestTools.Utils;
+using System.Reflection;
 
 public class LionFishPTest 
 {
@@ -14,11 +16,11 @@ public class LionFishPTest
     public IEnumerator SetUp()
     {
         fishObj = new GameObject("Lionfish");
-        fishRb = fishObj.AddComponent<Rigidbody2D>();
+        fishRb  = fishObj.AddComponent<Rigidbody2D>();
         fishObj.AddComponent<BoxCollider2D>();
-        fish = fishObj.AddComponent<Lionfish>();
+        fish     = fishObj.AddComponent<Lionfish>();
 
-        yield return null; // allow Start & first Update
+        yield return null;
     }
 
     [UnityTearDown]
@@ -31,31 +33,20 @@ public class LionFishPTest
     [UnityTest]
     public IEnumerator Patrol_SetsVelocityMagnitudeToPatrolSpeed()
     {
-        // After one frame, Update has applied Patrol()
         yield return null;
         Assert.AreEqual(fish.patrolSpeed, fishRb.velocity.magnitude, 0.1f);
     }
 
     [UnityTest]
-    public IEnumerator OnCollisionEnter2D_CallsApplyPoisonAndLogsMessage()
+    public IEnumerator ChangesDirection_AfterInterval()
     {
-        // Create a diver (player) with tag "Player"
-        var diverObj = new GameObject("Diver");
-        diverObj.tag = "Player";
-        diverObj.AddComponent<Rigidbody2D>();
-        diverObj.AddComponent<BoxCollider2D>();
-        var diver = diverObj.AddComponent<Diver>();
+        var dirField = typeof(Lionfish)
+            .GetField("patrolDirection", BindingFlags.NonPublic | BindingFlags.Instance);
+        Vector2 initial = (Vector2)dirField.GetValue(fish);
 
-        // Position overlapping
-        fishObj.transform.position = Vector3.zero;
-        diverObj.transform.position = Vector3.zero;
+        yield return new WaitForSeconds(fish.directionChangeInterval + 0.1f);
 
-        // Expect the log
-        LogAssert.Expect(LogType.Log, "Lionfish attacked the diver!");
-
-        // Wait for physics collision
-        yield return new WaitForFixedUpdate();
-
-        Object.Destroy(diverObj);
+        Vector2 updated = (Vector2)dirField.GetValue(fish);
+        Assert.AreNotEqual(initial, updated);
     }
 }

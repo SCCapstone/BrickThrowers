@@ -2,7 +2,7 @@
 // To run this specific PlayMode test only:
 //   • In the Unity Editor Test Runner:
 //       – Window → General → Test Runner  
-//       – Select the “PlayMode” category  
+//       – Select “PlayMode” category  
 //       – Right-click “HarpoonerPTest” → Run Selected  
 //   • Via CLI (runs only HarpoonerPTest):  
 //       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \  
@@ -19,28 +19,41 @@ public class HarpoonerPTest
     private GameObject go;
     private Harpooner harpooner;
     private GameObject attackZone;
+    private Animator playerAnimator;
+    private RuntimeAnimatorController testController;
 
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        // Create the GameObject and keep it inactive for injection
+        // Create GameObject and keep inactive for injection
         go = new GameObject("Harpooner");
-        go.SetActive(false);
-        go.AddComponent<Animator>(); // placeholder for private `animator`
+        go.AddComponent<Animator>(); // placeholder for private animator
         harpooner = go.AddComponent<Harpooner>();
+        go.SetActive(false);
 
-        // Inject the attackZone
+        // Inject attackZone
         attackZone = new GameObject("AttackZone");
-        attackZone.SetActive(false);
         typeof(Harpooner)
             .GetField("attackZone", BindingFlags.NonPublic | BindingFlags.Instance)
             .SetValue(harpooner, attackZone);
 
-        // Avoid the AnimatorOverrideController error failing the test
-        LogAssert.Expect(LogType.Error, "Could not set Runtime Animator Controller");
+        // Inject playerSpriteAnimator & harpoonerAnimator
+        var playerGO = new GameObject("PlayerSprite");
+        playerAnimator = playerGO.AddComponent<Animator>();
+        testController = new AnimatorOverrideController();
+        typeof(Harpooner)
+            .GetField("harpoonerAnimator", BindingFlags.NonPublic | BindingFlags.Instance)
+            .SetValue(harpooner, testController);
+        typeof(Harpooner)
+            .GetField("playerSpriteAnimator", BindingFlags.NonPublic | BindingFlags.Instance)
+            .SetValue(harpooner, playerAnimator);
 
-        // Activate so Awake() and OnEnable() run
+        // Activate to trigger Awake and OnEnable, avoiding NRE
         go.SetActive(true);
+        typeof(Harpooner)
+            .GetMethod("Awake", BindingFlags.NonPublic | BindingFlags.Instance)
+            .Invoke(harpooner, null);
+
         yield return null;
     }
 
@@ -49,13 +62,14 @@ public class HarpoonerPTest
     {
         Object.Destroy(go);
         Object.Destroy(attackZone);
+        Object.Destroy(playerAnimator.gameObject);
         yield return null;
     }
 
     [UnityTest]
     public IEnumerator OnEnable_ActivatesZone()
     {
-        // Only check the zone activation
+        // OnEnable ran in SetUp
         Assert.IsTrue(attackZone.activeSelf, "attackZone should be active after OnEnable");
         yield break;
     }
@@ -63,10 +77,9 @@ public class HarpoonerPTest
     [UnityTest]
     public IEnumerator OnDisable_DeactivatesZone()
     {
-        // Disable component to trigger OnDisable
+        // Disable to trigger OnDisable
         harpooner.enabled = false;
         yield return null;
-
         Assert.IsFalse(attackZone.activeSelf, "attackZone should be inactive after OnDisable");
         yield break;
     }

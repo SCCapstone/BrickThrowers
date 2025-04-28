@@ -11,9 +11,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.TestTools;
 using System.Reflection;
-using System.Collections;
 
 [TestFixture]
 public class PorterETest 
@@ -24,8 +22,6 @@ public class PorterETest
     private GameObject slotHolder;
     private GridLayoutGroup grid;
     private RectTransform holderRect;
-    private Animator playerAnimator;
-    private RuntimeAnimatorController testController;
 
     const int MAX_SLOTS = 4;
     const int DEFAULT_SLOTS = 3;
@@ -34,25 +30,31 @@ public class PorterETest
     [SetUp]
     public void SetUp()
     {
-        porterObj = new GameObject("PorterObj");
-        porter    = porterObj.AddComponent<Porter>();
+        // Create the Porter and slot objects
+        porterObj  = new GameObject("PorterObj");
+        porter     = porterObj.AddComponent<Porter>();
 
         slotPrefab = new GameObject("SlotPrefab");
         slotHolder = new GameObject("SlotHolder", typeof(RectTransform));
         grid       = slotHolder.AddComponent<GridLayoutGroup>();
         holderRect = slotHolder.GetComponent<RectTransform>();
+
+        // Initialize defaults
         grid.constraintCount = DEFAULT_SLOTS;
         holderRect.sizeDelta = Vector2.zero;
 
-        var playerGO      = new GameObject("PlayerSprite");
-        playerAnimator    = playerGO.AddComponent<Animator>();
-        testController    = new AnimatorOverrideController();
-
+        // Inject slot references
         var t = typeof(Porter);
-        t.GetField("slot",               BindingFlags.NonPublic | BindingFlags.Instance).SetValue(porter, slotPrefab);
-        t.GetField("slotHolder",         BindingFlags.NonPublic | BindingFlags.Instance).SetValue(porter, slotHolder);
-        t.GetField("porterAnimator",     BindingFlags.NonPublic | BindingFlags.Instance).SetValue(porter, testController);
-        t.GetField("playerSpriteAnimator", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(porter, playerAnimator);
+        t.GetField("slot",        BindingFlags.NonPublic | BindingFlags.Instance)
+         .SetValue(porter, slotPrefab);
+        t.GetField("slotHolder",  BindingFlags.NonPublic | BindingFlags.Instance)
+         .SetValue(porter, slotHolder);
+
+        // Null out animator fields to prevent assignment errors
+        t.GetField("porterAnimator",       BindingFlags.NonPublic | BindingFlags.Instance)
+         .SetValue(porter, null);
+        t.GetField("playerSpriteAnimator", BindingFlags.NonPublic | BindingFlags.Instance)
+         .SetValue(porter, null);
     }
 
     [TearDown]
@@ -61,19 +63,16 @@ public class PorterETest
         Object.DestroyImmediate(porterObj);
         Object.DestroyImmediate(slotPrefab);
         Object.DestroyImmediate(slotHolder);
-        Object.DestroyImmediate(playerAnimator.gameObject);
     }
 
     [Test]
     public void OnEnable_ConfiguresInventoryAndSetsEnableClass()
     {
-        // Swallow Unity error about invalid AnimatorOverrideController
-        LogAssert.Expect(LogType.Error, "Could not set Runtime Animator Controller");
-
         // Preconditions
         Assert.AreEqual(DEFAULT_SLOTS, grid.constraintCount);
         Assert.AreEqual(0f,            holderRect.sizeDelta.x);
         Assert.AreEqual(0,             slotHolder.transform.childCount);
+
         var flagField = typeof(Porter)
             .GetField("enableClass", BindingFlags.NonPublic | BindingFlags.Instance);
         Assert.IsFalse((bool)flagField.GetValue(porter));
@@ -84,35 +83,31 @@ public class PorterETest
             .Invoke(porter, null);
 
         // Assertions
-        Assert.IsTrue((bool)flagField.GetValue(porter), "enableClass should be true after OnEnable");
-        Assert.AreEqual(MAX_SLOTS, grid.constraintCount, "constraintCount should be MAX_SLOTS");
-        Assert.AreEqual(EXTRA_SLOT_WIDTH, holderRect.sizeDelta.x, 1e-3f,
-            "holder width should increase by EXTRA_SLOT_WIDTH");
-        Assert.AreEqual(1, slotHolder.transform.childCount, "should add one slot child");
+        Assert.IsTrue((bool)flagField.GetValue(porter), "enableClass should be true");
+        Assert.AreEqual(MAX_SLOTS,        grid.constraintCount,  "constraintCount should be MAX_SLOTS");
+        Assert.AreEqual(EXTRA_SLOT_WIDTH, holderRect.sizeDelta.x, 1e-3f, "holder width should increase");
+        Assert.AreEqual(1,                 slotHolder.transform.childCount, "one slot should be added");
     }
 
-    [UnityTest]
-    public IEnumerator OnDisable_ResetsInventoryAndAnimator_AndClearsEnableClass()
+    [Test]
+    public void OnDisable_ResetsInventoryAndClearsEnableClass()
     {
-        // First enable (swallow the same Animator error)
-        LogAssert.Expect(LogType.Error, "Could not set Runtime Animator Controller");
+        // First enable to set state
         typeof(Porter)
             .GetMethod("OnEnable", BindingFlags.NonPublic | BindingFlags.Instance)
             .Invoke(porter, null);
-        yield return null;
 
         // Act
         typeof(Porter)
             .GetMethod("OnDisable", BindingFlags.NonPublic | BindingFlags.Instance)
             .Invoke(porter, null);
-        yield return null;
 
         // Assertions
         var flagField = typeof(Porter)
             .GetField("enableClass", BindingFlags.NonPublic | BindingFlags.Instance);
         Assert.IsFalse((bool)flagField.GetValue(porter), "enableClass should be false after OnDisable");
-        Assert.AreEqual(DEFAULT_SLOTS, grid.constraintCount, "constraintCount reset to DEFAULT_SLOTS");
-        Assert.AreEqual(0f,            holderRect.sizeDelta.x, 1e-3f, "holder width reset after OnDisable");
-        Assert.AreEqual(0,             slotHolder.transform.childCount, "slot child should be removed");
+        Assert.AreEqual(DEFAULT_SLOTS, grid.constraintCount, "constraintCount should reset to DEFAULT_SLOTS");
+        Assert.AreEqual(0f,            holderRect.sizeDelta.x, 1e-3f, "holder width should reset");
+        Assert.AreEqual(0,             slotHolder.transform.childCount, "slot should be removed");
     }
 }

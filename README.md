@@ -30,7 +30,7 @@ Check out the full playlist for instructions:
 
 ## Final Demo video
 
-{% include youtube.html id="NpEaa2P7qZI" %}
+{% include youtube.html id="R46OBZBf_Bw" %}
 
 ## Cloning the repository
 Importing the project into your computer is done by cloning the repository from GitHub, or alternatively downloading the project as a ZIP file through the green button labeled “Code.” The project is built using Unity, so you will have to have Unity and its related tools installed prior to running the project. An IDE is also recommended for editing scripts, such as Visual Studio Community.

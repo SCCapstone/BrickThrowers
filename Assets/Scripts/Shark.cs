@@ -1,121 +1,132 @@
+// Copyright 2025 Brick Throwers
+// Shark.cs - Controls the shark's behavior, including patrolling and charging at the player.
+using System.Collections;
 using UnityEngine;
 
-public class Shark : MonoBehaviour
-{
-    public float patrolSpeed = 3f;               // Speed of shark patrol
-    public float chargeSpeed = 7f;              // Speed of shark when charging
-    public float chargeCooldown = 3f;           // Cooldown time between charges
-    public float detectionRange = 10f;          // Detection range for spotting the player
-    public float chargeDuration = 2f;           // Duration of the charge
-    public int oxygenDamage = 20;               // Amount of oxygen damage to the player
+public class Shark : MonoBehaviour, IDamageable {
+  public float patrolSpeed = 3f; // Speed of shark patrol
+  public float chargeSpeed = 7f; // Speed of shark when charging
+  public float chargeCooldown = 3f; // Cooldown time between charges
+  public float detectionRange = 10f; // Detection range for spotting the player
+  public float chargeDuration = 10f; // Duration of the charge
+  public int oxygenDamage = 20; // Amount of oxygen damage to the player
 
-    private Transform targetPlayer;
-    private Rigidbody2D rb;
-    private bool isCharging = false;
-    private float chargeTimer = 0f;
-    private float cooldownTimer = 0f;
-    private Vector2 patrolDirection;
+  private Transform targetPlayer;
+  private Rigidbody2D rb;
 
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-        {
-            Debug.LogError("No Rigidbody2D attached to the Shark GameObject.");
-            return;
-        }
+  private float chargeTimer = 0f;
+  private float cooldownTimer = 0f;
+  public float roamDuration = 2f;
+  private int health = 120;
+  private Vector2 patrolDirection;
+  public bool isCharging = false;
+  public bool isPatrolling = false;
 
-        patrolDirection = GetRandomDirection(); // Initialize patrol direction
-
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if (playerObject != null)
-        {
-            targetPlayer = playerObject.transform;
-        }
-        else
-        {
-            Debug.LogError("No GameObject with tag 'Player' found in the scene.");
-        }
+  void Start() {
+    rb = GetComponent<Rigidbody2D>();
+    if (rb == null) {
+      Debug.LogError("No Rigidbody2D attached to the Shark GameObject.");
+      return;
     }
 
-    void Update()
-    {
-        if (rb == null) return;
+    patrolDirection = GetRandomDirection(); // Initialize patrol direction
+  }
 
-        cooldownTimer -= Time.deltaTime;
-
-        if (!isCharging && targetPlayer != null && cooldownTimer <= 0f && Vector2.Distance(transform.position, targetPlayer.position) <= detectionRange)
-        {
-            StartCharging();
-        }
-
-        if (isCharging)
-        {
-            chargeTimer -= Time.deltaTime;
-            ChargeTowardsPlayer();
-
-            if (chargeTimer <= 0f)
-            {
-                StopCharging();
-            }
-        }
-        else
-        {
-            Patrol();
-        }
+  #region Old Logic
+  void Update() {
+    if (!isCharging) {
+      if (!isPatrolling) {
+        StartCoroutine(Patrol());
+      }
     }
+  }
 
-    void Patrol()
-    {
-        // Move in a set direction
-        rb.velocity = patrolDirection * patrolSpeed;
+  IEnumerator Patrol() {
+    isPatrolling = true;
+    // Move in a set direction
 
-        // Randomly change direction over time
-        if (Random.Range(0f, 1f) < 0.01f)
-        {
-            patrolDirection = GetRandomDirection();
-        }
+    //Debug.Log($"{rb.velocity}");
+
+    //// Randomly change direction over time
+    //if (Random.Range(0f, 1f) < 0.01f)
+    //{
+    //    patrolDirection = GetRandomDirection();
+    //}
+
+    //rb.velocity = patrolDirection * patrolSpeed;
+    //yield return new WaitForSeconds(roamDuration); // Adjust patrol frequency
+
+    Vector2 randomDirection = Random.insideUnitCircle.normalized;
+    rb.velocity = randomDirection * patrolSpeed;
+    yield return new WaitForSeconds(roamDuration);
+
+    isPatrolling = false;
+  }
+
+  Vector2 GetRandomDirection() {
+    float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+    return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
+  }
+  #endregion
+  #region Charge Logic
+  void Charge() {
+    // Setup parameters for charge
+    isCharging = true;
+    chargeTimer = chargeDuration;
+    cooldownTimer = chargeCooldown;
+
+    // Charge
+    StartCoroutine(ChargePlayer());
+  }
+
+  IEnumerator ChargePlayer() {
+    Vector2 chargeDirection = (
+        (Vector2)targetPlayer.position - (Vector2)transform.position
+    ).normalized;
+    rb.velocity = chargeDirection * chargeSpeed;
+    yield return new WaitForSeconds(chargeDuration);
+    // Stop the shark after the charge
+    StopCharging();
+
+    // Enter cooldown
+    StartCoroutine(ChargeCooldown());
+  }
+
+  void StopCharging() {
+    isCharging = false;
+    rb.velocity = Vector2.zero; // Stop the shark after charge
+  }
+
+  IEnumerator ChargeCooldown() {
+    yield return new WaitForSeconds(cooldownTimer);
+    cooldownTimer = 0f;
+  }
+  #endregion
+  #region Collision
+  void OnCollisionEnter2D(Collision2D collision) {
+    if (collision.collider.CompareTag("Player")) {
+      Player player = collision.collider.GetComponent<Player>();
+      if (player != null) {
+        player.TakeOxygenDamage(oxygenDamage);
+      }
     }
-
-    void StartCharging()
-    {
-        isCharging = true;
-        chargeTimer = chargeDuration;
-        cooldownTimer = chargeCooldown;
+  }
+  #endregion
+  #region Triggers
+  private void OnTriggerEnter2D(Collider2D collision) {
+    if (collision.gameObject.CompareTag("Player")) {
+      targetPlayer = collision.transform;
+      if (!isCharging && cooldownTimer <= 0f) {
+        Charge();
+      }
     }
-
-    void ChargeTowardsPlayer()
-    {
-        if (targetPlayer == null) return;
-
-        Vector2 chargeDirection = ((Vector2)targetPlayer.position - (Vector2)transform.position).normalized;
-        rb.velocity = chargeDirection * chargeSpeed;
-
-        // Optional: Check for direct collisions during charge using raycast or triggers
+  }
+  #endregion
+  public void TakeDamage(int damageAmount) {
+    health -= damageAmount;
+    if (health <= 0) {
+      Destroy(gameObject);
+      Debug.Log("Shark defeated!");
     }
-
-    void StopCharging()
-    {
-        isCharging = false;
-        rb.velocity = Vector2.zero; // Stop the shark after charge
-    }
-
-    Vector2 GetRandomDirection()
-    {
-        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
-        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Player"))
-        {
-            Player player = collision.collider.GetComponent<Player>();
-            if (player != null)
-            {
-                player.TakeOxygenDamage(oxygenDamage);
-                Debug.Log("Shark dealt damage to the player!");
-            }
-        }
-    }
+  }
 }

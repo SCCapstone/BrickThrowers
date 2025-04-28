@@ -1,46 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+// File: Assets/Tests/PlayMode/PlayerTests.cs
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner
+//       – Select “PlayMode” category
+//       – Right-click “PlayerTests” → Run Selected
+//   • Via CLI (runs only PlayerTests):
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \
+//         -testFilter PlayerTests -logFile -testResults TestResults/PlayerTests.xml
+
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.TestTools;
-using UnityEngine.UIElements;
+using System.Reflection;
 
 public class PlayerTests
 {
-    private GameObject antidoteItem = Resources.Load<GameObject>("antidoteTest");
-    private GameObject playerPrefab = Resources.Load<GameObject>("TempPlayerTest");
-
-    private GameObject playerObject;
-    private Player player;
-
-    private GameObject itemObject;
-
-    [SetUp]
-    public void Setup()
+    [Test]
+    public void Player_ClassStructure_IsValid()
     {
-        CreatePlayer();
-        if (Camera.main == null)
-        {
-            GameObject cam = new GameObject("Main Camera");
-            Camera cameraComponent = cam.AddComponent<Camera>();
-            cam.tag = "MainCamera";
-            cam.transform.position = new Vector3(0, 0, -50);
-        }
-    }
+        // Verify Player inherits from Diver
+        Assert.IsTrue(typeof(Player).IsSubclassOf(typeof(Diver)), 
+            "Player should inherit from Diver");
 
-    private void CreatePlayer()
-    {
-        playerObject = GameObject.Instantiate(playerPrefab);
-        player = playerObject.GetComponent<Player>();
-    }
-
-    // Create a placeholder Unity test that does nothing and sends a success message on execution.
-    [UnityTest]
-    public IEnumerator PlayerTest()
-    {
-        yield return null;
-        Assert.IsTrue(true, "Player test executed successfully.");
+        // Verify Movement(Vector2) method exists
+        var movementMethod = typeof(Player)
+            .GetMethod("Movement", BindingFlags.NonPublic | BindingFlags.Instance);
+        Assert.NotNull(movementMethod, 
+            "Player should implement a private Movement(Vector2) method");
     }
 }

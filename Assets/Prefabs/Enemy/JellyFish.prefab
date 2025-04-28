@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2045665573, guid: 3885470ffec74314f9dba713bf5c3d31, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -135,7 +135,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &3035443230451461536
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -186,3 +186,4 @@ MonoBehaviour:
   floatSpeed: 1.5
   directionChangeInterval: 2
   stunDuration: 2
+  health: 20

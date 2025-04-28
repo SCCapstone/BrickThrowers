@@ -1,5 +1,88 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3576271084495860606
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450786864254358127}
+  - component: {fileID: 8373798314524162406}
+  m_Layer: 9
+  m_Name: LightEmitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1450786864254358127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3576271084495860606}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.265, y: 0.028, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1657484055434002952}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!331 &8373798314524162406
+SpriteMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3576271084495860606}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 8177471321811730583, guid: 87aaca0a643d54397ba969dab4fc8875, type: 3}
+  m_MaskAlphaCutoff: 0.2
+  m_FrontSortingLayerID: 0
+  m_BackSortingLayerID: 0
+  m_FrontSortingLayer: 0
+  m_BackSortingLayer: 0
+  m_FrontSortingOrder: 0
+  m_BackSortingOrder: 0
+  m_IsCustomRangeActive: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &6805865486030843734
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +96,7 @@ GameObject:
   - component: {fileID: 4065085211902461105}
   - component: {fileID: 6990112835692879343}
   - component: {fileID: 6338305029418221268}
-  - component: {fileID: 1473061180669978501}
+  - component: {fileID: 5403488538542650921}
   m_Layer: 9
   m_Name: Anglerfish
   m_TagString: Enemy
@@ -33,7 +116,8 @@ Transform:
   m_LocalPosition: {x: 424.1, y: 236.2, z: 0}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 1450786864254358127}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4460578158319415238
@@ -121,13 +205,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f44a76b7c42604e97485da8419f829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swimSpeed: 2
+  swimSpeed: 20
   directionChangeInterval: 5
   anglerLight: {fileID: 0}
   lightIntensity: 3
   flickerFrequency: 0.1
   detectionRange: 5
-  oxygenDamage: 0.1
+  oxygenDamage: 0.5
+  health: 30
 --- !u!50 &6338305029418221268
 Rigidbody2D:
   serializedVersion: 4
@@ -154,9 +239,9 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &1473061180669978501
-CircleCollider2D:
+  m_Constraints: 4
+--- !u!60 &5403488538542650921
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -188,5 +273,44 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.29
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.58, y: 0.43}
+    newSize: {x: 0.58, y: 0.43}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.29, y: 0.085}
+      - {x: 0.26999998, y: 0.175}
+      - {x: 0.04, y: 0.195}
+      - {x: -0.03, y: 0.21499999}
+      - {x: -0.21, y: 0.21499999}
+      - {x: -0.28, y: 0.16499999}
+      - {x: -0.29, y: 0.145}
+      - {x: -0.29, y: -0.114999995}
+      - {x: -0.26, y: -0.205}
+      - {x: -0.19, y: -0.21499999}
+      - {x: 0.11, y: -0.21499999}
+      - {x: 0.14999999, y: -0.205}
+      - {x: 0.28, y: -0.13499999}
+      - {x: 0.29, y: -0.114999995}
+    - - {x: -0.21, y: 0.015}
+      - {x: -0.21, y: 0.044999998}
+      - {x: -0.22999999, y: 0.065}
+      - {x: -0.22, y: 0.085}
+      - {x: -0.21, y: 0.125}
+      - {x: -0.16, y: 0.16499999}
+      - {x: -0.099999994, y: 0.16499999}
+      - {x: -0.07, y: 0.125}
+      - {x: -0.089999996, y: 0.125}
+      - {x: -0.17, y: 0.114999995}
+      - {x: -0.21, y: 0.074999996}
+      - {x: -0.21, y: 0.055}
+      - {x: -0.22, y: 0.044999998}
+      - {x: -0.22, y: -0.005}
+      - {x: -0.22999999, y: -0.005}
+  m_UseDelaunayMesh: 0

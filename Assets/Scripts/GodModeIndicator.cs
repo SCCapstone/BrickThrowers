@@ -16,7 +16,7 @@ public class GodModeIndicator : MonoBehaviour
     private string activeSceneName;
     
     // Actions
-    public static event System.Action onGodModeActivated;
+    public static event System.Action<bool> onGodModeActivated;
 
     void Awake()
     {
@@ -56,7 +56,7 @@ public class GodModeIndicator : MonoBehaviour
         if (activeSceneName != lobbySceneName)
         {
             Debug.Log($"Scene changed to {activeSceneName}. God mode status: {isGodModeActive}");
-            onGodModeActivated?.Invoke();
+            onGodModeActivated?.Invoke(isGodModeActive);
         }
         else
         {

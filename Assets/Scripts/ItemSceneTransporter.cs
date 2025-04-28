@@ -59,8 +59,7 @@ public class ItemSceneTransporter : MonoBehaviour {
       } else {
         startingItemsArrived?.Invoke(itemList);
       }
-    } else {
-      itemList.Clear();
     }
+    itemList.Clear();
   }
 }

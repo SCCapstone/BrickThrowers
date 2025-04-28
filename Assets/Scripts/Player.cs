@@ -395,9 +395,10 @@ public class Player : Diver
     /// The player should not be able to use this in the final game - well, except if they really wanted to via Options.
     /// This prevents oxygen depletion, loss of stamina when sprinting,
     /// </summary>
-    private void GodMode(bool godModeStaus)
+    private void GodMode()
     {
-        godMode = godModeStaus;
+        // First, invert the bool. This covers the button being used to enable/disable god mode.
+        godMode = !godMode;
 
         Debug.Log($"Acquired signal from GodModeIndicator. God mode is now " + (godMode ? "enabled." : "disabled."));
 

@@ -31,6 +31,7 @@ public class LobbyCountdown : MonoBehaviour {
     sceneToLoad = sceneIndex; // need to store the map first!
     mapPanel.SetActive(false); // then need to hide map panel as the countdown happens:)
     countdownPanel.SetActive(true);
+    Time.timeScale = 1f;
     StartCoroutine(CountdownRoutine());
   }
   /// <summary>

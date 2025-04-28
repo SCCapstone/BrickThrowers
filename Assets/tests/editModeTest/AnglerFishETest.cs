@@ -1,45 +1,59 @@
-using System.Collections;
+// File: Assets/Tests/Editor/AnglerFishETest.cs
+// To run this specific EditMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select the “EditMode” category  
+//       – Right-click “AnglerFishETest” → Run Selected  
+//   • Via CLI (runs only AnglerFishETest):  
+//       Unity -batchmode -projectPath . -runTests -testPlatform EditMode \  
+//         -testFilter AnglerFishETest -logFile -testResults TestResults/AnglerFishETest.xml
+
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
+using System.Reflection;
 
 [TestFixture]
-
-public class AnglerFishETest 
+public class AnglerFishETest
 {
-       // Verifies that the Anglerfish’s public defaults are as expected.
     [Test]
     public void DefaultValuesAreCorrect()
     {
-        var go = new GameObject();
+        var go = new GameObject("Anglerfish");
         var fish = go.AddComponent<Anglerfish>();
-        Assert.AreEqual(2f, fish.swimSpeed, "swimSpeed should default to 2f");
-        Assert.AreEqual(5f, fish.directionChangeInterval, "directionChangeInterval should default to 5f");
-        Assert.AreEqual(3f, fish.lightIntensity, "lightIntensity should default to 3f");
-        Assert.AreEqual(5f, fish.detectionRange, "detectionRange should default to 5f");
-        Assert.AreEqual(0.1f, fish.oxygenDamage, "oxygenDamage should default to 0.1f");
+
+        Assert.AreEqual(2f,    fish.swimSpeed,                "swimSpeed should default to 2f");
+        Assert.AreEqual(5f,    fish.directionChangeInterval,  "directionChangeInterval should default to 5f");
+        Assert.AreEqual(3f,    fish.lightIntensity,          "lightIntensity should default to 3f");
+        Assert.AreEqual(5f,    fish.detectionRange,          "detectionRange should default to 5f");
+        Assert.AreEqual(0.2f,  fish.oxygenDamage,            "oxygenDamage should default to 0.2f");
+        Assert.AreEqual(30,    fish.health,                  "health should default to 30");
+
         Object.DestroyImmediate(go);
     }
 
-    // Checks that after one frame, the fish’s Rigidbody2D has been set moving at swimSpeed.
-    [UnityTest]
-    public IEnumerator SwimMovementOccurs()
+    [Test]
+    public void SwimMovementOccurs_AfterStartAndUpdate()
     {
-        var go = new GameObject();
-        var fish = go.AddComponent<Anglerfish>();
+        // Arrange
+        var go = new GameObject("Anglerfish");
         var rb = go.AddComponent<Rigidbody2D>();
+        var fish = go.AddComponent<Anglerfish>();
+        // No Light assigned => Start won't schedule flicker
+        // No Player with tag => targetPlayer remains null
 
-        // Place a player outside detectionRange so InteractWithPlayer won't fire
-        var player = new GameObject { tag = "Player" };
-        player.transform.position = Vector3.one * (fish.detectionRange + 1f);
+        // Act: call Start() then Update()
+        typeof(Anglerfish)
+            .GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic)
+            .Invoke(fish, null);
+        typeof(Anglerfish)
+            .GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic)
+            .Invoke(fish, null);
 
-        // Let Start() and Update() run
-        yield return null;
-
+        // Assert
         float speed = rb.velocity.magnitude;
-        Assert.AreEqual(fish.swimSpeed, speed, 0.1f, "After one frame, velocity magnitude should equal swimSpeed");
+        Assert.AreEqual(fish.swimSpeed, speed, 0.1f,
+            "After Start() + Update(), rb.velocity magnitude should equal swimSpeed");
 
-        Object.Destroy(go);
-        Object.Destroy(player);
+        Object.DestroyImmediate(go);
     }
 }

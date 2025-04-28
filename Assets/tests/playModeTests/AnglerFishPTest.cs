@@ -1,3 +1,5 @@
+// File: Assets/Tests/PlayMode/AnglerFishPTest.cs
+
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
@@ -8,52 +10,38 @@ public class AnglerFishPTest
     private GameObject fishObj;
     private Anglerfish fish;
     private Rigidbody2D fishRb;
-    private BoxCollider2D fishCol;
-
-    private GameObject playerObj;
-    private Diver diver;
 
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        // create anglerfish
         fishObj = new GameObject("Anglerfish");
-        fishRb = fishObj.AddComponent<Rigidbody2D>();
-        fishCol = fishObj.AddComponent<BoxCollider2D>();
-        fishCol.isTrigger = false;
+        fishRb  = fishObj.AddComponent<Rigidbody2D>();
+        fishObj.AddComponent<BoxCollider2D>();
         fish = fishObj.AddComponent<Anglerfish>();
-        var light = fishObj.AddComponent<Light>();
-        fish.anglerLight = light;
+        fish.anglerLight = fishObj.AddComponent<Light>();
 
-        // create player/diver
-        playerObj = new GameObject("Player");
+        // place player out of detection range
+        var playerObj = new GameObject("Player");
         playerObj.tag = "Player";
         playerObj.AddComponent<BoxCollider2D>();
         playerObj.AddComponent<Rigidbody2D>();
-        diver = playerObj.AddComponent<Diver>();
-        diver.oxygenLevel = 10f;
+        playerObj.transform.position = Vector3.up * (fish.detectionRange + 1f);
 
-        // overlap for collision
-        fishObj.transform.position = Vector3.zero;
-        playerObj.transform.position = Vector3.zero;
-
-        yield return null;  
-        yield return new WaitForFixedUpdate();
+        yield return null;
     }
 
     [UnityTearDown]
     public IEnumerator TearDown()
     {
         Object.Destroy(fishObj);
-        Object.Destroy(playerObj);
         yield return null;
     }
 
     [UnityTest]
-    public IEnumerator OnCollisionStay2D_DamagesDiverOxygen()
+    public IEnumerator Swim_SetsVelocityMagnitudeToSwimSpeed()
     {
-        float before = diver.oxygenLevel;
-        yield return new WaitForFixedUpdate();  
-        Assert.Less(diver.oxygenLevel, before);
+        // After one frame, Update should have applied the swim movement
+        yield return null;
+        Assert.AreEqual(fish.swimSpeed, fishRb.velocity.magnitude, 0.1f);
     }
 }

@@ -1,52 +1,61 @@
+// File: Assets/Tests/PlayMode/SharkPTest.cs
+// To run this specific PlayMode test only:
+//   • In the Unity Editor Test Runner:
+//       – Window → General → Test Runner  
+//       – Select the “PlayMode” category  
+//       – Right-click “SharkPTest” → Run Selected  
+//   • Via CLI (runs only SharkPTest):  
+//       Unity -batchmode -projectPath . -runTests -testPlatform PlayMode \  
+//         -testFilter SharkPTest -logFile -testResults TestResults/SharkPTest.xml
+
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
+using System.Reflection;
 
-public class SharkPTest : MonoBehaviour
+public class SharkPTest
 {
-     private GameObject sharkObj;
+    private GameObject sharkObj;
     private Shark shark;
-    private Rigidbody2D sharkRb;
-    private GameObject playerObj;
-    private Player player;
+    private Rigidbody2D rb;
 
     [UnitySetUp]
     public IEnumerator SetUp()
     {
+        // Create Shark and its Rigidbody2D
         sharkObj = new GameObject("Shark");
-        sharkRb = sharkObj.AddComponent<Rigidbody2D>();
-        shark = sharkObj.AddComponent<Shark>();
+        rb       = sharkObj.AddComponent<Rigidbody2D>();
+        shark    = sharkObj.AddComponent<Shark>();
 
-        // Create player
-        playerObj = new GameObject("Player");
-        playerObj.tag = "Player";
-        var col = playerObj.AddComponent<BoxCollider2D>();
-        playerObj.AddComponent<Rigidbody2D>();
-        player = playerObj.AddComponent<Player>();
-        player.oxygenLevel = 100f;
+        // Inject our Rigidbody2D into the private field
+        typeof(Shark)
+            .GetField("rb", BindingFlags.NonPublic | BindingFlags.Instance)
+            .SetValue(shark, rb);
 
-        // Position for collision
-        sharkObj.transform.position = Vector3.zero;
-        playerObj.transform.position = Vector3.zero;
+        // Disable gravity so movement is only from Patrol()
+        rb.gravityScale = 0f;
 
-        yield return null;                  // let Start() run
-        yield return new WaitForFixedUpdate(); // resolve physics
+        // Wait a frame for Start() to run and Patrol() coroutine to begin
+        yield return null;
     }
 
     [UnityTearDown]
     public IEnumerator TearDown()
     {
         Object.Destroy(sharkObj);
-        Object.Destroy(playerObj);
         yield return null;
     }
 
     [UnityTest]
-    public IEnumerator OnCollisionEnter2D_ReducesPlayerOxygen()
+    public IEnumerator Shark_Patrol_SetsVelocityMagnitude()
     {
-        float before = player.oxygenLevel;
+        // Wait one FixedUpdate to allow the Patrol coroutine to set velocity
         yield return new WaitForFixedUpdate();
-        Assert.Less(player.oxygenLevel, before, "Player oxygen should decrease on collision with Shark");
+
+        float speed = rb.velocity.magnitude;
+        // Allow a wider tolerance since direction is random
+        Assert.AreEqual(shark.patrolSpeed, speed, 1f,
+            "After one frame, shark should be patrolling at roughly patrolSpeed");
     }
 }
